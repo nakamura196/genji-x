@@ -1,0 +1,43 @@
+/*
+ * Ocean Market / Pontus-X Portal / Clio-X より移植 (Apache-2.0)。
+ * 由来: cliox/src/components/@shared/atoms/Badge/index.module.css
+ * .badge は 1 文字も変えていない。
+ */
+.badge {
+  display: inline-block;
+  font-size: var(--font-size-mini);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  line-height: 1 !important;
+  text-transform: uppercase;
+  padding: 0.2rem;
+  border-radius: var(--border-radius);
+  color: var(--brand-white);
+  background: var(--badge-background-color);
+  vertical-align: top;
+}
+
+/*
+ * ここから下は本家に無い追加。
+ * 本家の Badge は色が 1 種類しかない（クレイ色の塗り）。
+ * この試作では「共有のコントラクト（注意して読む）」と
+ * 「ソース検証済み（安心してよい）」を並べて出すので、
+ * 同じ色だと読み分けられない。Alert が使っている警告色に合わせた。
+ */
+.warn {
+  background: var(--brand-alert-orange);
+}
+
+.ok {
+  background: var(--brand-alert-green);
+}
+
+/*
+ * 塗りではなく枠だけの版。本文の脇に何個も並べたときに、
+ * 塗りの帯が続くと本文より目立ってしまうため。
+ */
+.outline {
+  background: transparent;
+  color: var(--font-color-light);
+  box-shadow: inset 0 0 0 var(--border-size-sm) var(--border-color);
+}

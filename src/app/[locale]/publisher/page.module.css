@@ -1,0 +1,169 @@
+/*
+ * コントラクト 1 件の画面。
+ *
+ * 本家 (Ocean Market / Pontus-X / Clio-X) にこの画面は無い。この試作の独自分。
+ * ただし値は本家の変数から取る。px を直に書くと、
+ * 他の画面と字の大きさや余白がずれ、暗い表示にも追随しない。
+ */
+
+/* 上の余白と幅の上限は Page（narrow Container + Page/index.module.css）が持つ。
+   ここで持つと 2 か所に同じ値が並び、片方だけ直したときにずれる。
+   行の長さも同じ理由で書かない。以前は本文だけ max-width: 46rem を持っていて、
+   箱の右端より一段内側で折り返し、箱の中に理由の分からない余白ができていた。 */
+
+/* 上のパンくず。本家に相当物が無いので、字は小さく、色は補助文字の色に */
+.breadcrumb {
+  font-size: var(--font-size-small);
+  margin-bottom: calc(var(--spacer) / 2);
+}
+
+/* 題の下にバッジを並べるので、本家の margin-bottom (1 spacer) を詰める */
+.pageHeader {
+  margin-bottom: calc(var(--spacer) / 4);
+}
+
+.address {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  /* 42 文字の 16 進が入る。狭い画面で横に飛び出さないように折る */
+  overflow-wrap: anywhere;
+  margin: 0 0 calc(var(--spacer) / 8);
+}
+
+.badges {
+  display: flex;
+  gap: calc(var(--spacer) / 4);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacer);
+}
+
+/* バッジが 1 つも出ない種類（工場・手数料の宛先）では空の箱が残るので、
+   その場合だけ余白を消す */
+.badges:empty {
+  margin-bottom: 0;
+}
+
+.section {
+  margin-bottom: calc(var(--spacer) * 1.5);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-h4);
+  margin: 0 0 calc(var(--spacer) / 4);
+}
+
+.lead {
+  margin: 0;
+  line-height: 1.95;
+}
+
+.note {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.8;
+  margin: 0 0 calc(var(--spacer) / 2);
+}
+
+/* 落とし穴の断り書き。左に線を引いて本文と区別する */
+.gotcha {
+  margin: var(--spacer) 0 0;
+  padding-left: calc(var(--spacer) / 2);
+  border-left: var(--border-size) solid var(--color-primary);
+  color: var(--font-color-light);
+  line-height: 1.9;
+}
+
+/* 事実の一覧。テーブルにすると狭い画面で横に潰れるので、行の積み重ねにする */
+.row {
+  padding: calc(var(--spacer) / 4) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+}
+
+.rowInner {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  flex-wrap: wrap;
+}
+
+.rowKey {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  min-width: 11rem;
+}
+
+.rowValue {
+  flex: 1;
+  min-width: 14rem;
+  font-size: var(--font-size-small);
+  overflow-wrap: anywhere;
+}
+
+.rowNote {
+  color: var(--font-color-light);
+  font-size: var(--font-size-mini);
+  line-height: 1.8;
+  margin: calc(var(--spacer) / 8) 0 0;
+}
+
+.mono {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+}
+
+.links {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  flex-wrap: wrap;
+  /*
+   * **自分の上の余白は自分で持つ。**
+   *
+   * 元は margin-top を持っていなかった。契約の説明画面では、この箱の直前が
+   * 必ず `.note`（下に margin を持つ段落）だったので、たまたま隙間が空いていた。
+   * 「この記録を公開した鍵」の画面では直前が行の並びや `.rowNote` になり、
+   * **隙間が 0px になってボタンが上の文字にくっついた**（実測 0px）。
+   *
+   * 隣に何が来るかに頼った余白は、置き場所が変わった瞬間に崩れる。
+   * 操作の箱は、前に何があっても自分で間を取る。
+   */
+  margin-top: var(--spacer);
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   この画面だけの追加。上はコントラクトの説明画面から丸ごと持ってきた
+   （同じ「裏側を見せる」系統なので、行・見出し・等幅の見た目を揃える）。
+
+   ここから下は「チェーンの外の申告」の節を、チェーンの節と**見た目で
+   区別する**ためのもの。同じ体裁で並べると、読者は目の前の名前が
+   どこまで検証されたものか判断できない。 */
+
+/* 申告の節。左に線を引いて、上の節と別物であることを目で分かるようにする */
+.claim {
+  border-left: 3px solid var(--color-secondary);
+  padding-left: var(--spacer);
+}
+
+/* 「これはチェーンに無い」という断り。節の中でいちばん強く出す */
+.warn {
+  margin: 0 0 var(--spacer);
+  padding: calc(var(--spacer) / 2);
+  background: var(--background-highlight);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+  line-height: 1.8;
+  color: var(--font-color-text);
+}
+
+/* 検証の一行。42 文字の 16 進とパイプが並ぶので、この箱の中だけで横に流す */
+.command {
+  margin: 0 0 calc(var(--spacer) / 2);
+  padding: calc(var(--spacer) / 2);
+  background: var(--background-highlight);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+}

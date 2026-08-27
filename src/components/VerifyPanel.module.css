@@ -1,0 +1,85 @@
+/*
+ * 自分で確かめる欄。色の出どころを Ocean Market 由来の変数に一本化した
+ * （以前は --dh-* を直に参照していて、周りと色体系が割れていた）。
+ * ボタンは移植した atoms/Button を使う。
+ */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: calc(var(--spacer) / 2) 0 0;
+}
+
+.step {
+  padding: calc(var(--spacer) / 5) 0;
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+}
+
+.stepOk { color: var(--brand-alert-green); }
+.stepNg { color: var(--brand-alert-red); }
+
+.mark {
+  display: inline-block;
+  width: 1.4rem;
+  font-family: var(--font-family-monospace);
+}
+
+.detail {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  padding-left: 1.4rem;
+  word-break: break-all;
+}
+
+.details {
+  margin-top: calc(var(--spacer) / 2);
+}
+
+.summary {
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  color: var(--link-font-color);
+}
+
+.previewNote {
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  margin: calc(var(--spacer) / 4) 0;
+  line-height: 1.8;
+}
+
+.preview {
+  background: var(--background-highlight);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacer) / 3) calc(var(--spacer) / 2.5);
+  font-size: var(--font-size-mini);
+  line-height: 1.7;
+  overflow-x: auto;
+  max-height: 20rem;
+  font-family: var(--font-family-monospace);
+  color: var(--font-color-text);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.result {
+  margin-top: calc(var(--spacer) / 2.5);
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2.5);
+  border-radius: var(--border-radius);
+  background: var(--background-highlight);
+  border: 1px solid var(--border-color);
+  font-size: var(--font-size-small);
+}
+
+.resultOk { color: var(--brand-alert-green); }
+.resultNg { color: var(--brand-alert-red); }
+
+.note {
+  margin-top: calc(var(--spacer) / 2.5);
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  line-height: 1.8;
+}

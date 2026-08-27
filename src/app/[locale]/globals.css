@@ -1,0 +1,256 @@
+/* Tailwind v4。**この 1 行だけがこのアプリの Tailwind の入口。**
+   以前は stylesGlobal/styles.css の末尾にも v3 の
+   `@import 'tailwindcss'; @tailwind base; ...` が残っていて、
+   preflight が 2 回当たっていた。2 回目が @layer base の後に来るので、
+   移植した h1〜h5 の大きさとリンクの色が全ページで打ち消され、
+   トップの見出しが本文と同じ 15px で出ていた。 */
+@import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin "@tailwindcss/typography";
+
+/* 色と寸法の出どころは stylesGlobal/_variables.css の 1 か所だけ
+   （Ocean Market からの移植）。以前はここに別系統の設計トークン
+   (@nakamura196/dh-ui の --dh-*) も読み込んでいて、body の地色を
+   そちらが上書きし、ページごとに背景が 3 色に割れていた。 */
+
+/* フッタを最下部に貼り付ける（sticky footer）。
+   コンテンツが画面の高さに満たないと、フッタが画面の途中で止まってしまう。
+   body を縦の flex にして、main に flex:1 を与えて余りを吸わせる。
+   min-height は dvh を使う（モバイルのアドレスバーで vh がずれるため、
+   フォールバックに fallback として vh も置く）。 */
+html { height: 100%; }
+body.sticky-footer {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+body.sticky-footer > * { flex: none; }
+/* ページが <main> を持つとは限らない（about は <div> だった）ので、
+   レイアウト側で包んだ .page-body を伸ばす */
+body.sticky-footer .page-body { flex: 1 0 auto; }
+body.sticky-footer footer { margin-top: auto; }
+
+/* ── キーボードで操作したときのフォーカス表示 ──────────────────────
+   移植元 (Ocean Market 系) は Button / SearchBar / Wallet の CSS で
+   `outline: 0` を当てている。マウスで押す前提の指定で、Tab で辿ると
+   **いまどこにいるのか分からない**。実測でヘッダの「目録」
+   「この試作について」、ウォレットのボタン、Hero の検索欄に表示が無かった。
+
+   `:focus-visible` だけに戻すので、マウスで押したときの見た目は変わらない。
+   `!important` を付けているのは、打ち消している側が `.text:focus` のような
+   詳細度 0,2,0 の指定で、しかも CSS Module と global の読み込み順が
+   Next では保証されないため。ここは 1 か所で効かせ切る。 */
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--border-size) solid var(--color-secondary) !important;
+  outline-offset: 2px;
+  /* **枠は即座に出す。** ヘッダのリンクは `transition: all 0.3s` を持っていて、
+     そのままだと枠が 0.3 秒かけて現れる。Tab を押した瞬間の 0.1 秒は
+     「表示が無い」のと同じで、実際そこで見落とした。 */
+  transition-property: none !important;
+}
+
+/* 本文の下の余白。本家 cliox/src/components/App/index.module.css の
+   `.main { padding: 0 0 calc(var(--spacer) * 2) 0 }` と同じ。
+   上の余白は入れない。トップの Hero が画面いっぱいに広がるため */
+.page-body { padding-bottom: calc(var(--spacer) * 2); }
+
+/* ==================================================================
+   トップページ
+
+   本家 (cliox/src/components/Home/) は Tailwind のクラスを直接
+   JSX に並べていて、移植できる CSS Module がほとんど無い
+   （home.module.css は 2 規則しかない）。そこで、
+   本家が Tailwind で書いていた寸法を、こちらの変数で書き直した。
+   `.home` という名前は本家と同じにしてある。stylesGlobal/styles.css の
+   「トップだけ本文を Libre Baskerville にする」規則が
+   `.home` を見ているので、名前を変えるとその指定が外れる。
+   ================================================================== */
+
+/* cliox/src/components/Home/home.module.css の全文（クラス名もそのまま） */
+.home svg {
+  margin: 0;
+  display: inline-block;
+}
+
+.home h2,
+.home h3,
+.home h4,
+.home h5,
+.home h6 {
+  color: var(--home-font-color-heading);
+}
+
+/* Hero の色。本家は写真の上に黒 60% を重ねている。
+   写真を持ち込まないので、代わりに brand の色で同じ暗さを作る。
+   #23201c のような生の値を JSX に書かないための変数。 */
+:root {
+  --home-hero-background: linear-gradient(
+    160deg,
+    var(--brand-walnut) 0%,
+    var(--brand-grey-darker) 55%,
+    var(--brand-clay-dark) 100%
+  );
+  --home-hero-font-color: var(--brand-white);
+  /* 説明文は本文より一段落とす。地が暗いので、白のまま透かす */
+  --home-hero-font-color-muted: rgb(255 255 255 / 0.86);
+  --home-hero-border-color: rgb(255 255 255 / 0.5);
+}
+
+.home-hero {
+  background: var(--home-hero-background);
+  color: var(--home-hero-font-color);
+  padding: calc(var(--spacer) * 3) 0 calc(var(--spacer) * 2.5);
+}
+
+/* Hero の中は地が暗いので、見出しの色 (--font-color-heading) を上書きする。
+   これをしないと、明るい表示のとき黒い見出しが暗い地に乗る */
+.home-hero h1 {
+  color: var(--home-hero-font-color);
+  margin: 0 0 calc(var(--spacer) / 1.5);
+}
+
+.home-hero-search {
+  max-width: 46rem;
+  margin: 0 auto calc(var(--spacer) * 1.5);
+}
+
+/* 検索欄を、包んでいる箱（46rem）いっぱいに広げる。
+   移植した SearchBar の .input は width を持たず、input の既定の大きさ
+   （20 文字ぶん = 約 220px）のままだった。ヘッダの中では狭くてよいが、
+   Hero に置くと **プレースホルダが「巻名や巻次で探す（例」で切れる**。
+   ヘッダ側に影響を出さないよう、Hero の中だけ広げる。 */
+.home-hero-search input[type='search'] {
+  width: 100%;
+  max-width: 100%;
+}
+
+.home-hero-body {
+  max-width: 50rem;
+}
+
+.home-hero-lead {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-large);
+  line-height: 1.9;
+  color: var(--home-hero-font-color-muted);
+  margin: 0 0 calc(var(--spacer) * 1.5);
+}
+
+.home-hero-actions {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  flex-wrap: wrap;
+}
+
+/* Hero の中のボタン。本家の Button は clay 塗り (primary) と
+   クリーム塗り (secondary) の 2 種類で、どちらも暗い地の上で読める。
+   ここでは 2 つ目を「枠だけ」にしたいので、暗い地用の色を当てる。
+   Button の .outline は brand-grey なので、そのままだと沈む */
+.home-hero-actions .home-hero-outline,
+.home-hero-actions .home-hero-outline:focus,
+.home-hero-actions .home-hero-outline:active {
+  color: var(--home-hero-font-color);
+  border-color: var(--home-hero-border-color);
+}
+
+.home-hero-actions .home-hero-outline:hover {
+  color: var(--home-hero-font-color);
+  border-color: var(--home-hero-font-color);
+}
+
+/* 数字の並び */
+.home-stats {
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  padding: calc(var(--spacer) * 1.5) 0;
+}
+
+.home-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-family-heading);
+  color: var(--font-color-heading);
+  /* 桁が揃わないと、数字を並べた意味が薄れる */
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.home-stat-label {
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+}
+
+/* 立場を選ぶ（本家の ChooseRole） */
+.home-section {
+  padding-bottom: calc(var(--spacer) * 2);
+}
+
+.home-section-title {
+  margin: 0 0 var(--spacer);
+}
+
+.home-roles {
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+/* Box.module.css の a.box:hover が浮きを付ける。色だけ本文に戻す */
+.home-role {
+  color: inherit;
+}
+
+.home-role h3 {
+  font-size: var(--font-size-h4);
+  margin: 0 0 calc(var(--spacer) / 4);
+}
+
+.home-role p {
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  line-height: 1.85;
+}
+
+/* 54 帖をまとめた 1 件への入口。役割の 3 枚の下に 1 行だけ置く */
+.home-whole {
+  margin: var(--spacer) 0 0;
+  font-size: var(--font-size-small);
+}
+
+/* 裏側 */
+.home-behind {
+  background: var(--background-highlight);
+  padding: calc(var(--spacer) * 2) 0;
+}
+
+.home-behind h2 {
+  margin: 0 0 calc(var(--spacer) / 2);
+}
+
+.home-behind-body {
+  font-size: var(--font-size-small);
+  line-height: 1.95;
+  color: var(--font-color-light);
+  max-width: 52rem;
+  margin: 0 0 var(--spacer);
+}
+
+/* 系統図。折り返すと枝の形が崩れるので、狭い画面では横に送る */
+.home-lineage {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+  color: var(--font-color-light);
+  margin: 0 0 var(--spacer);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.home-readat {
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  margin: 0;
+}

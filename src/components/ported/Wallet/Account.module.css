@@ -1,0 +1,140 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/Header/Wallet/Account.module.css
+ *
+ * `--menu-icon-color-fill`（.button svg）は本家の書き間違い。正しくは
+ * `--menu-icon-fill-color`。**直していない。**本家では下の 25rem 以上の
+ * 指定が上書きするので実害が出ておらず、ここだけ直すと差分の追跡が面倒になる。
+ *
+ * 末尾に .error と .placeholder を足してある（本家に無い分。理由はそこに書いた）。 */
+.button {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  border: var(--menu-border-size) solid var(--menu-border-color);
+  border-radius: var(--menu-border-radius);
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 3);
+  white-space: nowrap;
+  background: var(--background-content);
+  margin: 0;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.button,
+.address {
+  color: var(--menu-font-color);
+}
+
+.button:hover,
+.button:focus {
+  transform: none;
+  outline: 0;
+}
+
+/* 本家は --color-primary (clay #c8794d)。白地に 3.33:1 しかなく、13px の
+   文字には足りない（実測）。1 段濃い --color-secondary に寄せる（5.42:1）。
+   hover は本家が --color-highlight (clay-light) で、白地に 2.50:1 とさらに
+   薄くなっていた。逆に濃くして、状態が変わったことが分かるようにする。 */
+.button.initial {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.button.initial:hover,
+.button.initial:focus {
+  color: var(--font-color-heading);
+  border-color: var(--font-color-heading);
+}
+
+.button.initial span {
+  display: none;
+}
+
+.address {
+  display: none;
+  text-transform: none;
+  padding-left: calc(var(--spacer) / 8);
+}
+
+.button svg {
+  width: var(--menu-caret-size);
+  height: var(--menu-caret-size);
+  fill: var(--menu-icon-color-fill);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: calc(var(--spacer) / 3);
+  transition: transform 0.2s ease-out;
+}
+
+[aria-expanded='true'] .button svg {
+  transform: rotate(180deg);
+}
+
+.status {
+  margin-left: calc(var(--spacer) / 4);
+  position: relative;
+  top: 1px;
+}
+
+.caret,
+svg.caret {
+  display: none;
+}
+
+@media screen and (min-width: 25rem) {
+  .button.initial span {
+    display: inline;
+  }
+  .caret,
+  svg.caret {
+    display: inline-block;
+    fill: var(--menu-icon-fill-color);
+  }
+}
+
+@media screen and (min-width: 52rem) {
+  .address {
+    display: inline-block;
+  }
+  .blockies {
+    margin-right: calc(var(--spacer) / 6);
+  }
+}
+
+/* ここから下は本家に無い追加分。
+ *
+ * 本家は wagmi + ConnectKit を使っていて、ウォレットが無い / 繋ぎ先が違う、
+ * といった状態はモーダル側が引き受けるので、ボタンには「未接続」と「接続済み」の
+ * 2 つしか無い。こちらはモーダルを持たないぶん、その 2 つをボタンで表す。 */
+
+/* 繋ぎ先が Sepolia でないとき。押すと切り替えを頼む。
+ * 赤は _colors.css の警告色をそのまま使う（ここで色を作らない） */
+.button.error,
+.button.error:hover,
+.button.error:focus {
+  color: var(--brand-alert-red);
+  border-color: var(--brand-alert-red);
+}
+
+/* サーバ側では window.ethereum の有無が分からない。
+ * 描き終わるまでは同じ形のまま薄く出して、場所だけ確保しておく。 */
+.button.placeholder {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ウォレットが入っていないときの案内。<a> なので下線を消す */
+.button.download,
+.button.download:hover {
+  text-decoration: none;
+}
+
+/* 本家は狭い画面 (52rem 未満) で住所を隠し、代わりにアバターの絵だけを見せる。
+ * こちらはアバターを出していないので、隠すとボタンの中身が空になる。常に見せる。
+ * 詳細度 (0,2,0) が上の .address (0,1,0) より高いので、順番に関係なく勝つ。 */
+.button .address {
+  display: inline-block;
+}

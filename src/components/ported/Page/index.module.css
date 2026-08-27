@@ -1,0 +1,11 @@
+/*
+ * 本家 cliox/src/components/App/index.module.css の `.main` にあたる余白。
+ * あちらは `padding: 0 0 calc(var(--spacer) * 2) 0` で、上の余白が無い。
+ * ヘッダが固定されていない（cliox は position: sticky をコメントアウトしている）
+ * ので、上に詰まっても見出しが隠れなかったため。
+ * こちらは Ocean Market どおり固定ヘッダに戻してあるので、上にも余白が要る。
+ * 下の余白はレイアウト側 (.page-body) が持つ。
+ */
+.page {
+  padding-top: var(--spacer);
+}

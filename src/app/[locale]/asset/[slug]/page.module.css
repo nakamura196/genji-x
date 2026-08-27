@@ -1,0 +1,10 @@
+/*
+ * この画面だけの見た目。中身の段組は移植した AssetContent/index.module.css
+ * が持っているので、ここに残るのは外枠の余白だけ。
+ * 以前は page.tsx に style={{}} で 36px / 80px と直に書いていて、
+ * 本家の --spacer (2rem) 基準からずれていた。
+ */
+.page {
+  padding-top: var(--spacer);
+  padding-bottom: calc(var(--spacer) * 3);
+}

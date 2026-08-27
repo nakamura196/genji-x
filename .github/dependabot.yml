@@ -1,0 +1,32 @@
+version: 2
+
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+    # 公開直後の版を取りにいかない。
+    # 乗っ取られた版が出回った事例（chalk/debug 2025-09、eslint-config-prettier 2025-07、
+    # ua-parser-js 2021）は、いずれも数時間〜数日で検出・取り下げられている。
+    # 脆弱性の修正はこの待ち時間を無視して即日来るので、遅れる心配は無い。
+    cooldown:
+      default-days: 5
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3
+
+  # Actions も対象にする。SHA で固定してあるので、
+  # Dependabot が SHA とコメントの両方を書き換えてくれる
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 5
+      semver-major-days: 30
+      semver-minor-days: 7
+      semver-patch-days: 3

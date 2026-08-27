@@ -1,0 +1,143 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。見て書き直さず、そのまま使う */
+.teaser {
+  max-width: 40rem;
+  height: 100%;
+}
+
+.link {
+  composes: box from '../atoms/Box.module.css';
+  font-size: var(--font-size-small);
+  height: 100%;
+  color: var(--teaser-font-color);
+  background: var(--teaser-background);
+  border-radius: var(--teaser-border-radius);
+  border: var(--teaser-border-size) solid var(--teaser-border-color);
+  box-shadow: var(--teaser-box-shadow);
+  position: relative;
+  padding-top: calc(var(--spacer) / 2);
+  padding-bottom: calc(var(--spacer) / 2);
+  /* for sticking footer to bottom */
+  display: flex;
+  flex-direction: column;
+}
+
+a.link:hover,
+a.link:focus {
+  box-shadow: var(--teaser-hover-box-shadow);
+}
+
+.detailLine {
+  margin-bottom: calc(var(--spacer) / 4);
+}
+
+.content {
+  margin-top: calc(var(--spacer) / 3);
+  overflow-wrap: break-word;
+  hyphens: auto;
+  /* for sticking footer to bottom */
+  flex: 1;
+}
+
+.content p {
+  margin-bottom: calc(var(--spacer) / 3);
+  font-family: var(--font-family-heading);
+}
+
+.title {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  color: var(--teaser-title-font-color);
+  margin: 0;
+  padding-bottom: calc(var(--spacer) / 6);
+  overflow-wrap: break-word;
+}
+
+.price {
+  margin-top: calc(var(--spacer) / 12);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: calc(var(--spacer) / 24);
+}
+
+.typeLabel {
+  font-size: var(--font-size-mini);
+  display: inline-block;
+  border-left: 1px solid var(--border-color);
+  padding-left: calc(var(--spacer) / 4);
+  margin-left: calc(var(--spacer) / 4);
+}
+
+.networkName {
+  min-width: max-content;
+  font-size: var(--font-size-mini);
+}
+
+.typeLabel:first-child {
+  border-left: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ここから下は本家に無い。本家が JS のコンポーネントで賄っている部分を、
+   同じ見た目のまま CSS だけで置き換えたもの。上の写しには一切手を入れていない。
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* 本家は react-dotdotdot（JS で文字を測って切る）で題と説明を 3 行に丸めている。
+   同じ絵は CSS だけで出るので依存を 1 つ減らした。行数は本家の clamp={3} と同じ。 */
+.clamp3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 本家 @shared/Publisher/index.module.css の**そのままの写し**。
+   あちらは所有者のアドレスを名前に引き当てて出すが、こちらは公開者が 1 者しか
+   いないので文字列を渡すだけにした。見た目の指定は 1 つも足していない。
+
+   以前ここに font-size: mini (10px) と color: light を足していた。本家では
+   題のすぐ下にカード本文と同じ 13px で並ぶ公開者名が、1 段小さい注釈の顔に
+   なっていた。字の大きさも色も .link から継がせるのが本家の作り。 */
+.publisher {
+  max-width: 100%;
+  margin: 0;
+  margin-right: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 32rem) {
+  .publisher {
+    display: inline-block;
+  }
+}
+
+/* .price の中身。本家はここに <Price size="small"> を置く。
+   買うものが無いので参照された回数を出す。太字・見出し色という Price の格は
+   そのまま借りる。数字が入れ替わっても行がずれないよう tabular-nums にしてある。 */
+.orders {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  color: var(--font-color-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 数え終わるまでの表示。場所は .orders と同じ高さを保ちたいので
+   ブロックを変えず、字だけ小さく淡くする。 */
+.ordersLoading {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-base);
+  color: var(--font-color-light);
+}
+
+/* 暗い配色は _variables.css の .dark 側で
+   --teaser-font-color / --teaser-title-font-color ごと差し替えてある。
+   以前はここに :global(.dark) の打ち消しを 2 つ置いて肩代わりしていたが、
+   変数が直った今は二重に効くだけなので外した。 */

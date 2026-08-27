@@ -1,0 +1,123 @@
+/*
+ * 使い方の画面。本家 (Ocean Market / Pontus-X / Clio-X) に対応する画面は無い。
+ * ただし寸法と色は本家の変数から取る。px を直に書くと他の画面とずれ、
+ * 暗い表示にも追随しない。
+ */
+
+.section {
+  margin-bottom: calc(var(--spacer) * 1.5);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-h4);
+  margin: 0 0 calc(var(--spacer) / 3);
+}
+
+.lead {
+  margin: 0;
+  line-height: 1.95;
+}
+
+.note {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.8;
+  margin: 0 0 calc(var(--spacer) / 2);
+}
+
+/* ── 用語 ─────────────────────────────────────────────────────── */
+.terms {
+  margin: 0;
+}
+
+.term {
+  padding: calc(var(--spacer) / 2) 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.termName {
+  margin: 0 0 calc(var(--spacer) / 8);
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--font-color-heading);
+}
+
+.termBody {
+  margin: 0;
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+}
+
+/* ── 手順 ─────────────────────────────────────────────────────── */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  padding-bottom: var(--spacer);
+}
+
+/* 番号。丸で囲んで、手順であることを形でも示す */
+.stepNo {
+  flex: 0 0 auto;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: 1px solid var(--color-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-small);
+  color: var(--color-secondary);
+}
+
+.stepTitle {
+  /* spacer/8 (4px) だと本文にくっつく。手順の見出しと説明の間は spacer/4 (8px) */
+  margin: 0 0 calc(var(--spacer) / 4);
+  font-size: var(--font-size-base);
+}
+
+.stepBody {
+  margin: 0;
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+}
+
+.hint {
+  margin: calc(var(--spacer) / 4) 0 0;
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}
+
+/* 蛇口へのボタン。狭い画面では縦に積む */
+.faucets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacer) / 3);
+  /* 自分の上の余白は自分で持つ。直前に何が来ても崩れないように */
+  margin-top: calc(var(--spacer) / 2);
+}
+
+/* ── 詰まりやすいところ ───────────────────────────────────────── */
+.trouble {
+  padding: calc(var(--spacer) / 2) 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.troubleQ {
+  /* 上と同じ理由 */
+  margin: 0 0 calc(var(--spacer) / 4);
+  font-size: var(--font-size-base);
+}
+
+.troubleA {
+  margin: 0;
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+  color: var(--font-color-light);
+}

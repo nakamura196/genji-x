@@ -1,0 +1,112 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ *
+ * **1 点だけ直している。** Clio-X 版は色を直書きしていた
+ * (#fff / #000 / #eaeaea / #666) ため、ダークモードで白いまま残っていた。
+ * 移植した _variables.css には .dark の定義があるので、変数に戻す。
+ */
+.footer {
+  background-color: var(--background-content);
+  color: var(--font-color-text);
+  border-top: var(--border-size) solid var(--border-color);
+}
+
+.title {
+  color: var(--font-color-heading);
+  font-weight: var(--font-weight-bold);
+}
+
+.link {
+  color: var(--font-color-text);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--link-font-color);
+}
+
+.subtitle {
+  color: var(--font-color-light);
+}
+
+.beta {
+  /* 本家は --color-primary (clay) の地に白。3.33:1 で、9.75px の文字には
+     足りない（実測）。Badge と同じ地 (clay-dark, 5.82:1) に合わせる。 */
+  background-color: var(--badge-background-color);
+  color: var(--brand-white);
+}
+
+/* ------------------------------------------------------------------
+   ここから下は組み方（段組と余白）。
+   本家 (cliox/src/components/Footer/{Footer,Links}.tsx) はこの部分を
+   Tailwind のユーティリティで直接書いていて、CSS Modules に無い。
+   こちらは JSX に style を直書きしない方針なので、同じ形をここに写した。
+   値は本家の Tailwind クラスと突き合わせてある
+   (py-8 → var(--spacer)、mt-8 → var(--spacer) * 1.5、pt-4 → var(--spacer)/2)。
+   ------------------------------------------------------------------ */
+.inner {
+  padding-top: var(--spacer);
+  padding-bottom: var(--spacer);
+}
+
+/* 本家は 2 列 / 4 列の固定段組。こちらは列の数が中身で変わるので、
+   入る分だけ並べて足りなければ折り返す。最小幅は本家の 1 列ぶんに合わせた */
+.links {
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+/* 本家 Links.module.css の .titleContainer に相当（見出しの高さを揃える） */
+.column h3 {
+  margin-top: 0;
+  margin-bottom: calc(var(--spacer) / 3);
+  font-size: var(--font-size-base);
+  line-height: 1.4;
+  text-transform: none;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list li {
+  margin-bottom: calc(var(--spacer) / 6);
+}
+
+.list li:last-child {
+  margin-bottom: 0;
+}
+
+.link,
+.list .link {
+  font-size: var(--font-size-small);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.bottom {
+  border-top: var(--border-size-sm) solid var(--border-color);
+  margin-top: var(--spacer);
+  padding-top: calc(var(--spacer) / 2);
+}
+
+.subtitle {
+  font-size: var(--font-size-mini);
+  margin: 0;
+  display: inline;
+}
+
+/* 本家の Links.module.css の .betaBadge と同じ値 */
+.beta {
+  font-size: var(--font-size-mini);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--border-radius);
+  margin-right: calc(var(--spacer) / 3);
+  display: inline-block;
+  vertical-align: baseline;
+}

@@ -1,0 +1,19 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/@shared/atoms/Badge/index.module.css
+ *
+ * 本家では atoms 配下の共通部品だが、この作業では Header 配下しか触れないので
+ * ここに置いてある。中身は 1 行も変えていない。
+ * atoms/ を触れる回になったら atoms/Badge/ へ移すこと。 */
+.badge {
+  display: inline-block;
+  font-size: var(--font-size-mini);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  line-height: 1 !important;
+  text-transform: uppercase;
+  padding: 0.2rem;
+  border-radius: var(--border-radius);
+  color: var(--brand-white);
+  background: var(--badge-background-color);
+  vertical-align: top;
+}

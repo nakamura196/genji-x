@@ -1,0 +1,10 @@
+/* Ocean Market より移植 (Apache-2.0)。
+   cliox ではこの規則がコメントアウトされていた（固定ヘッダをやめている）が、
+   本家 Ocean Market / Pontus-X の見た目は固定ヘッダなので、元の形に戻して使う。 */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--background-content);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}

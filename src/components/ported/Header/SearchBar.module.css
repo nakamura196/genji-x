@@ -1,0 +1,109 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0) */
+.search {
+  --button-size: 38px;
+
+  overflow: hidden;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: left;
+  width: 100%;
+  padding: 5px 0;
+  padding-bottom: calc(var(--spacer) / 2);
+  position: relative;
+}
+
+.springContainer {
+  width: 100%;
+}
+
+.button {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  left: 1px;
+  padding: calc(var(--spacer) / 4);
+  width: var(--button-size);
+  color: var(--font-color-text);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input {
+  margin: 0;
+  outline: 0;
+  padding-right: var(--spacer);
+  padding-left: var(--button-size);
+  height: var(--button-size);
+  max-width: 100%;
+  border: var(--input-border-size) solid var(--input-border-color);
+  border-radius: var(--input-border-radius);
+  background-color: var(--input-background);
+  font-size: 16px; /* prevent zoom in on input focus on mobile devices */
+  cursor: text;
+  transition: 0.1s ease-out;
+}
+
+.input:focus {
+  /* prevent the placeholder to move when increasing the border size*/
+  padding-left: calc(var(--button-size) - 1px);
+
+  border: var(--input-selected-border-size) solid
+    var(--input-selected-border-color);
+}
+
+.searchIcon {
+  fill: var(--input-placeholder-font-color);
+  transition: 0.1s ease-out;
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+}
+
+.search:has(.input:focus) .searchIcon,
+.button:hover .searchIcon,
+.button:focus .searchIcon {
+  fill: var(--input-font-color);
+}
+
+/* Homepage search bar styles */
+.searchHome input.input {
+  /* border-radius: 50px; */
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.searchHome input.input:focus {
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ------------------------------------------------------------------
+   ここから下は本家に無い追加分。**白地に白い文字だった。**
+
+   本家の .input は文字色を指定していない（cliox/src/components/Header/
+   SearchBar.module.css にも color の指定は無い）。Tailwind の preflight が
+   input に `color: inherit` を当てるので、入力欄は親の色をそのまま継ぐ。
+   トップの Hero は `.home-hero { color: 白 }` なので、
+   --input-background (白) の入力欄に白い文字が乗り、
+   打った字もプレースホルダも見えなかった（実測 1.00:1）。
+
+   DOM にはあるので存在の確認は通る。e2e/visual.spec.ts の
+   プレースホルダの判定も、Chrome が ::placeholder の色を oklab() で返すため
+   rgb() 前提の解析が空振りして素通りしていた。
+
+   本家が入力欄のために用意している色を明示する。
+   ------------------------------------------------------------------ */
+.input {
+  color: var(--input-font-color);
+}
+
+.input::placeholder {
+  color: var(--input-placeholder-font-color);
+  /* Firefox は既定で 0.54 まで薄める。薄めない */
+  opacity: 1;
+}

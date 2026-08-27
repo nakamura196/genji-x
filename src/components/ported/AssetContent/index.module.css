@@ -1,0 +1,135 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。見て書き直さず、そのまま使う */
+.networkWrap {
+  display: block;
+  margin-top: -1rem;
+}
+
+.grid {
+  display: grid;
+  gap: calc(var(--spacer) * 1.5);
+  position: relative;
+  margin-top: -1rem;
+}
+
+.grid > div {
+  overflow: hidden;
+}
+
+.content {
+  composes: box from '../atoms/Box.module.css';
+  padding-top: 0;
+  margin-top: var(--spacer);
+  position: relative;
+}
+
+@media (min-width: 60rem) {
+  .grid {
+    grid-template-columns: 1.5fr 1fr;
+  }
+
+  .actions {
+    margin-top: var(--spacer);
+  }
+}
+
+.ownerActions {
+  text-align: center;
+  margin-top: var(--spacer);
+  margin-bottom: calc(var(--spacer) * 1.5);
+  padding: calc(var(--spacer) / 3) var(--spacer);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ここから下は本家に無い。本家が JS のコンポーネント (Markdown / Alert) で
+   賄っている部分と、暗い配色の破れ直し。上の写しには手を入れていない。
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* 本家 AssetContent は説明を <Markdown className={styles.description}> で出すが、
+   index.module.css に .description の定義が無く、素のまま流れている。
+   こちらの説明は改行を含む素のテキストなので、改行を活かす指定だけ足した。
+
+   overflow-wrap を足したのは、この説明に ipfs:// の CID と 0x… のハッシュが
+   そのまま入っているため。区切り文字が無いので 1 語として扱われ、480px では
+   右へ 142px はみ出していた。**画面には横スクロールが出ない**（本家の
+   .grid > div が overflow: hidden なので、はみ出した分は切り落とされる）ので、
+   横あふれを測る試験は通ってしまい、CID の後半だけが黙って消えていた。 */
+.description {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  margin-top: var(--spacer);
+  margin-bottom: 0;
+}
+
+/* 「生の値」の小見出し。本家の MetaFull は見出しを持たないが、
+   こちらは葉ハッシュや root が並ぶので、何の一覧かを言っておく必要がある。 */
+.sectionTitle {
+  font-size: var(--font-size-h5);
+  margin-top: calc(var(--spacer) * 1.5);
+  margin-bottom: 0;
+}
+
+/* 末尾の但し書き。本家の Alert に相当する位置だが、
+   警告ではなく限界の申告なので、色を付けず線で区切るだけにする。 */
+.caveat {
+  margin-top: var(--spacer);
+  padding-top: calc(var(--spacer) / 1.5);
+  border-top: 1px solid var(--border-color);
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  margin-bottom: 0;
+}
+
+/* 暗い配色での破れ直し。
+   本家の Box は色を --box-template-font-color (= --brand-black) で固定しており、
+   .dark でこの変数が上書きされていない（本家に暗い配色が無いので露見しない）。
+   そのままだと #141414 の箱に黒字が載る。共有物の _variables.css は触らず、
+   この 1 枚の中だけで肩代わりする。 */
+:global(.dark) .content {
+  color: var(--font-color-text);
+}
+
+/* 本家は .networkWrap の中に <NetworkName className={styles.network}> を置くが、
+   .network の定義は本家にも無い（NetworkName 側が持っている）。
+   ネットワーク名を出す部品は移植していないので、字だけここで整える。 */
+.network {
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── 出どころの印の凡例（本家に無い追加） ────────────────────────────
+   「生の値」の直下に 1 行。印だけ置いて説明を title 属性に隠すと、
+   触れない人（キーボード操作・読み上げ・触った瞬間に消える環境）に届かない。 */
+.sourceLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacer) / 4) var(--spacer);
+  /*
+   * 見出しの余白を詰めようとして負の margin を入れていたが、
+   * **見出しに食い込んで文字が重なっていた**（テストが検出した）。
+   * 詰めたいなら見出しの側の margin-bottom を直す。
+   * 別の要素の余白を負の値で打ち消すと、片方を直したときに必ず壊れる。
+   */
+  /*
+   * 上に余白を持つ。**見出し「生の値」との間が 0px だった**（実測）。
+   * `.sectionTitle` は margin-bottom を持たない作りなので、
+   * 直後に来る要素が自分で間を取る。
+   */
+  margin: calc(var(--spacer) / 3) 0 var(--spacer);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* 凡例の中の印は、見出しの中と違って左に余白が要らない */
+.legendItem > span:first-child {
+  margin-left: 0;
+}

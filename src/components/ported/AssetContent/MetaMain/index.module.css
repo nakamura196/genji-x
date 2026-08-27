@@ -1,0 +1,38 @@
+/* Ocean Market / Pontus-X Portal (Clio-X) より移植 (Apache-2.0)。
+   由来: cliox/src/components/Asset/AssetContent/MetaMain/index.module.css
+   見て書き直さず、そのまま写す（composes を持たないので直す所も無い）*/
+.meta {
+  margin-left: calc(var(--spacer) * -0.75);
+  margin-right: calc(var(--spacer) * -0.75);
+  margin-bottom: calc(var(--spacer) / 1.5);
+  color: var(--color-secondary);
+  font-size: var(--font-size-small);
+}
+
+.publisherInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.badgeContainer {
+  padding: calc(var(--spacer) / 2);
+}
+
+@media (min-width: 40rem) {
+  .meta {
+    margin-left: calc(var(--spacer) * -1);
+    margin-right: calc(var(--spacer) * -1);
+  }
+  .publisherInfo {
+    flex-direction: row;
+  }
+}
+
+.asset {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: calc(var(--spacer) * 2);
+  border-bottom: 1px solid var(--border-color);
+}

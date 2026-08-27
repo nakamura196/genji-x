@@ -1,0 +1,57 @@
+/* Ocean Market / Pontus-X Portal (Clio-X) より移植 (Apache-2.0)。
+   由来: cliox/src/components/Asset/AssetContent/MetaSecondary.module.css
+   見て書き直さず、そのまま写す（composes を持たないので直す所も無い）*/
+.metaSecondary {
+  font-size: var(--font-size-small);
+}
+
+.metaSecondary > * {
+  margin-top: var(--spacer);
+}
+
+.metaSecondary p {
+  /* mimic ListItem spacing */
+  margin-bottom: calc(var(--spacer) / 8);
+}
+
+.samples {
+  margin-top: var(--spacer);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ここから下は本家に無い。本家が @shared/atoms/Tags (未移植) に任せている
+   見た目を、この画面で要る分だけ写した。上の写しには手を入れていない。
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* IPFS の住所。ボタンの右に置くと折り返しで崩れるので、次の行に落とす */
+.uri {
+  display: block;
+  margin-top: calc(var(--spacer) / 4);
+  font-size: 0.8rem;
+  word-break: break-all;
+  padding: 0;
+}
+
+.note {
+  margin-top: calc(var(--spacer) / 4);
+  margin-bottom: 0;
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--spacer) / 4);
+}
+
+/* 本家 @shared/atoms/Tags の 1 個ぶん。丸みと余白は本家の変数から取る */
+.tag {
+  display: inline-block;
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  background: var(--background-highlight);
+  border: var(--border-size-sm) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacer) / 8) calc(var(--spacer) / 3);
+}

@@ -1,0 +1,267 @@
+/*
+ * Ocean Market の全体スタイル。Apache-2.0。
+ *
+ * 由来: oceanprotocol/market → deltaDAO/mvg-portal (Pontus-X Portal)
+ *       → ClioX-mvg-portal (Clio-X) → ここ (Genji-X)
+ *
+ * **見て真似るのではなく、そのまま移植している。** 見て書き直すと、
+ * 角の丸み (本家は 0.2rem) ひとつ取ってもずれる。同じコードなら同じ見た目になる。
+ *
+ * 外したもの: _toast.css / _emojipicker.css / datepicker.css
+ *   (react-toastify / emoji-picker-react / react-datepicker を持ち込むため。
+ *    この目録では使わない)
+ */
+@import './_variables.css';
+
+/* Custom base styles that should be applied before Tailwind */
+@layer base {
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-size: var(--font-size-root);
+    scroll-behavior: smooth;
+  }
+
+  @media screen and (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    color: var(--font-color-text);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    font-weight: var(--font-weight-base);
+    line-height: var(--line-height);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    background: var(--background-body);
+  }
+
+  /* Apply Libre Baskerville only to the home page content */
+  /* For all other pages, use the base font */
+  .markdown p,
+  article p,
+  .body-text,
+  .description,
+  blockquote,
+  .content p,
+  .font-serif,
+  p.text-lg {
+    font-family: var(--font-family-base);
+  }
+
+  /* Special class to apply Libre Baskerville only on home page */
+  .home .markdown p,
+  .home article p,
+  .home .body-text,
+  .home .description,
+  .home blockquote,
+  .home .content p,
+  .home p.text-lg {
+    font-family: var(--font-family-body);
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--link-font-color);
+    transition: 0.2s ease-out;
+  }
+
+  /*
+   * **本文の中のリンクには下線を引く。**
+   *
+   * 本家 (Ocean Market / Pontus-X / Clio-X) は `a { text-decoration: none }` で、
+   * リンクを色だけで区別している。カードやナビのように「押せるとわかる形」の
+   * 中にあるうちは成り立つが、**文章の中に混ざると見分けられない**。
+   * WCAG 1.4.1（色だけで情報を伝えない）に触れる。実測でも
+   * text-decoration は none、区別は色 (#5c3a1c) だけだった。
+   *
+   * すべての a に引くと、カードやボタンまで下線だらけになるので、
+   * **段落・箇条書き・説明文の中だけ**に絞る。
+   */
+  p a,
+  li a,
+  dd a,
+  blockquote a {
+    text-decoration: underline;
+    /* 文字の下端に貼り付かないよう少し離す。日本語は下に伸びる字が多い */
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 1px;
+  }
+
+  /* ボタンとして描かれているものは除く（見た目が二重になる） */
+  p a[class*='button'],
+  li a[class*='button'] {
+    text-decoration: none;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    font-weight: var(--font-weight-bold);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: var(--font-family-heading);
+    color: var(--font-color-heading);
+    line-height: 1.2;
+    font-weight: var(--font-weight-bold);
+  }
+
+  h1 {
+    font-size: var(--font-size-h2);
+  }
+
+  h2 {
+    font-size: var(--font-size-h3);
+  }
+
+  h3 {
+    font-size: var(--font-size-h4);
+  }
+
+  @media (min-width: 30rem) {
+    h1 {
+      font-size: var(--font-size-h1);
+    }
+
+    h2 {
+      font-size: var(--font-size-h2);
+    }
+
+    h3 {
+      font-size: var(--font-size-h3);
+    }
+  }
+
+  h4 {
+    font-size: var(--font-size-h4);
+  }
+
+  h5 {
+    font-size: var(--font-size-h5);
+  }
+
+  figure,
+  img,
+  svg,
+  video,
+  audio,
+  embed,
+  canvas,
+  picture {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul li {
+    display: block;
+  }
+
+  /* ::selection styling removed as requested */
+
+  /* fix required for codemirror */
+  .cm-scroller ::selection {
+    color: var(--font-color-heading);
+  }
+
+  form,
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table th,
+  table td {
+    border: 0;
+    margin: 0;
+    padding: calc(var(--spacer) / 2);
+    border-bottom: 1px solid var(--border-color);
+    text-align: left;
+    font-size: 90%;
+  }
+
+  table th {
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* Custom components */
+@layer components {
+  /* Add your custom component classes here */
+}
+
+/* Custom utilities */
+@layer utilities {
+  /* Add your custom utility classes here */
+  .font-heading {
+    font-family: var(--font-family-heading) !important;
+  }
+
+  .font-body {
+    font-family: var(--font-family-body) !important;
+  }
+}
+
+/* Import other custom styles */
+@import './_code.css';
+@import './_typography.css';
+
+/* prevent background scrolling */
+.ReactModal__Body--open {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------
+   **ここに Tailwind を読み込まない。**
+
+   本家 (Clio-X) は Tailwind v3 なので、この位置に
+     @import 'tailwindcss';
+     @tailwind base; @tailwind components; @tailwind utilities;
+   が並んでいた。こちらは v4 で、v4 の `@import 'tailwindcss'` は
+   preflight (ブラウザ既定の打ち消し) をそのまま @layer base に流し込む。
+
+   このファイルは app/[locale]/globals.css の**後**に読まれるので、
+   ここでもう一度読むと preflight が上の `@layer base` の後ろに積まれ、
+   移植した h1〜h5 の font-size と `a` の色が全ページで打ち消される。
+   実際、トップの見出しが本文と同じ 15px で出ていた。
+
+   v4 の入口は globals.css の 1 行だけにしてある。
+   `@tailwind` ディレクティブは v4 には無い（v3 の書き方）ので消した。
+   ------------------------------------------------------------------ */

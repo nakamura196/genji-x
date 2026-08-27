@@ -1,0 +1,99 @@
+/*
+ * Ocean Market / Pontus-X Portal / Clio-X より移植 (Apache-2.0)。
+ * 由来:
+ *   .assetList / .empty                     cliox/src/components/@shared/AssetList/index.module.css
+ *   .container / .filterContainer / .results cliox/src/components/Search/index.module.css
+ *
+ * 本家では「一覧そのもの」と「検索ページの 2 段組」が別ファイルに分かれている。
+ * こちらは検索ページが一覧そのもの（他に置く場所が無い）なので 1 枚にまとめた。
+ * 本家の .loaderWrap は写していない。あちらは Aquarius の返事を待つ間の
+ * ぐるぐるを包む規則だが、こちらは 55 件が最初から手元にあり待ちが無い。
+ * 値は 1 つも変えていない。とくに列幅 20rem と 25rem の折り返しは、
+ * 目で合わせると必ずずれるので本家の数字のまま写している。
+ */
+
+.assetList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(var(--spacer) / 2);
+}
+
+@media screen and (min-width: 25rem) {
+  .assetList {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--spacer);
+  }
+}
+
+.empty {
+  color: var(--color-secondary);
+  font-size: var(--font-size-small);
+  font-style: italic;
+}
+
+/* ここから Search/index.module.css の写し */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 2);
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: calc(var(--spacer) / 4);
+  width: 100%;
+  padding-right: calc(var(--spacer) / 1.2);
+}
+
+.resultsCount {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: calc(var(--spacer));
+  color: var(--search-results-font-color);
+}
+
+@media screen and (min-width: 65rem) {
+  .container {
+    flex-direction: row;
+    gap: calc(var(--spacer) / 1.2);
+  }
+  .filterContainer {
+    flex-direction: column;
+    width: 15rem;
+    border-right: 1px solid var(--border-color);
+  }
+  .filterContainer > div {
+    padding-bottom: calc(var(--spacer) / 1.2);
+    border-bottom: 1px solid var(--border-color);
+  }
+  .results {
+    width: 100%;
+  }
+}
+
+/*
+ * ここから下は本家に無い。
+ *
+ * 狭い画面では .filterContainer が横並びになる（本家の作り）が、
+ * 中身が「文字入力・チェック・並べ替え」の 3 つで、本家のような
+ * 折りたたみの箱ではないため、そのままだと 3 つが 1 行に潰れて読めない。
+ * 幅が足りている間だけ横に並べ、足りなければ折り返す指定を足す。
+ */
+.filterContainer > div {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+@media screen and (min-width: 65rem) {
+  /* 2 段組になったら本家どおり縦積み。上の flex 指定は打ち消す */
+  .filterContainer > div {
+    flex: none;
+  }
+}
+
+/* 暗い配色は _variables.css の .dark 側で --search-results-font-color ごと
+   --font-color-heading に差し替えてある。以前はここに :global(.dark) の
+   打ち消しを置いて肩代わりしていたが、変数が直った今は二重に効くだけなので外した。 */

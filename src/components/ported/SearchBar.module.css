@@ -1,0 +1,249 @@
+/*
+ * Ocean Market / Pontus-X Portal / Clio-X より移植 (Apache-2.0)。
+ * 由来:
+ *   .input / .select / .small   cliox/src/components/@shared/FormInput/InputElement/index.module.css
+ *   .checkbox / .checkboxLabel  cliox/src/components/@shared/FormInput/InputElement/Radio/index.module.css
+ *   .filterList / .filterType / .filtersHeader / .clearBtn
+ *                               cliox/src/components/Search/Filter.module.css
+ *
+ * 本家はフォーム部品が汎用コンポーネント（Input, Accordion, Button）になっているが、
+ * この試作で使うのは検索欄と 1 つのチェックと並べ替えだけなので、
+ * 必要な規則だけをここに集めた。**値は 1 つも変えていない。**
+ *
+ * 本家の .filterTypeLabel（h5）は写していない。あちらは「Service Type」
+ * 「Access Type」と絞り込みの群が複数あって、その見出しに使う規則だが、
+ * こちらは群が 1 つしかなく、当てる先が無い。使わない規則は置かない。
+ * 高さ 34px、矢印の背景画像の位置など、目で合わせると必ずずれる数字が多い。
+ */
+
+/* ── 入力欄 (InputElement の .input + .small) ────────────────────────────── */
+.input {
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--input-font-color);
+  border: var(--input-border-size) solid var(--input-border-color);
+  box-shadow: none;
+  width: 100%;
+  background: var(--background-content);
+  padding: calc(var(--spacer) / 3);
+  margin: 0;
+  border-radius: var(--input-border-radius);
+  transition: 0.2s ease-out;
+  height: 43px;
+  min-width: 0;
+  appearance: none;
+  display: block;
+}
+
+.input:focus {
+  border-color: var(--font-color-text);
+  box-shadow: none;
+  outline: 0;
+}
+
+.input::placeholder {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  color: var(--input-placeholder-font-color);
+  font-weight: var(--font-weight-base);
+  transition: 0.2s ease-out;
+  opacity: 0.7;
+}
+
+.select {
+  composes: input;
+  height: 43px;
+  padding-right: 3rem;
+
+  /* custom arrow */
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--font-color-text) 50%
+    ),
+    linear-gradient(135deg, var(--font-color-text) 50%, transparent 50%),
+    linear-gradient(
+      to right,
+      var(--input-border-color) 1px,
+      transparent 1px,
+      transparent
+    );
+  background-position: calc(100% - 18px) calc(1rem + 5px),
+    calc(100% - 13px) calc(1rem + 5px), 100% 0;
+  background-size: 5px 5px, 5px 5px, 2.5rem 3rem;
+  background-repeat: no-repeat;
+}
+
+.select:focus {
+  outline: 0;
+  font-family: var(--font-family-base);
+}
+
+.small,
+.select.small {
+  font-size: var(--font-size-small);
+  height: 34px;
+  padding: calc(var(--spacer) / 4);
+}
+
+.small::placeholder {
+  font-size: var(--font-size-small);
+}
+
+.select.small {
+  padding-right: 2rem;
+
+  /* custom arrow */
+  background-position: calc(100% - 14px) 1rem, calc(100% - 9px) 1rem, 100% 0;
+  background-size: 5px 5px, 5px 5px, 2rem 3rem;
+}
+
+/* ── チェック (Radio/index.module.css の .checkbox) ──────────────────────── */
+.checkbox {
+  composes: input;
+  position: relative;
+  padding: 0;
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+  border-color: var(--input-checkbox-border-color);
+}
+
+.checkbox:focus {
+  box-shadow: 0 0 0 var(--input-selected-background);
+}
+
+.checkbox::after {
+  content: '';
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  opacity: 0;
+  transition: transform 0.3s ease-out, opacity 0.2s;
+  width: 6px;
+  height: 9px;
+  border: 2px solid var(--input-background);
+  border-top: 0;
+  border-left: 0;
+  left: 5px;
+  top: 2px;
+  transform: rotate(40deg);
+}
+
+.checkbox:checked {
+  border-color: var(--input-selected-background);
+  background: var(--input-selected-background);
+}
+
+.checkbox:checked::after {
+  opacity: 1;
+}
+
+.checkboxLabel {
+  margin: 0;
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-small);
+  padding-left: 0.5rem;
+  cursor: pointer;
+}
+
+/* ── 絞り込みの並び (Search/Filter.module.css) ───────────────────────────── */
+.filterList {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 2);
+}
+
+.filtersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  /* 絞り込みの列は 15rem しかない。「条件をすべて外す」が出ると
+     見出しの「絞り込み」が「絞り込 / み」と 2 行に割れていた。
+     見出しは折らず、入り切らないときはボタンを次の行へ回す。 */
+  flex-wrap: wrap;
+  gap: 0 calc(var(--spacer) / 4);
+}
+
+.filtersHeader .filtersTitle {
+  white-space: nowrap;
+}
+
+.filtersTitle {
+  color: var(--filter-title-color);
+  font-size: var(--filter-title-font-size);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.filterType > div:not(:last-child) {
+  margin-bottom: calc(var(--spacer) / 8);
+}
+
+.filterList label {
+  color: var(--filter-label-color);
+  font-size: var(--filter-label-font-size);
+}
+
+/* 本家は <Button style="text" size="small" className={styles.clearBtn}> なので、
+   atoms/Button の .button + .text + .small が重なった見た目になる。
+   composes で参照すると隣のファイルの改名で壊れるため、その 3 つが実際に効かせる
+   宣言だけをここに写した（値は同じ）。 */
+.clearBtn {
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  min-width: auto;
+  width: fit-content;
+  background: 0;
+  box-shadow: none;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-small);
+  color: var(--filter-clear-color);
+}
+
+.clearBtn:hover {
+  color: var(--filter-clear-hover-color);
+}
+
+/*
+ * 暗い配色は _variables.css の .dark 側で
+ * --filter-title-color / --input-placeholder-font-color ごと差し替えてある。
+ * 以前はここに :global(.dark) の打ち消しを 2 つ置いて肩代わりしていたが、
+ * 変数が直った今は二重に効くだけなので外した。**この 1 枚は本家の写しに戻す。**
+ */
+
+/* ── 和歌の数（本家に無い項目） ─────────────────────────────────────────
+   この帯だけはチェーンではなく手元の TEI から数えた値なので、
+   見出しの下に出どころを 1 行で断る。本家に対応するクラスは無い。
+   字は絞り込みのラベルより 1 段小さく、色も薄くして、選択肢と混ざらないようにする。 */
+.filtersNote {
+  margin: calc(var(--spacer) / -4) 0 0;
+  /* --font-size-mini (0.65rem = 9.75px) だと小さすぎて読めなかった。
+     絞り込みのラベル (--font-size-small) より 1 段だけ落とす */
+  font-size: var(--font-size-small);
+  line-height: 1.4;
+  color: var(--color-secondary);
+}
+
+/* 帯ごとの件数。ラベルの右端に寄せる。
+   数字は選択肢そのものではないので、太字にせず色を落とす。 */
+.checkboxLabel .facetCount {
+  margin-left: 0.4rem;
+  font-weight: var(--font-weight-base);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-secondary);
+}

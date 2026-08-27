@@ -1,0 +1,56 @@
+name: CI
+
+# PR の門番。**配る前に落とす**ことが目的なので、deploy.yml と同じ工程を踏む。
+# 違いは最後の「配る」を持たないことと、画面のテストを走らせること。
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: 素材の TEI を取る
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: kouigenjimonogatari/kouigenjimonogatari.github.io
+          path: kouigenji
+          fetch-depth: 1
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm audit --audit-level=high
+      - run: npx tsc --noEmit
+      - run: npx eslint
+
+      - name: ブラウザを取る
+        run: npx playwright install --with-deps chromium
+
+      - name: 画面のテスト
+        env:
+          GENJI_TEI_DIR: ${{ github.workspace }}/kouigenji/xml/master
+        # 開発サーバは playwright.config.ts の webServer が立てる。
+        # 並列数は runner の CPU に合わせて控えめに（詰めると落ちる）
+        run: npx playwright test --workers=2
+
+      - name: 失敗したときの画面を残す
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

@@ -1,0 +1,119 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/Header/UserPreferences/index.module.css
+ * composes の参照先だけ、こちらのディレクトリ構成に合わせて直してある。 */
+.preferences {
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 3);
+  cursor: pointer;
+  border: var(--menu-border-size) solid var(--menu-border-color);
+  border-radius: var(--menu-border-radius);
+  background-color: var(--background-content);
+  white-space: nowrap;
+
+  /**
+   * **隣の箱と高さを揃える。**
+   *
+   * 本家の UserPreferences は枠の無いアイコンなので、高さが揃わなくても
+   * 目立たなかった。こちらはネットワーク表示・ウォレットと並ぶ枠付きの箱にしたので、
+   * 高さが違うと段差になる。
+   *
+   * 中身が SVG だけで文字が無いため、line-height がそのまま高さになり
+   * 36px（隣は文字の行送りで 39px）になっていた。実測して分かった。
+   * 中身に依存しないよう、箱の高さを直接そろえる。
+   */
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--spacer) / 8);
+  height: 39px;
+  box-sizing: border-box;
+}
+
+.preferences svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.caret {
+  composes: caret from './Menu.module.css';
+}
+
+.icon {
+  fill: var(--menu-icon-fill-color);
+  transition: 0.2s ease-out;
+  width: 1em;
+  height: 1em;
+}
+
+.preferences:hover .icon,
+.preferences:focus .icon,
+.preferences:active .icon,
+.preferences[aria-expanded='true'] .icon {
+  fill: var(--menu-icon-fill-color-hover);
+}
+
+.preferencesDetails {
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 2);
+  max-width: 20rem;
+}
+
+.preferencesDetails > li > div,
+.preferencesDetails p:last-child {
+  margin-bottom: 0;
+}
+
+.preferencesDetails li p {
+  margin-top: calc(var(--spacer) / 8);
+}
+
+.preferencesDetails > li {
+  padding-top: calc(var(--spacer) / 3);
+  padding-bottom: calc(var(--spacer) / 3);
+}
+
+.preferencesDetails li:last-child,
+.preferencesDetails li:last-child p {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* ここから下は本家に無い追加分。**吹き出しの位置決めだけ。**
+ *
+ * 本家は tippy.js に位置を計算させ、吹き出しを body 直下に描いている。
+ * tippy と react-spring を入れないと決めたので、押した要素からの相対位置で出す。
+ * 見た目（枠・影・余白）は Tooltip.module.css の .content が持っていて、
+ * そちらは本家からそのまま移してある。 */
+.anchor {
+  composes: tooltip from './Tooltip.module.css';
+
+  position: relative;
+}
+
+.panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + calc(var(--spacer) / 4));
+  z-index: 1100;
+  width: max-content;
+  min-width: 17rem;
+  /* 狭い画面で画面外にはみ出さないように。本家は popper が同じことをしている */
+  max-width: calc(100vw - var(--spacer));
+}
+
+/* 本家の .preferences は Tooltip が包む <div> に当たっていた。
+ * こちらは押せることを支援技術に伝えたいので <button> に当てている。
+ * ブラウザ既定のボタン書式（フォント・行揃え）だけ打ち消す。
+ *
+ * **flex にしないこと。** 一度 inline-flex にしたら、狭い画面で中の
+ * 歯車とキャレットが flex アイテムとして潰され、幅 0 になって絵が消えた。
+ * 本家どおり中身は inline のまま（.preferences svg の指定が効く）にしておく。 */
+.preferences {
+  font: inherit;
+  color: inherit;
+  line-height: 1;
+}
+
+/* .actions は横並びの flex。ここが縮むと歯車がひしゃげるので縮ませない。
+ * 入りきらなくなったら、潰れて気づけないより横あふれとして出るほうがよい
+ * （e2e の「横スクロールが出ない」で検出できる）。 */
+.anchor {
+  flex-shrink: 0;
+}

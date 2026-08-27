@@ -1,0 +1,98 @@
+name: Deploy
+
+# main に入ったら Cloudflare Workers へ配る。
+#
+# ── なぜ CI から配るのか ────────────────────────────────────────
+# 1. **追跡していないファイルが出ていかない。** 手元から配ると、実験用の写しや
+#    測定スクリプトが混ざっても気づけない。CI は clone した状態から作る。
+#
+# 2. **資産と HTML が食い違わない。** ここが実際に効いた。
+#    手元で `next build` を何度か走らせたあと配ったところ、**HTML が参照する
+#    JS/CSS が 404 になった**（Turbopack は毎回ちがう名前で塊を作るので、
+#    古い `.next` が残っていると組み合わせがずれる）。
+#    毎回まっさらから作れば、この種の事故は構造的に起きない。
+#
+# ── ビルドが外に触るところ ──────────────────────────────────────
+# prebuild が 2 つ動く。
+#   build-snapshot.mjs    公開 RPC から 55 件のメタデータを読む（鍵は要らない）
+#   build-tei-facets.mjs  素材の TEI を数える → 別リポジトリなので checkout する
+#
+# どちらも読むだけで、秘密を必要としない。秘密は配布の 1 手だけ。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 同時に 2 本走らせない。あとから来たほうを待たせる（配布の取り消しは面倒）
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      # 素材の TEI。巻名・行数・和歌の数をここから数える（チェーンには載せていない）
+      - name: 素材の TEI を取る
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: kouigenjimonogatari/kouigenjimonogatari.github.io
+          path: kouigenji
+          # 巻名と seg しか見ないので、履歴は要らない
+          fetch-depth: 1
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # 既知の脆弱性がある依存のまま配らない
+      - run: npm audit --audit-level=high
+
+      - run: npx tsc --noEmit
+
+      - name: ビルド
+        env:
+          GENJI_TEI_DIR: ${{ github.workspace }}/kouigenji/xml/master
+        run: npm run build
+
+      # 出したものが意図どおりか、配る前に確かめる
+      - name: 出来上がりの点検
+        run: |
+          test -f .next/server/app/sitemap.xml.body || true
+          node -e "
+            const fs = require('fs');
+            const f = require('./src/data/tei-facets.json');
+            if (Object.keys(f.volumes).length !== 54) throw new Error('帖が 54 件ではない');
+            if (!f.volumes['01'].titleAlt) throw new Error('巻名の漢字が取れていない');
+            const s = require('./src/data/snapshot.json');
+            if (s.assets.length !== 55) throw new Error('資産が 55 件ではない');
+            const withName = s.assets.filter(a => /中村|Nakamura/.test(JSON.stringify(a.ddo))).length;
+            if (withName) throw new Error('チェーンの記録に氏名が入っている: ' + withName + ' 件');
+            console.log('点検 OK  54 帖 / 55 件 / 氏名なし');
+          "
+
+      - name: Cloudflare Workers へ配る
+        env:
+          # Workers Scripts (Edit) と Workers Routes (Edit) を持つトークン。
+          # 独自ドメイン (genji-x.ldas.jp) の割り当てに Routes 側が要る。
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx opennextjs-cloudflare deploy
+
+      - name: 配ったものが応答するか
+        run: |
+          for p in /ja /en /ja/search /ja/publisher /ja/how-to /ja/asset/01 /.well-known/genji-witness.json; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 3 --retry-delay 5 "https://genji-x.ldas.jp$p")
+            printf '  %-38s %s\n' "$p" "$code"
+            [ "$code" = "200" ] || exit 1
+          done

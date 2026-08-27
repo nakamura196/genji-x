@@ -1,0 +1,98 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/Header/UserPreferences/Appearance.module.css
+ * （.label / .help だけ後述のとおり別ファイル由来） */
+.buttons {
+  display: grid;
+  gap: calc(var(--spacer) / 4);
+  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+  padding-bottom: calc(var(--spacer) / 8);
+}
+
+.button {
+  width: auto;
+  padding: calc(var(--spacer) / 3) calc(var(--spacer) / 4) !important;
+  border-radius: var(--border-radius);
+  text-transform: none;
+}
+
+.button,
+.button:hover,
+.button:active {
+  color: var(--color-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.button svg {
+  width: var(--font-size-h4);
+  height: var(--font-size-h4);
+  fill: currentColor;
+  margin-bottom: calc(var(--spacer) / 5);
+}
+
+.button.selected {
+  color: var(--font-color-text);
+  border-color: var(--color-secondary);
+}
+
+/* 本家にはこの下に
+ *   .appearances div[class*='boxSelectionsWrapper'] { padding-bottom: ... }
+ * があるが、BoxSelection（ラジオボタンの箱）を使っていないので写していない。
+ * 選択肢は下の .buttons / .button / .selected のほうで組んでいる。 */
+
+/* ここから下は本家の別ファイルから持ってきたもの。
+ * 本家の Appearance.tsx は <Label> と <FormHelp> を使っており、その中身が
+ *   cliox/src/components/@shared/FormInput/Label.module.css
+ *   cliox/src/components/@shared/FormInput/Help.module.css
+ * にある。FormInput 一式はまだ移植していないので、この 2 クラスだけ写した。 */
+.label {
+  color: var(--font-color-text);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family-heading);
+  line-height: 1.2;
+  display: block;
+  margin-bottom: calc(var(--spacer) / 4);
+}
+
+.help {
+  font-size: var(--font-size-small);
+  color: var(--brand-grey-light);
+  margin-top: calc(var(--spacer) / 6);
+}
+
+/* ここから下は本家に無い追加分。
+ *
+ * 本家のこの .button は atoms/Button に重ねる前提の指定で、単体で使うと
+ * ブラウザ既定のボタン（灰色の地・中央揃えの 1 行）のままになる。
+ * atoms/Button を composes すると今度は主要色の地が付いてしまい、
+ * 「選ばれていない」側まで塗られる。**足りない分だけここで足す。** */
+.button {
+  background: var(--background-content);
+  font: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.2s ease-out;
+}
+
+/* 暗いときの補正。
+ * 本家の --color-secondary (#8c6046) は明るい地に置く前提の色で、
+ * 暗いときの背景 (#141414) に載せるとコントラストが 2.4 しか出ず読めない。
+ * 明るいクレイに寄せる（globals.css の :root.dark と同じ考え方）。
+ * 変数そのものを塗り替えないのは、明るいときの見た目を動かさないため。
+ *
+ * 補足文の色 (--brand-grey-light #4c5167) も同じ理由で読めないので、
+ * 移植済みの --font-color-light に寄せる。 */
+:global(.dark) .button,
+:global(.dark) .button:hover,
+:global(.dark) .button:active {
+  color: var(--brand-clay-light);
+}
+
+:global(.dark) .button.selected {
+  color: var(--font-color-heading);
+}
+
+:global(.dark) .help {
+  color: var(--font-color-light);
+}

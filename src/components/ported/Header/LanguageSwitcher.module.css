@@ -1,0 +1,51 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0) */
+.switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button {
+  cursor: pointer;
+  background: var(--background-content);
+  border: none;
+  box-shadow: none;
+  padding: 0 calc(var(--spacer) / 4);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacer) / 8);
+  /* **本家は --menu-icon-fill-color (clay #c8794d)。白地に 3.33:1 しかない**
+     （実測）。12px の太字なので WCAG AA の 4.5:1 が要る。
+     いま選んでいない側を既定の本文色にして、選んでいる側にクレイを当てる。 */
+  color: var(--font-color-text);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+  text-transform: uppercase;
+  transition: 0.2s ease-out;
+}
+
+.button:hover,
+.button:focus {
+  color: var(--color-secondary);
+}
+
+.icon {
+  fill: currentColor;
+  width: var(--font-size-base);
+  height: var(--font-size-base);
+  display: block;
+}
+
+/* 本家 (cliox/src/components/Header/LanguageSwitcher.tsx) は、いま選んでいない側を
+ * `style={{ opacity: 0.55 }}` と JSX に直書きして薄くしていた。
+ * **その薄さだと白地で 1.86:1 になり、読めない**（実測）。
+ * 薄さではなく「色と下線」で区別する。DOM は本家と同じ
+ * （aria-current が付く / 付かないは本家のとおり）。 */
+.button[aria-current='true'] {
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}

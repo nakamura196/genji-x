@@ -1,0 +1,80 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/Header/NetworkMenu/{index,Network}.module.css
+ * （本家では 2 ファイルだが、.networkMenu が 3 行しかないので 1 枚にまとめた）
+ *
+ * .network の角丸が左側だけなのは本家のとおり。**直していない。**
+ * 本家はここの右隣にウォレットのボタンが並び、2 つで 1 つの錠剤に見せる意図が
+ * あったと思われる（今は .actions に gap があるので離れて見える）。
+ * 見た目の判断を独断で変えると本家との差分が積み上がるので、そのまま残す。 */
+.networkMenu {
+  display: flex;
+  align-self: stretch;
+}
+
+.network {
+  height: 100%;
+  border: var(--menu-border-size) solid var(--menu-border-color);
+  border-top-left-radius: var(--menu-border-radius);
+  border-bottom-left-radius: var(--menu-border-radius);
+  padding: calc(var(--spacer) / 6) calc(var(--spacer) / 3);
+  background: var(--background-content);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 本家の .network は押すとネットワーク一覧が開く <button>。
+ * こちらは Sepolia 1 本だけで切り替え先が無いため、ただの表示にしてある。
+ * 押せそうに見えると嘘になるので、指カーソルだけ戻す。 */
+.network.static {
+  cursor: default;
+}
+
+.name {
+  font-size: var(--font-size-small);
+  color: var(--menu-font-color);
+  cursor: pointer;
+}
+
+.name.static {
+  cursor: default;
+}
+
+.badge {
+  composes: badge from './Badge.module.css';
+
+  margin-left: calc(var(--spacer) / 8);
+  /* 本家は --menu-border-color (clay #c8794d) を地にしていたが、白い文字で
+     3.33:1 しか出ない（実測）。しかもこのバッジは font-size-mini の 0.8 倍で、
+     WCAG AA の 4.5:1 が要る。Badge 共通の地 (clay-dark, 5.82:1) に合わせる。 */
+  background-color: var(--badge-background-color);
+  color: var(--menu-network-badge-font-color);
+  font-size: calc(var(--font-size-mini) * 0.8);
+}
+
+.warning {
+  margin-right: calc(var(--spacer) / 14);
+}
+
+.caret {
+  display: none;
+  width: var(--menu-caret-size);
+  height: var(--menu-caret-size);
+  fill: var(--menu-icon-color-fill);
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: calc(var(--spacer) / 3);
+  transition: transform 0.2s ease-out;
+}
+
+[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
+}
+
+@media screen and (min-width: 25rem) {
+  .caret {
+    display: inline-block;
+    fill: var(--menu-icon-fill-color);
+  }
+}

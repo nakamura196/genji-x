@@ -1,0 +1,541 @@
+{
+  "Common": {
+    "title": "Kouigenji Monogatari Text DB — web3 edition",
+    "description": "A prototype that serves the Kouigenji Monogatari TEI/XML straight from the chain and IPFS, with no index server in between.",
+    "home": "Home",
+    "copyright": "TEI data is CC0 1.0",
+    "hero": {
+      "cta": "Browse the catalogue",
+      "secondary": "Try verifying"
+    },
+    "links": {
+      "title": "Links"
+    },
+    "quickLinks": {
+      "title": "Pages",
+      "about": "About"
+    },
+    "resources": {
+      "title": "Resources",
+      "example": "Original site"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "cta": "Get Started",
+      "secondary": "View Example"
+    }
+  },
+  "Header": {
+    "en": "English",
+    "ja": "日本語"
+  },
+  "Footer": {
+    "copyright": "© {year} Satoru Nakamura",
+    "quickLinks": {
+      "title": "Quick Links",
+      "about": "About"
+    },
+    "resources": {
+      "title": "Resources",
+      "example": "Example"
+    },
+    "links": {
+      "title": "Links"
+    }
+  },
+  "Example": {
+    "title": "Sample page",
+    "description": "A page listing the main mechanisms this prototype uses.",
+    "feature1": {
+      "title": "Internationalization",
+      "description": "Full i18n support with next-intl. Easily add and manage multiple languages."
+    },
+    "feature2": {
+      "title": "Dark Mode",
+      "description": "System-aware dark mode with next-themes. Automatically switches based on user preference."
+    },
+    "feature3": {
+      "title": "Server Side Rendering",
+      "description": "Dynamic content with Next.js SSR. Optimized for SEO and real-time data."
+    },
+    "feature4": {
+      "title": "Responsive Design",
+      "description": "Fully responsive with Tailwind CSS. Beautiful on all devices and screen sizes."
+    }
+  },
+  "catalog": {
+    "eyebrow": "A catalogue with no index server",
+    "title": "Kouigenji Monogatari — volume catalogue",
+    "lead": "TEI/XML of the Genji Monogatari variorum (Ikeda Kikan, Chuokoron-sha), published volume by volume. The text is CC0; no permission is needed to read it. Each volume carries a proof that it belongs to the anchored set of 54, checkable without looking at the other volumes. This page is assembled directly from the chain, with no Ocean node and no index server.",
+    "stat": {
+      "volumes": "volumes",
+      "lines": "lines",
+      "verifiable": "with proof",
+      "atBlock": "read at block"
+    },
+    "card": {
+      "meta": "Vol. {n} / {lines} lines",
+      "metaWhole": "All 54 volumes / {lines} lines",
+      "fallback": "Vol. {n}",
+      "fallbackWhole": "All 54",
+      "orders": "{n} references",
+      "loading": "counting…"
+    },
+    "badge": {
+      "free": "free",
+      "verifiable": "proof included",
+      "plaintext": "unencrypted"
+    },
+    "footnote": "Each root is anchored in CorpusAnchor ({anchor}). The text lives on IPFS and can be fetched by anyone from a public gateway. Reference counts are read from on-chain order records, which the publisher cannot alter.",
+    "teaser": {
+      "type": "VOLUME",
+      "typeWhole": "FULL SET",
+      "lines": "{n} lines",
+      "bytes": "{n} bytes",
+      "orders": "{n} references",
+      "loading": "counting…",
+      "free": "free",
+      "verifiable": "proof",
+      "linesLong": "{n} lines",
+      "waka": "{n} waka"
+    },
+    "lineage": {
+      "title": "Where this interface comes from",
+      "this": "this catalogue (no index server)",
+      "note": "Ocean Market, the Pontus-X Portal and Clio-X are all descendants of the same interface, sharing the card layout (the git history carries 1,155 commits by Ocean's own developers). The composition here is borrowed too, with one change: where they show a price, this shows how many times the item has been referenced. Keeping a price slot when nothing is for sale would be a lie, and what this system counts is use, not ownership. One more difference: they read from an index server (Aquarius); this reads straight from the chain."
+    },
+    "search": {
+      "placeholder": "Filter by title or number (e.g. kiritsubo, 05)",
+      "onlyProof": "with proof only",
+      "sortBy": "Sort",
+      "volume": "by volume",
+      "orders": "most referenced",
+      "lines": "most lines",
+      "count": "{shown} of {total}",
+      "filters": "Filters",
+      "clearFilters": "Clear filters",
+      "noResults": "No results found.",
+      "waka": "Most waka",
+      "wakaTitle": "Waka poems",
+      "wakaNote": "This one is counted from the TEI, not recorded on chain.",
+      "wakaAny": "Any",
+      "wakaBands": {
+        "1-4": "1–4",
+        "5-9": "5–9",
+        "10-19": "10–19",
+        "20+": "20 or more"
+      }
+    },
+    "readAt": "Read from the chain at block {block}",
+    "whole": {
+      "title": "All 54 volumes as a single record",
+      "body": "Alongside the 54 per-volume records, the same text is published as one TEI/XML file. {lines} lines. It carries no per-volume inclusion proof; those live on the individual volumes."
+    }
+  },
+  "asset": {
+    "volume": "Volume {n}",
+    "whole": "All 54 volumes",
+    "badge": {
+      "verifiable": "proof included",
+      "plaintext": "unencrypted"
+    },
+    "read": {
+      "title": "Read the text",
+      "lead": "It is CC0. No permission is needed — the link below works right now. It is stored content-addressed (CID), so the same address resolves no matter who serves it.",
+      "xmlNote": "This is a raw TEI/XML file. Your browser may show a blank page or a parse error — it is namespaced XML and the browser has no way to render it. The bytes do arrive; they just cannot be displayed. You can see the content under \"Check it yourself\" below.",
+      "button": "Open the TEI/XML"
+    },
+    "get": {
+      "title": "Record that you consulted this version",
+      "button": "Get",
+      "connecting": "Connecting wallet…",
+      "signing": "Waiting for signature…",
+      "waiting": "Waiting for confirmation…",
+      "done": "Recorded",
+      "again": "Record again",
+      "noWallet": "No wallet found (MetaMask or similar).",
+      "wrongChain": "Please switch to Sepolia.",
+      "receipt": "A receipt you can cite:",
+      "note": "Pressing this does not give you the text — you can already read it above. What it gives you is evidence: a permanent public record that you consulted this exact version. Put the receipt in a footnote and, five years later, it stays clear which version you read. Free, but it costs gas (Sepolia test ETH).",
+      "countLabel": "{n} times so far, by {people} people",
+      "copy": "Copy the citation",
+      "copied": "Copied",
+      "howTo": "How to get gas, step by step →"
+    },
+    "verify": {
+      "title": "Check it yourself",
+      "lead": "You do not have to trust this page. Press the button and your own browser fetches the text from a public IPFS gateway, hashes it, and folds {proof} hashes ({bytes} bytes) up to the root of all {total} volumes. It never touches the other volumes.",
+      "run": "Verify in your browser",
+      "running": "Verifying…",
+      "again": "Verify again",
+      "step": {
+        "fetch": "Fetch the text from a public gateway",
+        "hash": "Hash it and compare with the claim",
+        "fold": "Fold the proof path up to the root"
+      },
+      "ok": "Verified. This text is part of the root anchored on chain.",
+      "ng": "Could not verify.",
+      "note": "This runs entirely in your browser. It does not go through this site's server, an Ocean node, or an index server.",
+      "preview": "Show the beginning of the fetched text",
+      "previewNote": "These are the exact bytes just used for verification. No extra request was made."
+    },
+    "raw": {
+      "title": "Raw values",
+      "did": "Resolvable name (DID)",
+      "nft": "Catalogue entry (data NFT)",
+      "datatoken": "Use token (datatoken)",
+      "lines": "Lines",
+      "bytes": "Bytes",
+      "ddo": "Metadata",
+      "ddoValue": "{n} bytes, stored unencrypted on chain, so readers need no server",
+      "leaf": "Leaf hash of this volume",
+      "root": "Root of all 54 volumes",
+      "anchor": "Where the root is anchored",
+      "anchorCount": "{n} records by {people} observers",
+      "author": "Author",
+      "owner": "Owner",
+      "waka": "Waka poems",
+      "sources": {
+        "ddo": {
+          "short": "DDO",
+          "help": "From the DDO recorded on chain. This is what the publisher asserted; the chain does not vouch for it."
+        },
+        "chain": {
+          "short": "Chain",
+          "help": "Held by the chain itself, read from a contract or an event. The publisher cannot alter it after the fact."
+        },
+        "tei": {
+          "short": "TEI",
+          "help": "Counted from the TEI here. Not recorded on chain. Anyone with the text can recompute it."
+        }
+      },
+      "legend": {
+        "chain": "held by the chain",
+        "ddo": "asserted by the publisher",
+        "tei": "counted here (not on chain)"
+      }
+    },
+    "caveat": "Only the publisher has anchored this. It becomes a record the publisher cannot erase only once independent third parties anchor the same root. Also, being on IPFS does not mean permanent: if nobody keeps it, it becomes unreachable.",
+    "count": {
+      "title": "Times referenced",
+      "loading": "Counting…"
+    },
+    "behind": {
+      "title": "View on chain"
+    },
+    "meta": {
+      "published": "Published",
+      "updated": "Updated",
+      "ownedBy": "Owned by",
+      "access": "Download",
+      "accessedWith": "Accessed with {symbol}"
+    }
+  },
+  "contract": {
+    "backToList": "Back to catalogue",
+    "facts": "Facts read from the chain",
+    "factsNote": "name and symbol are what the contract itself claims. The chain guarantees only that the code at this address answered this way — not that the claim is true. Anyone can deploy a contract with the same name.",
+    "bytes": "bytes",
+    "raw": "See the raw values",
+    "rawNote": "Beyond this point the interface is generic, and some of what it shows is hard to read in this context (the things explained above actually appear there).",
+    "badge": {
+      "proxy": "minimal proxy",
+      "shared": "shared",
+      "verified": "source verified"
+    },
+    "kind": {
+      "dataNft": {
+        "title": "A catalogue entry (data NFT)",
+        "what": "This is not the material itself. It represents the role of publishing this material. Whoever holds it can rewrite the metadata and issue datatokens. Hand it to a library and the role moves; the text does not (the text lives on IPFS and anyone can read it).",
+        "gotcha": "Etherscan shows \"1 of ...\". That 1 is an ID, not a quantity. Each ERC-721 token has its own number, so you ask ownerOf(1) for its holder. Issuance is recorded as a transfer \"from address zero\" — there is no dedicated mint display."
+      },
+      "datatoken": {
+        "title": "A use token (datatoken)",
+        "what": "A ticket for one use of the material. Nobody ever holds one: ordering mints a token, records the order, and burns it inside the same transaction. What remains is only the record that it was used.",
+        "gotcha": "The Holders tab on Etherscan looks empty. Nothing is broken — the supply is always zero. There is no tradeable holding; what is counted is use, not ownership."
+      },
+      "corpusAnchor": {
+        "title": "Where roots are anchored (CorpusAnchor)",
+        "what": "A contract for recording the roots that fold all 54 volumes, and all 25,065 lines, into a single value each. Anyone can call it. If another researcher or library runs the same computation and gets the same root, they can anchor it under their own name.",
+        "gotcha": "This contract holds no state variables at all, so there is no way to ask \"what is the latest root?\" — you read the whole log instead. That is deliberate: a single writable variable would be enough for the publisher to erase the past. Here, overwriting simply does not exist as an operation."
+      },
+      "shared": {
+        "factory": {
+          "title": "The factory (ERC721Factory)",
+          "what": "Ocean deployed this on Sepolia. One call to it creates a catalogue entry and a datatoken at once. Everyone uses this same factory."
+        },
+        "dispenser": {
+          "title": "The dispenser",
+          "what": "The counter that hands out tokens for free assets. It is a single shared contract, not one created per asset.",
+          "gotcha": "Publishing emits an event called DispenserCreated, but nothing was created. This asset’s distribution settings were merely registered with the shared counter. The name is misleading."
+        },
+        "nftTemplate": {
+          "title": "The catalogue entry implementation (ERC721Template)",
+          "what": "The actual behaviour of every catalogue entry lives here. Each entry is a 45-byte shell that forwards everything to this address. Deploying the full implementation each time would cost millions of gas."
+        },
+        "dtTemplate": {
+          "title": "The use token implementation (ERC20Template)",
+          "what": "The behaviour of every datatoken lives here. Each datatoken is itself a 45-byte proxy. Ocean Market defaults to this \"Enterprise\" version, which mints, records and burns in one transaction."
+        },
+        "feeCollector": {
+          "title": "The fee recipient (OPFCommunityFeeCollector)",
+          "what": "Where Ocean community fees go. This material is free, so nothing has ever flowed here."
+        }
+      }
+    },
+    "row": {
+      "name": "Claimed name",
+      "nameNote": "Self-reported by the contract.",
+      "symbol": "Symbol",
+      "code": "Code size",
+      "codeProxyNote": "Only 45 bytes, because this is a minimal proxy. It forwards every call to the implementation below and does nothing else. That is why Etherscan shows no source on the Contract tab.",
+      "proxyTarget": "Where the implementation lives",
+      "proxyTargetNote": "The program at this address runs. It is shared by everyone.",
+      "owner": "Who holds the publisher role",
+      "ownerNote": "The answer to ownerOf(1). This account can rewrite the metadata.",
+      "supply721": "Entries in existence",
+      "supply721Note": "Just one. ERC-721 tokens are each distinct, so this count and the ID are different things.",
+      "supply20": "Tokens in existence",
+      "supply20Note": "Always zero: minted and burned inside the same transaction as the order.",
+      "cap": "Issuance cap",
+      "capValue": "{n} uses",
+      "capNote": "Not honoured by every datatoken implementation. It is honoured by Ocean Market's default (Enterprise).",
+      "paired": "Its counterpart",
+      "pairedNoteNft": "The datatoken this entry issues.",
+      "pairedNoteDt": "The catalogue entry that issues this token."
+    }
+  },
+  "site": {
+    "footer": {
+      "material": "Material",
+      "source": "Kouigenji Monogatari (site)",
+      "repo": "TEI/XML repository",
+      "chain": "On-chain records",
+      "anchor": "CorpusAnchor",
+      "lineage": "Lineage of this interface",
+      "beta": "prototype",
+      "bottom": "TEI data is CC0 1.0. The interface is ported from Ocean Market / Pontus-X Portal / Clio-X (Apache-2.0). Assembled directly from the chain and IPFS, with no index server.",
+      "publisher": "The key behind the records",
+      "howTo": "How to record a citation"
+    },
+    "nav": {
+      "catalog": "Catalogue",
+      "about": "About",
+      "searchLabel": "Search",
+      "languageLabel": "Language"
+    },
+    "wallet": {
+      "connect": "Connect wallet",
+      "connecting": "Connecting…",
+      "wrongChain": "Switch to Sepolia",
+      "noWallet": "No wallet",
+      "copy": "Copy address",
+      "copied": "Copied",
+      "explorer": "View on Etherscan",
+      "disconnect": "Disconnect",
+      "disconnectNote": "Also revokes the permission in your wallet. If your wallet does not support that, only this page disconnects."
+    },
+    "prefs": {
+      "label": "Preferences",
+      "appearance": "Appearance",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System",
+      "appearanceHelp": "Defaults to your OS setting, select to override."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Kouigenji Monogatari Text DB — web3 edition",
+      "lead": "The same text database, assembled directly from a chain and IPFS. The text stays CC0 and needs no permission to read. What this edition adds is three things: (1) each volume carries a proof that it belongs to the anchored whole, checkable without touching the other volumes; (2) you can leave a citation that nobody can erase; (3) the catalogue needs no index server, so it keeps working if the operator stops.",
+      "browse": "Browse the catalogue",
+      "verify": "Check a proof",
+      "upstream": "The original site (full-text search, SPARQL and IIIF are better there)"
+    },
+    "stats": {
+      "volumes": "volumes",
+      "lines": "lines (seg elements)",
+      "withProof": "with proof",
+      "servers": "servers required"
+    },
+    "roles": {
+      "title": "Why are you here?",
+      "read": {
+        "title": "To read",
+        "body": "The text lives on IPFS and anyone can fetch it from a public gateway. No login, no token. It is CC0, so use it freely."
+      },
+      "cite": {
+        "title": "To cite",
+        "body": "You can leave an on-chain record that you consulted this version. Put the transaction hash in a footnote and it stays clear five years later which version you read."
+      },
+      "verify": {
+        "title": "To check",
+        "body": "You do not have to trust what this page says. Your own browser fetches the text, hashes it, and walks a 192-byte proof path up to the root."
+      }
+    },
+    "behind": {
+      "title": "What is behind this page",
+      "body": "Ocean Market, the Pontus-X Portal and Clio-X are all descendants of the same interface, and so is this page (its CSS and components are ported from them). One thing differs: they read from an index server (Aquarius); this reads straight from the chain and IPFS. The reason is concrete — Ocean's index server went down and Ocean Market showed zero items.",
+      "this": "no index server",
+      "readAt": "Read from the chain at block {block} / CorpusAnchor {anchor}"
+    },
+    "whole": {
+      "link": "See all 54 volumes as a single record"
+    },
+    "upstream": {
+      "title": "How this relates to the upstream site",
+      "body": "This is not a replacement for the upstream site. Full-text search, SPARQL, IIIF and rendering speed are all better there. Four things are added here: a fixed version, a record of citation, third-party verification, and per-volume reference counts.",
+      "link": "Open the upstream site"
+    }
+  },
+  "about": {
+    "title": "About this prototype",
+    "lead": "A prototype that publishes the Kouigenji Monogatari TEI/XML without an index server.",
+    "caveat": {
+      "title": "Caveats",
+      "body": "This is a prototype, running on a test network. The root was anchored by the publisher alone, so at this stage it is no more than a record the publisher wrote about themselves. It starts to mean something only once an independent third party runs the same computation and anchors the same root. And putting the text on IPFS does not make it permanent: if nobody keeps holding it, it stops being retrievable."
+    },
+    "missing": {
+      "title": "What is not here",
+      "body": "Some features of the upstream portal were left out. There is nothing behind them here, so porting them would only produce empty panels.",
+      "item1": "Publishing and editing (there is a single publisher, and nothing is published through the interface)",
+      "item2": "Buying and pricing (the text is CC0, so there is nothing to sell)",
+      "item3": "Compute-to-Data (there is no compute environment to run jobs in)",
+      "item4": "Profiles, bookmarks and onboarding"
+    },
+    "what": {
+      "title": "What this does",
+      "body": "The Kouigenji Monogatari text database (TEI/XML based on Ikeda Kikan, Chuokoron-sha) is published as 55 entries: the 54 volumes plus the whole. The catalogue is read straight from on-chain metadata, and the text itself comes from IPFS. There is no database and no index server behind this page."
+    },
+    "data": {
+      "title": "Source text and licence",
+      "body": "The base text is Ikeda Kikan's Kouigenji Monogatari (Chuokoron-sha). The TEI/XML is published on the upstream site under CC0 1.0. No permission or account is needed to read it."
+    },
+    "chain": {
+      "title": "What lives on chain",
+      "body": "Three kinds of contract sit on Sepolia, an Ethereum test network: a data NFT that stands for the role of publishing a volume, a datatoken that covers a single access, and CorpusAnchor, which records the root that folds all 54 volumes into one value. Each contract has its own page explaining what Etherscan is actually showing you."
+    },
+    "lineage": {
+      "title": "Where the interface comes from",
+      "body": "The interface is ported from Ocean Market (Ocean Protocol) by way of deltaDAO's Pontus-X Portal and Clio-X, under Apache-2.0. The CSS and the DOM structure are carried over as they are, rather than reimplemented from the look of them. Only two things changed: routing (Pages Router to App Router) and where the data comes from (the chain and IPFS directly, instead of the Aquarius index server)."
+    },
+    "whole": {
+      "title": "All 54 volumes as a single record",
+      "body": "Alongside the 54 per-volume records, the same text is published as one TEI/XML file of 25,065 lines. It is a different level of granularity, so it is kept out of the per-volume listing.",
+      "link": "Open the single-file record"
+    },
+    "upstream": {
+      "title": "What the upstream site does better",
+      "body": "This is not a replacement for the upstream site (the Kouigenji Monogatari text database). Full-text search, the SPARQL endpoint, IIIF alignment with page images, and plain rendering speed are all better there. Only four things are added here.",
+      "item1": "A fixed version. Which state of the text a citation points at can no longer be moved after the fact.",
+      "item2": "A record of citation. Consulting the text can be recorded on chain, so a footnote can carry the transaction hash.",
+      "item3": "Third-party verification. You do not have to trust this page; your own browser can recompute the root.",
+      "item4": "Per-volume reference counts. The record of who consulted what, and when, lives outside the publisher's hands.",
+      "link": "Open the upstream site"
+    }
+  },
+  "publisher": {
+    "title": "The key behind these records",
+    "lead": "All 55 entries in this catalogue were recorded from a single key. What is written on chain is only that key’s address — no name appears anywhere. This page bridges the address to a person.",
+    "badge": {
+      "network": "Sepolia (testnet)",
+      "noName": "No name on chain"
+    },
+    "onChain": {
+      "title": "What the chain guarantees",
+      "note": "Everything below can be read back from Sepolia by anyone. The publisher cannot alter it after the fact.",
+      "address": "Address",
+      "author": "DDO author field",
+      "authorNote": "In all {n} records this field holds the address itself. No name is present.",
+      "anchor": "Where the roots are anchored",
+      "anchorNote": "The root of the 54 volumes and the root of all 25,065 lines are recorded in this contract.",
+      "network": "Network"
+    },
+    "offChain": {
+      "title": "From here on, this is only a claim",
+      "warn": "None of this section is on chain. This page is simply asserting it, and it can be deleted. Delete it and the address above becomes just an address again. It is arranged this way so that personal data is never placed somewhere it cannot be withdrawn (EDPB guidelines on blockchain, 02/2025).",
+      "name": "Claimed by",
+      "affiliation": "Affiliation",
+      "signature": "Signature",
+      "signatureNote": "The statement below, signed with the key for the address above ({scheme}). Nobody else could produce it.",
+      "file": "View the declaration file"
+    },
+    "verify": {
+      "title": "Check it yourself",
+      "note": "You do not have to take our word for it. With foundry’s cast and jq you can verify the signature.",
+      "expect": "If it prints Validation succeeded and shows {address}, the claim holds."
+    },
+    "creators": {
+      "title": "The people who made the data are different",
+      "body": "This key only put the records on chain. The Kouigenji Monogatari TEI/XML itself is the work of several people; the list of contributors is on the original site and in the TEI header. Their names appear neither on chain nor on this page, because consent was not obtained.",
+      "link": "Visit the original site"
+    }
+  },
+  "howTo": {
+    "title": "How to record a citation",
+    "lead": "You need nothing at all to read. The text is CC0, lives on IPFS, and opens from a link. Setup is only needed to write \"I cited this version\" onto the chain, and for that you need one thing: gas on a test network.",
+    "terms": {
+      "title": "Three words first",
+      "note": "People read this as \"you need a token\". That is not quite right.",
+      "eth": {
+        "name": "ETH",
+        "body": "The base currency of Ethereum. It is not a token. Tokens are issued by a contract; ETH has no contract — the chain itself tracks balances. Here you use ETH on Sepolia, a test network, which cannot be exchanged for money."
+      },
+      "datatoken": {
+        "name": "datatoken",
+        "body": "The token Ocean Protocol uses. You do not supply it. Pressing \"Record\" mints exactly one inside that transaction and burns it in the same one. So nobody can hold it and nobody can trade it. Supply is always zero."
+      },
+      "gas": {
+        "name": "Gas",
+        "body": "The fee for having the network execute a write. Paid in ETH by whoever writes. Reading costs nothing."
+      }
+    },
+    "steps": {
+      "title": "Steps",
+      "wallet": {
+        "title": "Install a wallet",
+        "body": "A browser extension such as MetaMask. If you already have one, use it."
+      },
+      "network": {
+        "title": "Switch to Sepolia",
+        "body": "This catalogue uses only Sepolia, a test network. Nothing is on a production chain. If the top right does not say Sepolia, press the wallet button and it will ask to switch.",
+        "hint": "The chainId is {chainId}."
+      },
+      "faucet": {
+        "title": "Get some test ETH",
+        "body": "Sepolia ETH comes free from a faucet. It cannot be exchanged for money, so no real value moves. One record costs very little — 0.01 ETH covers dozens. Any of these will do."
+      },
+      "order": {
+        "title": "Press \"Record\" on a volume page",
+        "body": "Your wallet asks you to sign. Approving leaves an on-chain record that you cited this version. It does not deliver the text (you can already read it). What you get is a citation nobody can erase."
+      }
+    },
+    "faucet": {
+      "pk910": "pk910 (just wait, no signup)",
+      "google": "Google Cloud (Google account)",
+      "alchemy": "Alchemy (signup)"
+    },
+    "trouble": {
+      "title": "Where people get stuck",
+      "noEth": {
+        "q": "It says I do not have enough gas",
+        "a": "The faucet ETH has not arrived yet, or it arrived on a different network. Check that your wallet shows Sepolia and that the balance is not zero."
+      },
+      "wrongChain": {
+        "q": "It says to switch to Sepolia",
+        "a": "You are on a production network. Press the button at the top right and it will ask to switch. If declined, choose Sepolia manually in your wallet."
+      },
+      "noWallet": {
+        "q": "It says no wallet found",
+        "a": "The extension is not installed, or is disabled for this tab. Reload the page after installing."
+      },
+      "nothing": {
+        "q": "Do I need to record anything at all?",
+        "a": "No. Not for reading. It matters when you want a footnote that pins down which version you saw, so that later updates cannot blur it."
+      }
+    },
+    "readOnly": "To repeat: reading needs no setup. Open the text straight from the catalogue.",
+    "toCatalog": "Browse the catalogue"
+  }
+}

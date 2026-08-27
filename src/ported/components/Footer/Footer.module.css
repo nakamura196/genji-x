@@ -1,0 +1,31 @@
+/* Footer specific styles */
+.footer {
+  background-color: #fff;
+  color: #000;
+  border-top: 1px solid #eaeaea;
+}
+
+.title {
+  color: #000;
+  font-weight: 600;
+}
+
+.link {
+  color: #000;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: #666;
+}
+
+.subtitle {
+  color: #000;
+  opacity: 0.8;
+}
+
+.beta {
+  background-color: #2563eb;
+  color: white;
+}

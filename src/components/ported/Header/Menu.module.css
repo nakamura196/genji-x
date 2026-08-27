@@ -1,0 +1,296 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。見て書き直さず、そのまま使う。
+ *
+ * **1 点だけ変えている: ナビを 1 行に戻す分岐を 94rem → 64rem に下げた。**
+ * 本家はナビ項目が多いので 94rem (1504px) まで下段に回す造りだが、
+ * こちらは「目録 / この試作について」の 2 つだけ。1440px の画面で下段に回ると、
+ * 項目が中央に浮いて不自然に見える。項目数が違うので分岐も変える。
+ * 色を本家からずらしたのと同じ理由（各フォークが自分で決める部分）。 */
+.menu {
+  width: 100%;
+  padding: calc(var(--spacer) / 2) calc(var(--spacer) * 2);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 767px) {
+  .menu {
+    padding: calc(var(--spacer) / 2);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .menu {
+    padding: calc(var(--spacer) / 3);
+  }
+
+  .actions {
+    gap: calc(var(--spacer) / 6);
+  }
+
+  .logo svg {
+    width: var(--menu-logo-size-width-sm);
+    height: var(--menu-logo-size-height-sm);
+  }
+
+  .actions button {
+    transform: scale(0.9);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .menu {
+    padding: calc(var(--spacer) / 4);
+  }
+
+  .actions {
+    gap: calc(var(--spacer) / 8);
+  }
+
+  .actions button {
+    transform: scale(0.85);
+  }
+
+  .logo svg {
+    width: var(--menu-logo-size-width-xs);
+    height: var(--menu-logo-size-height-xs);
+  }
+}
+
+.logo {
+  white-space: nowrap;
+  display: flex;
+}
+
+.logo {
+  order: 0;
+  /* 図案の下に文字を置くので、縦に積む（本家の縦型ロゴと同じ形） */
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  text-decoration: none;
+}
+
+/*
+ * ロゴの文字。**図案と同じ色・同じ幅に収める。**
+ * 本家は SVG に文字が焼き込まれているので、大きさは図案と一体になっている。
+ * こちらは別要素なので、字間を詰めて図案の幅（32px）に近づける。
+ */
+.wordmark {
+  font-size: 0.62rem;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--menu-logo-color, currentColor);
+  white-space: nowrap;
+}
+
+/* 狭い画面では図案だけにする（本家も小さい版はマークのみ） */
+@media screen and (max-width: 26rem) {
+  .wordmark {
+    display: none;
+  }
+}
+
+.navigation {
+  order: 3;
+  margin-top: calc(var(--spacer) / 2);
+  text-align: center;
+  border-top: var(--menu-mobile-navigation-border-size) solid
+    var(--menu-mobile-navigation-border-color);
+  border-bottom: var(--menu-mobile-navigation-border-size) solid
+    var(--menu-mobile-navigation-border-color);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  width: calc(100% + 2rem);
+}
+
+.actions {
+  order: 2;
+  display: flex;
+  gap: calc(var(--spacer) / 3);
+  margin-left: auto;
+}
+
+@media screen and (min-width: 64rem) {
+  .navigation {
+    order: 2;
+    width: auto;
+    margin: 0;
+    text-align: left;
+    border: none;
+  }
+  .actions {
+    order: 3;
+    margin-left: auto;
+  }
+}
+
+@media screen and (min-width: 64rem) {
+  .menu {
+    padding: calc(var(--spacer) / 1.5) calc(var(--spacer) * 2);
+  }
+}
+
+.navigation {
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+
+.navigation::-webkit-scrollbar,
+.navigation::-moz-scrollbar {
+  display: none;
+}
+
+.navigation li {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: calc(var(--spacer) / 3);
+  margin-left: calc(var(--spacer) / 3);
+}
+
+.link {
+  composes: text from '../atoms/Button/index.module.css';
+
+  color: var(--menu-font-color);
+  font-weight: var(--menu-link-font-weight);
+  font-size: var(--menu-link-font-size);
+  font-family: var(--font-family-heading);
+  letter-spacing: var(--menu-link-letter-spacing);
+  transition: var(--menu-transition);
+}
+
+.link,
+.link:hover,
+.link:focus,
+.link:active,
+.active {
+  display: block;
+  padding: calc(var(--spacer) / 8) 0;
+  text-transform: none;
+  transform: none;
+  position: relative;
+  z-index: 1;
+  font-weight: var(--menu-link-font-weight);
+  font-size: var(--menu-link-font-size);
+}
+
+/* Remove the underline effect by commenting out or removing these styles */
+/*
+.link:after {
+  content: '';
+  position: absolute;
+  background-color: var(--menu-font-color-hover);
+  height: 2px;
+  left: 1px;
+  right: 1px;
+  bottom: 0;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 0.2s;
+}
+
+.link:hover:after,
+.active:after {
+  transform: scaleX(1);
+} */
+
+.link:hover {
+  color: var(--menu-font-color-hover);
+}
+
+.link:active,
+.link:focus,
+.active,
+.active:hover {
+  color: var(--menu-font-color-active);
+}
+
+.active:after {
+  background-color: var(--menu-font-color-active);
+}
+
+.link[aria-disabled] {
+  pointer-events: none;
+}
+
+.logo svg {
+  margin-right: calc(var(--spacer) / 3);
+}
+
+.actions button {
+  text-transform: none;
+}
+
+.caret,
+svg.caret {
+  display: none;
+  width: var(--menu-caret-size);
+  height: var(--menu-caret-size);
+  fill: var(--menu-caret-fill-color);
+  transition: transform 0.2s ease-out;
+  vertical-align: middle;
+  margin-left: calc(var(--spacer) / 4);
+}
+
+[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
+}
+
+@media screen and (min-width: 64rem) {
+  .caret,
+  svg.caret {
+    display: inline-block;
+  }
+
+  .navigation {
+    margin-left: calc(var(--spacer) / 2);
+  }
+}
+
+/* ここから下は本家に無い追加分。**狭い画面での横あふれを止める。**
+ *
+ * .navigation の -1rem は「メニューの左右の余白ぶんだけ外へはみ出して、
+ * 上下の区切り線を画面の端まで伸ばす」ための値で、.menu の余白が
+ * 1rem (= var(--spacer) / 2) のときにちょうど釣り合う。
+ *
+ * ところが Clio-X は 480px 以下と 420px 以下で .menu の余白だけ狭め、
+ * .navigation 側を直していない。結果、余白より大きくはみ出して
+ * iPhone の幅 (390px) で 8px の横スクロールが出ていた。
+ * **はみ出す量を、そのときの余白に合わせる。** */
+@media screen and (max-width: 480px) {
+  .navigation {
+    margin-left: calc(var(--spacer) / -3);
+    margin-right: calc(var(--spacer) / -3);
+    width: calc(100% + var(--spacer) / 1.5);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .navigation {
+    margin-left: calc(var(--spacer) / -4);
+    margin-right: calc(var(--spacer) / -4);
+    width: calc(100% + var(--spacer) / 2);
+  }
+}
+
+/* .actions の gap も、上と同じ「後から書いた基本形が勝つ」事故を起こしている。
+ * 本家は 480px 以下 / 420px 以下で gap を詰める指定を書いているが、その指定より
+ * **後ろ** に `.actions { gap: calc(var(--spacer) / 3) }` が来るため、同じ詳細度で
+ * 後勝ちし、狭い画面でも 10px のままだった。
+ * そのぶん右端があふれ、歯車のボタンが縮んで中の絵が幅 0 になっていた。
+ * 同じ値をいちばん後ろにもう一度書いて効かせる。 */
+@media screen and (max-width: 480px) {
+  .actions {
+    gap: calc(var(--spacer) / 6);
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .actions {
+    gap: calc(var(--spacer) / 8);
+  }
+}

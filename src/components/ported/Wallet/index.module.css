@@ -1,0 +1,9 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/Header/Wallet/index.module.css
+ * 中身は 1 行も変えていない。 */
+.wallet {
+  display: flex;
+  align-self: stretch;
+  /* 吹き出しをこの中に絶対配置で出すので、基準をここに置く（本家は Popover 任せ） */
+  position: relative;
+}

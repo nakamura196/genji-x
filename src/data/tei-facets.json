@@ -1,0 +1,452 @@
+{
+  "$comment": "TEI から数えた値。チェーンには載っていない。snapshot.json と混ぜないこと",
+  "spec": {
+    "title": "titleStmt/title (historical kana)",
+    "titleAlt": "titleStmt/title[@type=\"alt\"] (kanji)",
+    "waka": "count of lg[@type=\"waka\"]",
+    "lines": "count of <seg>",
+    "bytes": "file length",
+    "leafHash": "sha256(0x00 || file bytes)  RFC 6962 leaf"
+  },
+  "sourceCommit": "f695a1affd4dc0581763ab0f4652fe016a695d50",
+  "sourceUri": null,
+  "totals": {
+    "waka": 795,
+    "lines": 25065,
+    "bytes": 5875071
+  },
+  "volumes": {
+    "10": {
+      "waka": 33,
+      "title": "さか木",
+      "titleAlt": "賢木",
+      "lines": 653,
+      "bytes": 152676,
+      "leafHash": "0xd8777f49ca819e93a532bc846a73dc5cf605846da5bfd52ddbeba6e1091af0fa"
+    },
+    "11": {
+      "waka": 4,
+      "title": "花ちるさと",
+      "titleAlt": "花散里",
+      "lines": 55,
+      "bytes": 15214,
+      "leafHash": "0xbb288591b6a3148a76d71387c25bb39a11807ad86597d2df72c35ad97f26db76"
+    },
+    "12": {
+      "waka": 48,
+      "title": "すま",
+      "titleAlt": "須磨",
+      "lines": 583,
+      "bytes": 137727,
+      "leafHash": "0xd00b788fc8e4daf4dc85cc7ffd028052fb6f3ea7232bf0977399a9a0c24c5405"
+    },
+    "13": {
+      "waka": 30,
+      "title": "あかし",
+      "titleAlt": "明石",
+      "lines": 522,
+      "bytes": 123042,
+      "leafHash": "0xc5a670a38371b2691991bbb526ff7db401af7a84d5351d7428d4bc40b880a62c"
+    },
+    "14": {
+      "waka": 17,
+      "title": "みをつくし",
+      "titleAlt": "澪標",
+      "lines": 436,
+      "bytes": 102584,
+      "leafHash": "0x1c565f8ac14dcd291098073e48534b4d6331494e85e61ff7a0094c5d4226011d"
+    },
+    "15": {
+      "waka": 6,
+      "title": "よもきふ",
+      "titleAlt": "蓬生",
+      "lines": 310,
+      "bytes": 73401,
+      "leafHash": "0x3703d1925b961461e9f701568decbc36826c836dbc54b38e884cf8881a8d8a47"
+    },
+    "16": {
+      "waka": 3,
+      "title": "せきや",
+      "titleAlt": "関屋",
+      "lines": 64,
+      "bytes": 17247,
+      "leafHash": "0xe640b8e9b77e6c72f931ec6659ead6f9986fcbd76e13486391f2f68c390be760"
+    },
+    "17": {
+      "waka": 9,
+      "title": "ゑあはせ",
+      "titleAlt": "絵合",
+      "lines": 248,
+      "bytes": 59427,
+      "leafHash": "0xa324291d5cb656c4459fc321eb7100b0c49f378de5eaea8cd0bf86f3b3c59789"
+    },
+    "18": {
+      "waka": 16,
+      "title": "松かせ",
+      "titleAlt": "松風",
+      "lines": 280,
+      "bytes": 67406,
+      "leafHash": "0xe1326d73e0a7149386ab3b4863a73df535773a4a18ece8006c953aaba8b5736b"
+    },
+    "19": {
+      "waka": 10,
+      "title": "うす雲",
+      "titleAlt": "薄雲",
+      "lines": 402,
+      "bytes": 94396,
+      "leafHash": "0x579987e519f079e3bc7480e4d218662133c6137d87f5f51e1fca3003c346f234"
+    },
+    "20": {
+      "waka": 13,
+      "title": "あさかほ",
+      "titleAlt": "朝顔（槿）",
+      "lines": 275,
+      "bytes": 66030,
+      "leafHash": "0x67fcf86db7212b07ac87cfffc97a4665d2627fa63cdf18b947214aeedf7b31d7"
+    },
+    "21": {
+      "waka": 16,
+      "title": "をとめ",
+      "titleAlt": "少女",
+      "lines": 668,
+      "bytes": 154961,
+      "leafHash": "0xd58ba57b18a1afdb4a7b72948ab76ac3546fa22d3538538862931af5b865255e"
+    },
+    "22": {
+      "waka": 14,
+      "title": "玉かつら",
+      "titleAlt": "玉鬘",
+      "lines": 534,
+      "bytes": 124708,
+      "leafHash": "0xd1d6c192e2c1e5b8692892be454f9ee80552a3f8e48abdcd97aa0dba6d17c4ec"
+    },
+    "23": {
+      "waka": 6,
+      "title": "初音",
+      "titleAlt": "初音",
+      "lines": 192,
+      "bytes": 46637,
+      "leafHash": "0xd8b21720340d259d476baefd226ab0fdb736109ca58a12be0c708959f0297b38"
+    },
+    "24": {
+      "waka": 14,
+      "title": "こてふ",
+      "titleAlt": "胡蝶",
+      "lines": 277,
+      "bytes": 66592,
+      "leafHash": "0x0e4a8cccad4cc394be8de6df2dd8842149d99b838485f8edda17f6a764a2c168"
+    },
+    "25": {
+      "waka": 8,
+      "title": "ほたる",
+      "titleAlt": "蛍",
+      "lines": 256,
+      "bytes": 61334,
+      "leafHash": "0xb1ba386882646f34000fb6fb2c0ef9d16c146199c84ac7d8a5242ddb3729ccab"
+    },
+    "26": {
+      "waka": 4,
+      "title": "とこなつ",
+      "titleAlt": "常夏",
+      "lines": 290,
+      "bytes": 68524,
+      "leafHash": "0x01337b20394085d1ca7efe82fe5b76dda9fc7302eaab8ee95c26b7755076fd67"
+    },
+    "27": {
+      "waka": 2,
+      "title": "かゝり火",
+      "titleAlt": "篝火",
+      "lines": 46,
+      "bytes": 13367,
+      "leafHash": "0x9131bdd05b3e52ff30fde9056d6d6df0470075df197f9cb2af9b09ada1218b14"
+    },
+    "28": {
+      "waka": 4,
+      "title": "野わき",
+      "titleAlt": "野分",
+      "lines": 238,
+      "bytes": 56638,
+      "leafHash": "0x4a08e6ae053a27d2f7727af0a002fbe8dfd47f423eb90efe017c261d16d74d71"
+    },
+    "29": {
+      "waka": 9,
+      "title": "みゆき",
+      "titleAlt": "行幸",
+      "lines": 368,
+      "bytes": 86571,
+      "leafHash": "0xa727cb32590e16c2dcbbf90ce38c8bc44282a23c900c7338f84a82a3fcbe9088"
+    },
+    "30": {
+      "waka": 8,
+      "title": "藤はかま",
+      "titleAlt": "藤袴",
+      "lines": 188,
+      "bytes": 45785,
+      "leafHash": "0x7c33c5e32a00ef3342207e77991dbb381b0fb25459f6591b8da79d567ad80010"
+    },
+    "31": {
+      "waka": 21,
+      "title": "まきはしら",
+      "titleAlt": "真木柱",
+      "lines": 490,
+      "bytes": 114621,
+      "leafHash": "0x99322fe82ea8ab4a8f7cd41cf5e0393314aa819d14017f48e83747df8b6fb3d5"
+    },
+    "32": {
+      "waka": 11,
+      "title": "梅かえ",
+      "titleAlt": "梅枝",
+      "lines": 248,
+      "bytes": 59689,
+      "leafHash": "0xe3f0ade295eb711151c424a5f3fd6a4b638bc96f1912761b89630d44aa06e0a6"
+    },
+    "33": {
+      "waka": 20,
+      "title": "藤のうらは",
+      "titleAlt": "藤裏葉",
+      "lines": 309,
+      "bytes": 74233,
+      "leafHash": "0x11a1b489a2f89d62ed0090e9d4396864fe7a7a75bf843bde8a0978a31cbcef7d"
+    },
+    "34": {
+      "waka": 24,
+      "title": "わかな上",
+      "titleAlt": "若菜 上",
+      "lines": 1341,
+      "bytes": 308102,
+      "leafHash": "0x71e613ad18fb0ed791373fdd41a05ee36b0cb99c24b693623d6244449ca5fa43"
+    },
+    "35": {
+      "waka": 18,
+      "title": "わかな下",
+      "titleAlt": "若菜 下",
+      "lines": 1348,
+      "bytes": 309231,
+      "leafHash": "0xd51b38bf35457707c2e80f01372de8dddc3338cf2cb3b1cdc7e7c83134d1e986"
+    },
+    "36": {
+      "waka": 11,
+      "title": "かしは木",
+      "titleAlt": "柏木",
+      "lines": 531,
+      "bytes": 123595,
+      "leafHash": "0x8877d4f3b96eab86ddfd1e0b6a2c598b5f4e13cee35bd556f07ac044a788d345"
+    },
+    "37": {
+      "waka": 8,
+      "title": "よこ笛",
+      "titleAlt": "横笛",
+      "lines": 242,
+      "bytes": 58322,
+      "leafHash": "0x7bb702f9fe397ee4de04e96e2256dc32d081d237a304620561579f856ed236e9"
+    },
+    "38": {
+      "waka": 6,
+      "title": "すゝむし",
+      "titleAlt": "鈴虫",
+      "lines": 189,
+      "bytes": 46070,
+      "leafHash": "0x210c1f6d439a999e0f3221968b073df127f3d08d60f8f4ae0a8df1460219a220"
+    },
+    "39": {
+      "waka": 26,
+      "title": "夕きり",
+      "titleAlt": "夕霧",
+      "lines": 938,
+      "bytes": 216591,
+      "leafHash": "0xab7061df1c8b2660e93595df8cc57b1f24d27987f3f7400cbd345ff89ce8ce68"
+    },
+    "40": {
+      "waka": 12,
+      "title": "みのり",
+      "titleAlt": "御法",
+      "lines": 249,
+      "bytes": 59919,
+      "leafHash": "0xa0bf7847f2f48d20bab97aa8ca86ead791a1c84dbbee09737b3d24e3cfe9eb70"
+    },
+    "41": {
+      "waka": 26,
+      "title": "まほろし",
+      "titleAlt": "幻",
+      "lines": 288,
+      "bytes": 69602,
+      "leafHash": "0xb8a2eeadacc45b2388d1d5b6200a903bdc7a8204597b81f664e83d46a73515b7"
+    },
+    "42": {
+      "waka": 1,
+      "title": "にほふ兵部卿",
+      "titleAlt": "匂宮",
+      "lines": 177,
+      "bytes": 42792,
+      "leafHash": "0x80d87946fb2e2e9788b1f3a6735198d086db8c1b641ba31f3199b0bc9f02de03"
+    },
+    "43": {
+      "waka": 4,
+      "title": "こうはい",
+      "titleAlt": "紅梅",
+      "lines": 166,
+      "bytes": 40565,
+      "leafHash": "0xa360dd194a63ea40c1f741941255a10705cd15145600bd1d38134bd10935fa4c"
+    },
+    "44": {
+      "waka": 24,
+      "title": "たけ川",
+      "titleAlt": "竹河",
+      "lines": 538,
+      "bytes": 126110,
+      "leafHash": "0x7056deb8c77ddadd478de2f0c2769dc808b80dc8cfced6a2efbd4b4443d3739e"
+    },
+    "45": {
+      "waka": 13,
+      "title": "はし姬",
+      "titleAlt": "橋姫",
+      "lines": 499,
+      "bytes": 116645,
+      "leafHash": "0x29bbb4303dbc2c3d7f0dbbb5c59871d87b9abc6fe436162350a70fe98f4dc521"
+    },
+    "46": {
+      "waka": 21,
+      "title": "しゐかもと",
+      "titleAlt": "椎本",
+      "lines": 489,
+      "bytes": 114776,
+      "leafHash": "0xc18cbc738cf5630338d10abcf5438f31d1bfdaf1c65182f9a08d7898e00bd04f"
+    },
+    "47": {
+      "waka": 31,
+      "title": "あけまき",
+      "titleAlt": "総角",
+      "lines": 1170,
+      "bytes": 269855,
+      "leafHash": "0xf29b31e5b477d3daa4c98b93a85e50af3d57eed3016abb343554b25b5bdf50d5"
+    },
+    "48": {
+      "waka": 15,
+      "title": "さわらひ",
+      "titleAlt": "早蕨",
+      "lines": 246,
+      "bytes": 59469,
+      "leafHash": "0xbf0f91a76509bb3956447616b44032180a0c6e5d99fd9485c944bf4cc2ace157"
+    },
+    "49": {
+      "waka": 24,
+      "title": "やとり木",
+      "titleAlt": "宿木",
+      "lines": 1220,
+      "bytes": 280810,
+      "leafHash": "0xd2eca24b25612ec4f4294b0555c2c644788150e02e9ac7fd0026c64e1744bb01"
+    },
+    "50": {
+      "waka": 11,
+      "title": "あつまや",
+      "titleAlt": "東屋",
+      "lines": 839,
+      "bytes": 193271,
+      "leafHash": "0x5d29c5525dd41a674cdd44896d2276950ddada7b83429903f81eb5752547c263"
+    },
+    "51": {
+      "waka": 22,
+      "title": "うき舟",
+      "titleAlt": "浮舟",
+      "lines": 936,
+      "bytes": 216124,
+      "leafHash": "0xac0faee12e16404397360c00d6b34b22cc581653987c1f2889f5dae99141a3d3"
+    },
+    "52": {
+      "waka": 11,
+      "title": "かけろふ",
+      "titleAlt": "蜻蛉",
+      "lines": 747,
+      "bytes": 172659,
+      "leafHash": "0xaaba460809b23b25a4a24e8ff60213c1db72fcba445877f7302dc9dd3d93ca0d"
+    },
+    "53": {
+      "waka": 28,
+      "title": "てならひ",
+      "titleAlt": "手習",
+      "lines": 863,
+      "bytes": 199889,
+      "leafHash": "0xa5935f1d9d7a2a067756a0a70ace2e07a416eea61ed19afd2b6233a55dc40d72"
+    },
+    "54": {
+      "waka": 1,
+      "title": "夢のうきはし",
+      "titleAlt": "夢浮橋",
+      "lines": 222,
+      "bytes": 53120,
+      "leafHash": "0xaf009318dd1538c52958484b198b1a11c059e27ccd9754c2a8cb3841854d81d6"
+    },
+    "01": {
+      "waka": 9,
+      "title": "きりつぼ",
+      "titleAlt": "桐壺",
+      "lines": 328,
+      "bytes": 77765,
+      "leafHash": "0x2eb26402442e5d919231738b73b2599309216b0bbdd05509c3252957022cfe63"
+    },
+    "02": {
+      "waka": 14,
+      "title": "ははきぎ",
+      "titleAlt": "帚木",
+      "lines": 617,
+      "bytes": 143378,
+      "leafHash": "0xd1b390b7c96f28f1a7c9d37e27bfd648c86e2053c9e7effae3efd0b040ea214c"
+    },
+    "03": {
+      "waka": 2,
+      "title": "うつせみ",
+      "titleAlt": "空蝉",
+      "lines": 145,
+      "bytes": 35682,
+      "leafHash": "0x8b1e153fd54bff968e95bebdbaca324739a3badcb20134bba39d5a3b7faa7618"
+    },
+    "04": {
+      "waka": 19,
+      "title": "夕かほ",
+      "titleAlt": "夕顔",
+      "lines": 636,
+      "bytes": 147922,
+      "leafHash": "0x469131e7d493a2abfbdb864de2af71cc4e78c379bb9e9e9179a0d02201c15ca7"
+    },
+    "05": {
+      "waka": 25,
+      "title": "わかむらさき",
+      "titleAlt": "若紫",
+      "lines": 628,
+      "bytes": 146509,
+      "leafHash": "0x3523461db708c6431b3d919cf00b330d304ca566df5f998b6a7cdfc23dede33f"
+    },
+    "06": {
+      "waka": 14,
+      "title": "すゑつむ花",
+      "titleAlt": "末摘花",
+      "lines": 419,
+      "bytes": 98499,
+      "leafHash": "0xe7cb3d13a949ac39f97c9962d0899157873b14c477b0a1ccc397b87b095d24d9"
+    },
+    "07": {
+      "waka": 17,
+      "title": "もみちの賀",
+      "titleAlt": "紅葉賀",
+      "lines": 368,
+      "bytes": 87331,
+      "leafHash": "0x9cc7a1216b28b51b7a7dab08f976bc23516375e7ed9058cb43c6b17444986d45"
+    },
+    "08": {
+      "waka": 8,
+      "title": "花のえん",
+      "titleAlt": "花宴",
+      "lines": 139,
+      "bytes": 34583,
+      "leafHash": "0x39ca8965265e5f00a87cf5055592c9fb4c675e6527bf48c89421088ba62f6aa7"
+    },
+    "09": {
+      "waka": 24,
+      "title": "あふひ",
+      "titleAlt": "葵",
+      "lines": 615,
+      "bytes": 143075,
+      "leafHash": "0x4c4392280de21782e2575e92747dba595db950554e71c6be385c1f22ad755e86"
+    }
+  }
+}

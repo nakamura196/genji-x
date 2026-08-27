@@ -1,0 +1,72 @@
+/*
+ * ── アクセント色だけ本家からずらしてある ──────────────────────
+ *
+ * 本家 Clio-X の粘土色 (#c8794d) は **WCAG AA (4.5:1) を満たしていない**。
+ * 白地に 3.33:1、白抜き文字を乗せても 3.33:1 で、axe が全ページで違反を出す。
+ * 忠実に移植すると、その問題まで引き継ぐことになる。
+ *
+ * 色は系統の中でも各フォークが自分で決める部分である
+ * (Pontus-X Portal と Clio-X でも色が違う)。構造は本家のまま、色だけ基準を満たす値にした。
+ *
+ * 差し替え後の実測 (2026-08-26):
+ *   --brand-clay        #95612b  白地 5.22:1 / 白抜き 5.22:1   適合
+ *   --brand-clay-light  #8a5626  白地 6.11:1 / 白抜き 6.11:1   適合
+ *   --brand-clay-dark   #6b4420  白地 8.49:1                   適合
+ *   --brand-clay-darker #5c3a1c  白地 10.11:1                  適合
+ *   暗い表示は #d9a463 (#141414 の上で 8.28:1)
+ *
+ * light を #a8703a にしなかったのは 4.16:1 で未達だったため
+ * (dh-ui が同じ値を測って却下している)。文字にも使われる変数なので上げてある。
+ */
+:root {
+  /* Portal brand color variables */
+  --brand-white: #ffffff;
+  --brand-black: #000000;
+  --brand-blue: #004967;
+  --brand-blue-light: #008baa;
+  --brand-cyan: #46daff;
+  --brand-purple: #7300f3;
+  --brand-violet: #b900ff;
+  --brand-gaia-x-blue: #283375;
+  --brand-clay: #95612b;
+  --brand-clay-light: #8a5626;
+  --brand-clay-dark: #6b4420;
+  --brand-clay-lightest: #f7f1e9;
+  --brand-walnut: #3e2b23;
+  --brand-grey-muted: #6b6b6b;
+  --brand-pink: #ff4092;
+  --brand-clay-darker: #5c3a1c;
+
+  --brand-gradient: linear-gradient(
+    to right bottom,
+    var(--brand-clay-light),
+    var(--brand-clay-dark)
+  );
+
+  --brand-grey: #2b2e3b;
+  --brand-grey-light: #4c5167;
+  --brand-grey-lighter: #d0d2dd;
+  --brand-grey-dimmed: #f5f6fb;
+  --brand-grey-darker: #3f3d3c;
+
+  --brand-alert-green: #5fb359;
+  --brand-alert-red: #d80606;
+  --brand-alert-orange: #b35f36;
+  --brand-alert-yellow: #eac146;
+
+  /* Ocean brand color variables */
+  --ocean-white: #ffffff;
+  --ocean-black: #141414;
+  --ocean-pink: #ff4092;
+  --ocean-purple: #7b1173;
+  --ocean-violet: #e000cf;
+
+  --ocean-grey-darker: #201f1f;
+  --ocean-grey-dark: #303030;
+  --ocean-grey: #41474e;
+  --ocean-grey-light: #8b98a9;
+  --ocean-grey-lighter: #e2e2e2;
+  --ocean-grey-dimmed: #f7f7f7;
+
+  --ocean-gradient: linear-gradient(to right bottom, #7b1173, #ff4092);
+}

@@ -1,0 +1,670 @@
+{
+  "$comment": "カタログアプリが読む入口の一覧。名前も root も入れない (チェーンから読めるので)。 入れてあるのはアドレスと、どのブロックから探せばよいか。 node scripts/18-registry.mjs が書き出す。",
+  "generatedAt": "2026-08-26T07:23:53.732Z",
+  "chainId": 11155111,
+  "corpusAnchor": "0x8197bd3d263b9dcf68df1e2629459f01e0cfcab9",
+  "corpusAnchorFromBlock": 11568901,
+  "publisher": "0xA787b1285d7D0Cf5284167Ce278774371946A3aA",
+  "assets": [
+    {
+      "nft": "0x46611965e6E49C424160B30B8b60BE5C383D1a52",
+      "datatoken": "0x7912E01939812Be315F1f449aE20Ce2515671F5b",
+      "did": "did:op:583a6aeb9a39ccc47f972c1d5304b7eb60744b3af9e8d7c6a74e31eabe655a50",
+      "fromBlock": 11568903,
+      "slug": "all",
+      "label": {
+        "ja": "校異源氏物語 全 54 帖",
+        "en": "Kouigenji Monogatari, all 54 volumes"
+      },
+      "ipfsCid": "bafybeihheffdysczxwsfu35h4f4vim643owfxwtb33aqhyovq5klbnlype"
+    },
+    {
+      "nft": "0x098101ed2BcE63b0743d9d64B9fb0Cac1553FeF6",
+      "datatoken": "0x6d9Ba38A6E48ea8a3e504E80696175Fa652F6BBe",
+      "did": "did:op:99bae35012078b8fbe4353eb28e4bf06b1a90d4da3ff57da3a60df17a39f84b3",
+      "fromBlock": 11569343,
+      "slug": "01",
+      "label": {
+        "ja": "きりつぼ（第1帖）",
+        "en": "Volume 1: きりつぼ"
+      },
+      "ipfsCid": "bafkreiegvfvumybo6vju5yauvbmjyf273ri5ykds3ndudt2hufbimocvau"
+    },
+    {
+      "nft": "0x58b2FfEd911cf5150335f8d1bd0AD6f3970d3AC0",
+      "datatoken": "0x7838A8b50FED9FF47F52f7578b3694Bbff3D8EBF",
+      "did": "did:op:e236b468abbdeb7d59cb2034862de0351663dbf1c655c795c153d7d24d3f5c52",
+      "fromBlock": 11569345,
+      "slug": "02",
+      "label": {
+        "ja": "ははきぎ（第2帖）",
+        "en": "Volume 2: ははきぎ"
+      },
+      "ipfsCid": "bafkreidyg7wqhd4jguw2p77nu2e2wdwy4usau4bfz5urdzdd5zf5x4cltq"
+    },
+    {
+      "nft": "0x0d836D2d882317C7619898138d8304B736D979a2",
+      "datatoken": "0x317B43a475c5bfF67EE233B08b2323E6A43a3a55",
+      "did": "did:op:aafeabc338e06554ad28de38897938d867d8795b115657b787073f44ae5b8be9",
+      "fromBlock": 11569347,
+      "slug": "03",
+      "label": {
+        "ja": "うつせみ（第3帖）",
+        "en": "Volume 3: うつせみ"
+      },
+      "ipfsCid": "bafkreiakicyw4522i7l5kw6cr4m6ucjkxltanlhmbkyyhlvz2vnrifwtkm"
+    },
+    {
+      "nft": "0xf6A8bF7C00fD99D2AFf1371F67efC3dfe2105f5f",
+      "datatoken": "0xed294FF4E4A054028C1DFa67897fb2E6da87Ecd7",
+      "did": "did:op:78f7551e2bd6bc520f9117bfc732a050694b4e1e4539fdf0d01f30b055ac1ef7",
+      "fromBlock": 11569349,
+      "slug": "04",
+      "label": {
+        "ja": "夕かほ（第4帖）",
+        "en": "Volume 4: 夕かほ"
+      },
+      "ipfsCid": "bafkreic5n45ou6zbf5l4eaqbqcutuija7jy7f7ar2i7zxplgfqnsjcydmq"
+    },
+    {
+      "nft": "0x26F4b452Cd1Df9a66751BBd9998570E3b271A062",
+      "datatoken": "0x9b012F0d10C8dc3f3a1daFc1745F2503b1d982B7",
+      "did": "did:op:25bb321a70377c4776098afe7d7b770c17f29e1eb42941f8365b8d4d92e1b71e",
+      "fromBlock": 11569351,
+      "slug": "05",
+      "label": {
+        "ja": "わかむらさき（第5帖）",
+        "en": "Volume 5: わかむらさき"
+      },
+      "ipfsCid": "bafkreieolqcv4wizk2lj6uzjwa4vlf7k7dff6nwagh3ojc7zwowhmsljjy"
+    },
+    {
+      "nft": "0x52e82A3550CB443C14Dea91175B7820B22f0EA8E",
+      "datatoken": "0x5Cbdc214415992d6a1703DfB6f36988EDd0a8BA7",
+      "did": "did:op:7fda10262c3511dfc73409f9b9c4f922227b687e401f0ccf7145c0a917768768",
+      "fromBlock": 11569353,
+      "slug": "06",
+      "label": {
+        "ja": "すゑつむ花（第6帖）",
+        "en": "Volume 6: すゑつむ花"
+      },
+      "ipfsCid": "bafkreifa6g3mvpri2lxftnkisbqpoo3xig5y3tr2o53w2ldkxnbupfh7ty"
+    },
+    {
+      "nft": "0x1643D2eDb2f73D38522543F1C2E2AeD3EeF3C588",
+      "datatoken": "0xc94700cc509179080Fb66e45fb8b96433E88Fa9B",
+      "did": "did:op:6d15683c32477c4bd159e9735ba69745fc4dabd8196cabf403fead9ac30cf787",
+      "fromBlock": 11569356,
+      "slug": "07",
+      "label": {
+        "ja": "もみちの賀（第7帖）",
+        "en": "Volume 7: もみちの賀"
+      },
+      "ipfsCid": "bafkreiaid5rpfpxoxzy2a2j7asr3yp5qaabscdzaut4wsvburwgubhjjay"
+    },
+    {
+      "nft": "0x32Ec60B951493973a73De70b97250Fb638B75FD8",
+      "datatoken": "0x033cCd4F09C4a27C5876d324A32D15fB8A8B9007",
+      "did": "did:op:0a47a628829b9ac80ec41ba38fab0984f5f6af556953334afdbeee0241f1018e",
+      "fromBlock": 11569358,
+      "slug": "08",
+      "label": {
+        "ja": "花のえん（第8帖）",
+        "en": "Volume 8: 花のえん"
+      },
+      "ipfsCid": "bafkreih364likkc3xqt6uytf7bw43qm5elutnc4nlbcmwkh2e5rcstfsoy"
+    },
+    {
+      "nft": "0x2A8D7A6F9261f1079bf1D103776eA7bCdE9B272d",
+      "datatoken": "0xE4eb890A5Aeb5A502157D06cEf3f2c22c8E9f5AC",
+      "did": "did:op:2ccbb7bb5eb22d96ec41a881ce82eb270196f8ce53084d1671ac3736c521decc",
+      "fromBlock": 11569360,
+      "slug": "09",
+      "label": {
+        "ja": "あふひ（第9帖）",
+        "en": "Volume 9: あふひ"
+      },
+      "ipfsCid": "bafkreiadzzijfpqdosxc2m2zqi3s6r52halamoyos775b5odzol52etltm"
+    },
+    {
+      "nft": "0xd0aa65ED59Dfa51c77bA39Ee46323a91605C96dc",
+      "datatoken": "0x412c175dfce2Fa98f98323dB054Aef63150E0926",
+      "did": "did:op:4bfabbd176c40d6f87e865d1bf4fce29450fbe45505ae92b049851a11dd1d2e2",
+      "fromBlock": 11569362,
+      "slug": "10",
+      "label": {
+        "ja": "さか木（第10帖）",
+        "en": "Volume 10: さか木"
+      },
+      "ipfsCid": "bafkreicnql5hwesr3nbyqlgg3tbxmwbelr7qlotdhvc3e64xatzyfeep6u"
+    },
+    {
+      "nft": "0x256536A3921A5769f78cb2d872631F24244a3D05",
+      "datatoken": "0xe5b406dD5B7Cb332465470d2376B81001B9a761a",
+      "did": "did:op:d63ed08058161dfc7a9dbcaf79a0902d5c57ded43355d6ba197836ac211f13c5",
+      "fromBlock": 11569364,
+      "slug": "11",
+      "label": {
+        "ja": "花ちるさと（第11帖）",
+        "en": "Volume 11: 花ちるさと"
+      },
+      "ipfsCid": "bafkreidh2w6so75a6yw63t7noips2stt5f3z5rub7zzwi7gtk2wqjzykt4"
+    },
+    {
+      "nft": "0x9f9222c0D09d5423CF49EFB044dAf44BF5C6d26E",
+      "datatoken": "0x63E6E2D70f50869f12d799515C3C23aDAb09685E",
+      "did": "did:op:b6cd0ba2357a1b5621cc8b79ce9367fed87407096df3f3eb75c11c1dbf42f1a2",
+      "fromBlock": 11569366,
+      "slug": "12",
+      "label": {
+        "ja": "すま（第12帖）",
+        "en": "Volume 12: すま"
+      },
+      "ipfsCid": "bafkreiatgmss7vmj5fkvmkfc6rbtspanpiqa6gfbg6hujs6z6ciamgrrbq"
+    },
+    {
+      "nft": "0x261add52673cdC84BE6FE446fbAE441a8ed8c147",
+      "datatoken": "0xCbBE96535BE59999268fB6Ae12bC7e321de55391",
+      "did": "did:op:67ce72ae7078494c14ec03d2bef11801d4061e9052e11af645902912ce71a9cd",
+      "fromBlock": 11569368,
+      "slug": "13",
+      "label": {
+        "ja": "あかし（第13帖）",
+        "en": "Volume 13: あかし"
+      },
+      "ipfsCid": "bafkreia7ui5ruaari4dfkx7earcflwdd5wjhgzhmjpgnltxwxxgvqr2i7m"
+    },
+    {
+      "nft": "0xa7a4771BFDdf854E717c34A6AC5BA09649D04E04",
+      "datatoken": "0xD9E389830A5005932B14E99c8d96A3cf52Fe1C2f",
+      "did": "did:op:9cc1ec9a0c6241582e51b8da788db8a4291ac4893971c512b23608d5ca8e526c",
+      "fromBlock": 11569370,
+      "slug": "14",
+      "label": {
+        "ja": "みをつくし（第14帖）",
+        "en": "Volume 14: みをつくし"
+      },
+      "ipfsCid": "bafkreie35ryipkcc2thf3kytefb2w2bkmjp67odpcjwv2xndj6aipahvfq"
+    },
+    {
+      "nft": "0x4cfbc2F8B99b14Eaa3E50b0176c375C13f9e4961",
+      "datatoken": "0xfF82e1E8dB235CC2Ddd905514E48a2c8Dc72f668",
+      "did": "did:op:e54b39fe576c341eb83fc6d7bd2bcb66262525953c86fac6da555758879c9d05",
+      "fromBlock": 11569372,
+      "slug": "15",
+      "label": {
+        "ja": "よもきふ（第15帖）",
+        "en": "Volume 15: よもきふ"
+      },
+      "ipfsCid": "bafkreidxnqke4qco2w3gpaxfrmmkmi2catcg5tvrvj4shrz5qwjgi2hgpi"
+    },
+    {
+      "nft": "0x9dED74b2a64e03428B8f1917cb5B21823F3702b6",
+      "datatoken": "0xf4d93252184D40Cb0b26D0cd5aFeab4433e96b3A",
+      "did": "did:op:867cacd5a7a9df4210494b77c7099b68045e29e9c8a448511d8e8e762480af7f",
+      "fromBlock": 11569374,
+      "slug": "16",
+      "label": {
+        "ja": "せきや（第16帖）",
+        "en": "Volume 16: せきや"
+      },
+      "ipfsCid": "bafkreiakwztwpzyfxo3oxw2w5ruspkr62gbhbh6udazbtpizcxvtkr6khu"
+    },
+    {
+      "nft": "0xB4F96cBBfc1B25C381FAB29aA86b034e9e27B4bA",
+      "datatoken": "0xD5d236e5eB7Dc71282895F78312ae1348A582a42",
+      "did": "did:op:a168dab2ff55cc7ccc8b20da3c5cbc10ead178a11fb217b51d4b47400e5c9d68",
+      "fromBlock": 11569376,
+      "slug": "17",
+      "label": {
+        "ja": "ゑあはせ（第17帖）",
+        "en": "Volume 17: ゑあはせ"
+      },
+      "ipfsCid": "bafkreif6bbxfo2q4re3kygsqzrcfcsl6emzduw6eb7zigt6hwmvtaqjkte"
+    },
+    {
+      "nft": "0x192AA34E20CdABbCD6e3B84c69515a5aee989248",
+      "datatoken": "0xbf3868b41eB46E51d2c6dFD35aE03d7d5AC331E0",
+      "did": "did:op:9e551b9031c5443d43ef4e4ce103b9e79bce020468f3d496a97b2283623fe311",
+      "fromBlock": 11569378,
+      "slug": "18",
+      "label": {
+        "ja": "松かせ（第18帖）",
+        "en": "Volume 18: 松かせ"
+      },
+      "ipfsCid": "bafkreid6enpvn6ltj5bobvweqf7pp5fjtwk4pdkp2oeph6p2kpfb7i23hu"
+    },
+    {
+      "nft": "0xC0e735F7653317f383d7B5aB5469cBc7bf4F58FF",
+      "datatoken": "0x9378e67CCf94Fd55dFfd04db51b03B3f93f10E88",
+      "did": "did:op:b71e7264ec96f03ae4589386a836b600d926c0eeedbb992b4e6c672041c3a293",
+      "fromBlock": 11569380,
+      "slug": "19",
+      "label": {
+        "ja": "うす雲（第19帖）",
+        "en": "Volume 19: うす雲"
+      },
+      "ipfsCid": "bafkreibv6nq7bgnqr3saib7e5edkof2vqwgxy2hge5kjqkluvsvwc5w4ym"
+    },
+    {
+      "nft": "0x4980E706ed3c9756F09b61C73CDae183F47147a3",
+      "datatoken": "0x71987efe9EA561E24CcC23aF3b24c9CF86dfc1aA",
+      "did": "did:op:c714154dc5d9b1af04e4eb3bbcd3ad70884d32769beb36cf4d247b76967f02a1",
+      "fromBlock": 11569382,
+      "slug": "20",
+      "label": {
+        "ja": "あさかほ（第20帖）",
+        "en": "Volume 20: あさかほ"
+      },
+      "ipfsCid": "bafkreiap2yvsvue3huvbtxgg5fffqfnqtrbr5nywhklscf3zkdd7dfqcge"
+    },
+    {
+      "nft": "0xF1ab24cfdE1C0A91EC510bcD01e5B8fD7676572B",
+      "datatoken": "0x1C44531EC509F1D7aa08a6C12B8Bd8E010Fa6C30",
+      "did": "did:op:980bb013d9c219843aea91cd28db3d408aae36302e601459fcd5090879037937",
+      "fromBlock": 11569384,
+      "slug": "21",
+      "label": {
+        "ja": "をとめ（第21帖）",
+        "en": "Volume 21: をとめ"
+      },
+      "ipfsCid": "bafkreidgce4hqgsgkbfwol35wxkpgx7pdvptybtkdf5knyfficg7rlf3ge"
+    },
+    {
+      "nft": "0xAB0d22C7cefc8c2f416E80d62a7963327Be29029",
+      "datatoken": "0x2D660F3B5b08335b9E78A5420B50c7df4562ec30",
+      "did": "did:op:e3c93feed18657b8e997bf6088221de6faafae52a74eabd656c4bb80a636cac5",
+      "fromBlock": 11569386,
+      "slug": "22",
+      "label": {
+        "ja": "玉かつら（第22帖）",
+        "en": "Volume 22: 玉かつら"
+      },
+      "ipfsCid": "bafkreibfjqabevvz2qokxp4tu6s65t3uohuezlcsv3gmkbpczu7q2xtqpe"
+    },
+    {
+      "nft": "0xaCc2687DEe807bc507eeD17Ad431b4606ecE89c9",
+      "datatoken": "0x350D6F2526885774A121995401A8babb509c4e10",
+      "did": "did:op:7f50de73aae3209b1037a64e67df393b3473c9684d2b055300a5a3d8b53b197e",
+      "fromBlock": 11569388,
+      "slug": "23",
+      "label": {
+        "ja": "初音（第23帖）",
+        "en": "Volume 23: 初音"
+      },
+      "ipfsCid": "bafkreihdrhobi4hqiak6m7365whgpeox6akqvyz6gcm3cn7om5tmollqdq"
+    },
+    {
+      "nft": "0x42cdDc8422320a0C91ecea36a4c4c13839A18ef4",
+      "datatoken": "0x475a2239D6124c2512f629BfcE122136061A59Ea",
+      "did": "did:op:5384ca147959072c5aa1870104f3803c0d24c3dd4689cd9c1ae8cb5c20e81187",
+      "fromBlock": 11569390,
+      "slug": "24",
+      "label": {
+        "ja": "こてふ（第24帖）",
+        "en": "Volume 24: こてふ"
+      },
+      "ipfsCid": "bafkreictxlfgp4lbfdl5dbjshwrxfdhbhepfj4vpikc5455wp2j5gp76bu"
+    },
+    {
+      "nft": "0x48399bB03269531B44978E7c15d63Dae3E964a3C",
+      "datatoken": "0x0eC63c6f9ff585bF49e1d035b43aDD45f2404584",
+      "did": "did:op:b64d15e7e03317a536adf9a1dd8032d9de4f6add0b9ad8c8b5d877f40efa61a1",
+      "fromBlock": 11569392,
+      "slug": "25",
+      "label": {
+        "ja": "ほたる（第25帖）",
+        "en": "Volume 25: ほたる"
+      },
+      "ipfsCid": "bafkreievwmzaqardvbwhfvlo4xmovtz5br4ae3v7jf2yygekrhz4nj3dz4"
+    },
+    {
+      "nft": "0xF480323097cCf2d9Aed79C4830E983722e33Bb11",
+      "datatoken": "0x96904BDd0f62b449f0162ed08CC3c1EEC65e7afd",
+      "did": "did:op:2d5e6742fc3eef67141ce1c3796f21aaf23357746d67ab30af52c2e27dc1fc01",
+      "fromBlock": 11569394,
+      "slug": "26",
+      "label": {
+        "ja": "とこなつ（第26帖）",
+        "en": "Volume 26: とこなつ"
+      },
+      "ipfsCid": "bafkreifsdmbozpwqvoaoocbte7zjvqysoasphniblur5daqxmr5sdateva"
+    },
+    {
+      "nft": "0xfe87e66F86bF6f51929C3a47e9eba8aA2a616019",
+      "datatoken": "0x4eAD5F390C0c294124F55a12dd52154C32F72597",
+      "did": "did:op:6a5e3532ba7cd946f966a571b99f317320ba3f02e241a9179a51491c693d7e93",
+      "fromBlock": 11569396,
+      "slug": "27",
+      "label": {
+        "ja": "かゝり火（第27帖）",
+        "en": "Volume 27: かゝり火"
+      },
+      "ipfsCid": "bafkreicezftfncrpupdcia7yyahiew34mpjkb3pv7idfomg3bk5bjo5vdy"
+    },
+    {
+      "nft": "0xBfCF74380c89FADe019fA0dEE89Be90Ae7e49aB2",
+      "datatoken": "0xBB953e8c3FDE8A26CfDb462864771c67F9CeA74b",
+      "did": "did:op:c6fc3bbef1977d8490c5527f88d88defa713cc5b58c22649209ef4e7dc73a87b",
+      "fromBlock": 11569398,
+      "slug": "28",
+      "label": {
+        "ja": "野わき（第28帖）",
+        "en": "Volume 28: 野わき"
+      },
+      "ipfsCid": "bafkreif3vj2fuzaupx2ubjtpzs4lqybd4m4ntbqkff4e5gicypnq5nvgzi"
+    },
+    {
+      "nft": "0x1063Fa2bd1035BBFb9808cc4CFd13686139Dd1F2",
+      "datatoken": "0xBC06f5e2b640426eA0B01D47e52d30802e3E7f59",
+      "did": "did:op:bec964fe9d94c382b5ff430d0fdf9265e59d5f071c1798d4ccf55fa5cd294078",
+      "fromBlock": 11569400,
+      "slug": "29",
+      "label": {
+        "ja": "みゆき（第29帖）",
+        "en": "Volume 29: みゆき"
+      },
+      "ipfsCid": "bafkreihpypjn2qgikjco65intxrpnjiwxvhkhs4vcfi2kew56pxsdtbw6i"
+    },
+    {
+      "nft": "0xB900CC468f8d5da26e5Cc4A2AAC50A9DdB05770a",
+      "datatoken": "0xfb4d1540C062A1EBE561d2ed89AAFaa29328d6f6",
+      "did": "did:op:93c3cb8ad2f0d39d2b67dd3b7d33ae9c8bd2787ba826ec19e79ca89c39511eaa",
+      "fromBlock": 11569402,
+      "slug": "30",
+      "label": {
+        "ja": "藤はかま（第30帖）",
+        "en": "Volume 30: 藤はかま"
+      },
+      "ipfsCid": "bafkreiblzov5mttlaqqhgnoi4zzqnkhcsov3hplzhsxrmpcwe2ztfhcx3u"
+    },
+    {
+      "nft": "0xA24C37F5301B5F594f60e187A4eB047Db01af8B2",
+      "datatoken": "0xC9649cEe389eeb2ad48899E7299fC6d2353Ca249",
+      "did": "did:op:e21cad0766958a9b980d1127b364c0f917c87c7bc163790db7d1b056165e9f88",
+      "fromBlock": 11569404,
+      "slug": "31",
+      "label": {
+        "ja": "まきはしら（第31帖）",
+        "en": "Volume 31: まきはしら"
+      },
+      "ipfsCid": "bafkreicvpjdxkdrrdj5atdf5iz2fl3g7klsxg6xg7a4q2dma3exu2t6at4"
+    },
+    {
+      "nft": "0xBB289Ac8D18757BdC0E208Fc91111D5Faf696BB2",
+      "datatoken": "0x2F63bFbc52f725b4dEa9976e247C0BDf35945cC2",
+      "did": "did:op:8e80449d278ce058bf6d51198b2594bfe55b6e8e812faaeddd1fcbbf88489077",
+      "fromBlock": 11569406,
+      "slug": "32",
+      "label": {
+        "ja": "梅かえ（第32帖）",
+        "en": "Volume 32: 梅かえ"
+      },
+      "ipfsCid": "bafkreideumyuxwjly4xr632l66njbz7wy3ygu6grt3izae54gzpn4agmce"
+    },
+    {
+      "nft": "0x7C321b6F108705a6e8c6625FF9C7AAdF57fAF369",
+      "datatoken": "0x51E32D45D46824f0d85954005B422a883b44DF26",
+      "did": "did:op:9e2ea214e2f9e8468e6f095cf13839e14b25cbdeec932fb4a9429a115e100b64",
+      "fromBlock": 11569408,
+      "slug": "33",
+      "label": {
+        "ja": "藤のうらは（第33帖）",
+        "en": "Volume 33: 藤のうらは"
+      },
+      "ipfsCid": "bafkreicduznrplf3r3aw72slpijpsugle6pavujjeee6pvhzaxqjnwmszi"
+    },
+    {
+      "nft": "0x388FD474D3adE6C9944C19281dcE88E9944D3820",
+      "datatoken": "0x1832E62Ce91c5f7F6aAd56302d02c76dabdD828c",
+      "did": "did:op:c2f916e1bdc676c8b4d9062dbe193332aa6005a29092e36d081dc29a0a191195",
+      "fromBlock": 11569410,
+      "slug": "34",
+      "label": {
+        "ja": "わかな上（第34帖）",
+        "en": "Volume 34: わかな上"
+      },
+      "ipfsCid": "bafybeiecymmz6mczjelnjl6iduvqbegvd3wgvcdywymmamz2yoxvktr4x4"
+    },
+    {
+      "nft": "0xf5fFCc3FB4fd57465085E6FB99C13769541d9D3f",
+      "datatoken": "0x275a3d8d444599D6544BF941B099C817Aee1c8e5",
+      "did": "did:op:e5f3b3760e4010fd599a0ca55ed6d4979a359a3441bd22bb819c9d891614d4b0",
+      "fromBlock": 11569412,
+      "slug": "35",
+      "label": {
+        "ja": "わかな下（第35帖）",
+        "en": "Volume 35: わかな下"
+      },
+      "ipfsCid": "bafybeidkal7asnb2pjzjien7osssqmo2zipfwjvwsqf6stkcxoa2eruhqm"
+    },
+    {
+      "nft": "0x0f87FC0EDb939A1f4f245Ed4149B0f459561085E",
+      "datatoken": "0x2F9F7E92e4c54b25aF1A3743D7394Dca740dfA2f",
+      "did": "did:op:ffb607a20366f5ca33cd05733b62c153f70c7593a5662d16e2528f6a89ef0be9",
+      "fromBlock": 11569414,
+      "slug": "36",
+      "label": {
+        "ja": "かしは木（第36帖）",
+        "en": "Volume 36: かしは木"
+      },
+      "ipfsCid": "bafkreieue46nhocd74kmvx5lsbggmqgkiqmv5iz2jryo4w6qb4pt5o5zu4"
+    },
+    {
+      "nft": "0x3e3ae1d1cA5B4B77BD9323426Ee4DD14B61e5828",
+      "datatoken": "0x2969C79fEfB19f95097dABC54dAa1c1Ad12A0F2E",
+      "did": "did:op:caea6535cac6e7b0fc8cc81ba67452f764435cde51756c7196f9cc27897003b8",
+      "fromBlock": 11569416,
+      "slug": "37",
+      "label": {
+        "ja": "よこ笛（第37帖）",
+        "en": "Volume 37: よこ笛"
+      },
+      "ipfsCid": "bafkreib3cwnctwlf4ptudo7zepu5cihcr2mis4xbj5vlgpvhilfk4vzsqy"
+    },
+    {
+      "nft": "0x5e923c8Be3031E0Fb1FF65dBb71b2A8a4d4d1DD6",
+      "datatoken": "0xf30163E8300c7AB62DCf4192B6b7D4D9E09AFBC2",
+      "did": "did:op:a0cd2b5cac0d98f2f2fc59c94c62c18ae20aea830daf97881aa5dac231a46aef",
+      "fromBlock": 11569418,
+      "slug": "38",
+      "label": {
+        "ja": "すゝむし（第38帖）",
+        "en": "Volume 38: すゝむし"
+      },
+      "ipfsCid": "bafkreigi45j7tfa7sasfm5sgvbfnvb7wfc5ffkzeazxqcng5pisuby5uwu"
+    },
+    {
+      "nft": "0x2E5519f99A557fA3699b7244373fEd5b6b6E3e60",
+      "datatoken": "0x0FF0C4ffE3b2f9522B75019Ce896B85602ce3D3D",
+      "did": "did:op:0437891c93805c9427442a5de37920b7f187c8c08762d80afedac8effc92c25d",
+      "fromBlock": 11569420,
+      "slug": "39",
+      "label": {
+        "ja": "夕きり（第39帖）",
+        "en": "Volume 39: 夕きり"
+      },
+      "ipfsCid": "bafkreihozny42die3hgr2wjptwhfoe4fbk5h5omimo27llxevsk2wp7i4y"
+    },
+    {
+      "nft": "0xbd9EcB98F11A266531A08de4B515c8635fb3445F",
+      "datatoken": "0xb3ac5ACaB21c5201ae3DC37D3C3d38410C9611D6",
+      "did": "did:op:4de9a4bf2fa70d8873473ac882186ee391a228eb4178e7c2e609ed205dff7c1a",
+      "fromBlock": 11569422,
+      "slug": "40",
+      "label": {
+        "ja": "みのり（第40帖）",
+        "en": "Volume 40: みのり"
+      },
+      "ipfsCid": "bafkreig7zzyngcb3kgmi3ienctpqtfam2afkwmyimzv52gwj64k6siogna"
+    },
+    {
+      "nft": "0x26100f7181d682cBC8503008D73f8557540eFCE1",
+      "datatoken": "0x034d1b3B859Bfd491931ed0114E4a630ce05FB00",
+      "did": "did:op:11084babdd88c3e35fb00f3afbcf74d27830b3668376ef0369d220422466dc91",
+      "fromBlock": 11569424,
+      "slug": "41",
+      "label": {
+        "ja": "まほろし（第41帖）",
+        "en": "Volume 41: まほろし"
+      },
+      "ipfsCid": "bafkreifq7zvzpjjshkq4eknuwlezszdgi4sbqo3gesfwtd5w2oyrostpwu"
+    },
+    {
+      "nft": "0x21411e1cf5963B368106338637197EC42e5A61a7",
+      "datatoken": "0xD952839f49509959151D1122e222c116D1A7725C",
+      "did": "did:op:3dbf1572e830ff1e3a15165d3b504b5cafba763f2fd5d013b7c001fec90dabbc",
+      "fromBlock": 11569426,
+      "slug": "42",
+      "label": {
+        "ja": "にほふ兵部卿（第42帖）",
+        "en": "Volume 42: にほふ兵部卿"
+      },
+      "ipfsCid": "bafkreigc4ynoj25vvuc2pf6l6pbgx353mxypg2gxzqlo5mfxnlcvwfjuty"
+    },
+    {
+      "nft": "0x5Fe2a6711cf08B89B18F5B6fC3688ed1Ae8752BA",
+      "datatoken": "0xda74146594677f473f417a8Fd684505edAe35b0f",
+      "did": "did:op:627fe234c88567f2b49f40900e3dff4a303d0f82712ab83fe732e4efa3010c51",
+      "fromBlock": 11569428,
+      "slug": "43",
+      "label": {
+        "ja": "こうはい（第43帖）",
+        "en": "Volume 43: こうはい"
+      },
+      "ipfsCid": "bafkreihcugggokrohhzdzbxsexwhgicdyooxeikmpuus5r3dlmbp5sxwbi"
+    },
+    {
+      "nft": "0x75ECA3B005e2D2d69C0d2bBdc995764b46A6e1c8",
+      "datatoken": "0x7B7A338d5dE92F334CAF1b1b8fC04E6857c84EcF",
+      "did": "did:op:a61c7b823d7aae606e017b78d319d2bcbf6f1c58661779e658a68bd9f6813fde",
+      "fromBlock": 11569430,
+      "slug": "44",
+      "label": {
+        "ja": "たけ川（第44帖）",
+        "en": "Volume 44: たけ川"
+      },
+      "ipfsCid": "bafkreihy32qxf33pwslut5tkuygxhft65odhen2elacnldsiqrwn32nutq"
+    },
+    {
+      "nft": "0xAfa4A58584DC47e89257927265c8c06AA920D973",
+      "datatoken": "0x9876423bBab51988FbB05c7fF2a9EC8cC3A1D99b",
+      "did": "did:op:cd54e47b186cf0108e5872f458414c64a98adeaf8f6acab3b3c8f7764ab89c58",
+      "fromBlock": 11569432,
+      "slug": "45",
+      "label": {
+        "ja": "はし姬（第45帖）",
+        "en": "Volume 45: はし姬"
+      },
+      "ipfsCid": "bafkreiesnym33wnv445j66d42eagye3wp5tztitugx4oln6wxsgwd3ckou"
+    },
+    {
+      "nft": "0xB4960d06E634035C6fdf2688ba41692F413CBd72",
+      "datatoken": "0x7303c3e0B5845c71E8e06C7203e5C2e2CB5Fa5E9",
+      "did": "did:op:c2d55a0b8328f86c4b9746cce141210690073fbe94a7e5ad3e157e70f2636770",
+      "fromBlock": 11569434,
+      "slug": "46",
+      "label": {
+        "ja": "しゐかもと（第46帖）",
+        "en": "Volume 46: しゐかもと"
+      },
+      "ipfsCid": "bafkreic7n4mq22cgbczpin4ffdwrnfjzf2e53rup53a3e5ullfa2cus3eu"
+    },
+    {
+      "nft": "0x9a332C97E19DFE7B181Cbf2278fDC64D43b2F867",
+      "datatoken": "0x60138249587565e44972a9f4D66DcAE6AA4d4AE7",
+      "did": "did:op:55a6fc87d32e1da8b76c530ee42b6366ac79c0ced589af60d82c4b09ccc26b3e",
+      "fromBlock": 11569436,
+      "slug": "47",
+      "label": {
+        "ja": "あけまき（第47帖）",
+        "en": "Volume 47: あけまき"
+      },
+      "ipfsCid": "bafybeienyou2q7xfrqohocujpwy2sakoljb27xdwxuas54uzty2plkoh7q"
+    },
+    {
+      "nft": "0xEe584B5fE0d5aead26823674ac10fa00c371167e",
+      "datatoken": "0x2EF862A4381da187cf743a03825B4516a5630bcA",
+      "did": "did:op:caa69db58a0e031a1a192268160122803a90abcee861d643794a1d2d5b7e0756",
+      "fromBlock": 11569438,
+      "slug": "48",
+      "label": {
+        "ja": "さわらひ（第48帖）",
+        "en": "Volume 48: さわらひ"
+      },
+      "ipfsCid": "bafkreihwc2mayjauf5voq4ctqhny74rboyyb7wml4zg5in47gufgjuwu4m"
+    },
+    {
+      "nft": "0x5A9E0CD41211A4FeE197569d49f33367064bA71d",
+      "datatoken": "0x4E20B33d56F88cbBd8991aAe91D82eE47b872ae5",
+      "did": "did:op:bb03920afabac4daddf409298b8bded068a2ffd52d6b7b0c9b608d203e48871d",
+      "fromBlock": 11569440,
+      "slug": "49",
+      "label": {
+        "ja": "やとり木（第49帖）",
+        "en": "Volume 49: やとり木"
+      },
+      "ipfsCid": "bafybeihdfhmnk2nuafgx6gsuuuwusfjnjuucqxvdbu2n6l37s3gd2645vi"
+    },
+    {
+      "nft": "0xACdd965AB835D9f25AA7cfC4f404C301836A6141",
+      "datatoken": "0xD5AB39683F319B0251BB3c56aF401bC94a41ED70",
+      "did": "did:op:51911fdb00699edb46633cd996fe87ab1e50f2ed6682e2eafea9c19b63ac8c91",
+      "fromBlock": 11569442,
+      "slug": "50",
+      "label": {
+        "ja": "あつまや（第50帖）",
+        "en": "Volume 50: あつまや"
+      },
+      "ipfsCid": "bafkreidl3n3y5ooesdukmi54kfmkyzbzvs33r4xjymd3rjy556w7e3yp2i"
+    },
+    {
+      "nft": "0x074E6c9526332C164c0e393922156b364E5f59f1",
+      "datatoken": "0x3fFD1A5f38C66d7592E9DBd7B0dFbfAb19068098",
+      "did": "did:op:11dea2b587d97e99195e526278a495b8668c830fe2e2da1d9249a7baf263cb72",
+      "fromBlock": 11569444,
+      "slug": "51",
+      "label": {
+        "ja": "うき舟（第51帖）",
+        "en": "Volume 51: うき舟"
+      },
+      "ipfsCid": "bafkreidx3yenj5gthcro5ijye2eiplbrlwqw2rpskujr4fv3t3726fiah4"
+    },
+    {
+      "nft": "0x5Ef2af20c1EF1c76B6d3c96b29EF5c1A3ee15324",
+      "datatoken": "0xF4E6e2AA0EEbE33A835CdDfE3bAd5206213e1eA5",
+      "did": "did:op:5a31da705af4dcf995ccfc2f71b5589e310fe371f0f45daf9a6586895b6e7390",
+      "fromBlock": 11569446,
+      "slug": "52",
+      "label": {
+        "ja": "かけろふ（第52帖）",
+        "en": "Volume 52: かけろふ"
+      },
+      "ipfsCid": "bafkreicy5ndzyqkutz6nwrxa4zpbs6wvcbakkaujmdrfbg6uuzrg4mwv64"
+    },
+    {
+      "nft": "0x1ed7DA6f993402b2E4160C968506DE1c3b3Cdd7e",
+      "datatoken": "0xDAa7297394133de7B66021101e96A0fb614E6dAf",
+      "did": "did:op:1cad9b2d56e0986b089d1152e3b6616106d83669e8bfe8c66f32d62d9cd858de",
+      "fromBlock": 11569448,
+      "slug": "53",
+      "label": {
+        "ja": "てならひ（第53帖）",
+        "en": "Volume 53: てならひ"
+      },
+      "ipfsCid": "bafkreihcu2z76qttfjoqm5dnx72h4nigz2iwn4ouaaypbxht3p5uouplam"
+    },
+    {
+      "nft": "0x0920a9BB70845Bd5C366903b828aE0D8d99f9f69",
+      "datatoken": "0x2567f67CE2b29aF59A2306954b4cFC2925A4f8F1",
+      "did": "did:op:533e4bc091c9e3f4190b62e58b3a47d6e888f0b886f71fa039220989ca584a19",
+      "fromBlock": 11569450,
+      "slug": "54",
+      "label": {
+        "ja": "夢のうきはし（第54帖）",
+        "en": "Volume 54: 夢のうきはし"
+      },
+      "ipfsCid": "bafkreid2thblg32abv4y5adpka3w2i4twm2jrqqwoakhaor5nrkp3rpbdm"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+/*
+ * 「取得」ボタンまわり。
+ *
+ * 以前はここを素の style={{}} で書き、別系統の設計トークン (--dh-*) を
+ * 参照していた。ページの他の部分は Ocean Market から移植した変数
+ * (--color-primary / --font-color-light など) で塗られているので、
+ * 同じ画面の中で色の出どころが 2 つに割れていた。
+ * ボタン本体は移植した atoms/Button に任せ、残りをここに集める。
+ */
+
+/* 取得の回数（右パネル以外で出す） */
+.count {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  margin: 0 0 calc(var(--spacer) / 2);
+}
+
+.note {
+  margin-top: calc(var(--spacer) / 3);
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  line-height: 1.8;
+  max-width: 34rem;
+}
+
+/* 取引が通ったあとに出す控え */
+.receipt {
+  margin-top: calc(var(--spacer) / 2);
+  padding: calc(var(--spacer) / 3) calc(var(--spacer) / 2.5);
+  background: var(--background-highlight);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+}
+
+.receiptOk {
+  color: var(--brand-alert-green);
+  margin-bottom: calc(var(--spacer) / 6);
+}
+
+.receiptLabel {
+  color: var(--font-color-light);
+  margin-bottom: calc(var(--spacer) / 8);
+}
+
+.hash {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  word-break: break-all;
+  display: block;
+  margin-bottom: calc(var(--spacer) / 4);
+  color: var(--font-color-text);
+}
+
+.receiptActions {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacer) / 2);
+}
+
+.explorer {
+  color: var(--link-font-color);
+  font-size: var(--font-size-small);
+}
+
+.error {
+  margin-top: calc(var(--spacer) / 2.5);
+  color: var(--brand-alert-red);
+  font-size: var(--font-size-small);
+  word-break: break-word;
+}
+
+/* 手順の画面への導線。地の文と区別が付くよう、下線を引いて色を変える
+   （色だけで区別すると、色が見分けにくい人に届かない） */
+.howTo {
+  color: var(--color-secondary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}

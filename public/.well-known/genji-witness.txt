@@ -1,0 +1,20 @@
+I am Satoru Nakamura (中村 覚), Associate Professor at the Historiographical Institute,
+The University of Tokyo, and the maintainer of 校異源氏物語 (Kouigenji Monogatari).
+
+I control the Ethereum address 0xA787b1285d7D0Cf5284167Ce278774371946A3aA.
+
+Records anchored from this address on Sepolia (chainId 11155111):
+  CorpusAnchor contract: 0x8197bd3d263b9dcf68df1e2629459f01e0cfcab9
+  chapter tree root:     0x0284bc76623585beebcf9d6265850ffb3b47f4647dc735750d5af5abd3e11729 (54 leaves)
+  item tree root:        0xc5e4853700f7fd421c9fdebe2786b16b892695dfd0a317968a112d9aaab62a0e (25065 leaves)
+  source commit:         6328fa3b60bd2202310071b95ac45b7f4e10b0d2
+  IPFS:                  ipfs://bafybeihheffdysczxwsfu35h4f4vim643owfxwtb33aqhyovq5klbnlype
+  Ocean data NFT:        0x46611965e6E49C424160B30B8b60BE5C383D1a52
+  DID:                   did:op:583a6aeb9a39ccc47f972c1d5304b7eb60744b3af9e8d7c6a74e31eabe655a50
+
+The TEI data is licensed CC0-1.0. Anyone may verify these roots independently
+by running scripts/01-digest.mjs against the source commit above.
+
+-----
+Address:   0xA787b1285d7D0Cf5284167Ce278774371946A3aA
+Signature: 0xc267b57999cc7cf12016b6d82b3729b015458da6673d64ed7825be7b74ad99490d21e83411939e2d738e5916f78a9a1130f8fe6e7fda6bad3bc221e2bae90f5e1b

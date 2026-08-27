@@ -1,0 +1,24 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 出どころ: cliox/src/components/@shared/atoms/Tooltip/index.module.css
+ *
+ * 本家のこの部品は tippy.js + react-spring で、body 直下に吹き出しを描き、
+ * 位置は popper が計算している。**ここでは箱の見た目だけを借りる。**
+ * 依存を 2 つ増やしてまで得たいのは位置合わせのアニメーションだけで、
+ * ヘッダの右端に出す用途なら「押した要素の真下・右揃え」で足りるため。
+ * 位置指定は .anchor / .panel（UserPreferences.module.css）側に置いた。
+ *
+ * composes の参照先だけ本家からの相対パスに直してある。 */
+.tooltip {
+  display: inline-block;
+}
+
+.content {
+  composes: box from '../atoms/Box.module.css';
+  padding: calc(var(--spacer) / 4);
+  max-width: 25rem;
+  font-size: var(--font-size-small);
+}
+
+.content p {
+  margin: 0;
+}

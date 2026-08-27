@@ -1,0 +1,46 @@
+/* Ocean Market / Pontus-X Portal (Clio-X) より移植 (Apache-2.0)。
+   由来: cliox/src/components/Asset/AssetContent/MetaMain/MetaAsset.module.css
+   見て書き直さず、そのまま写す（composes を持たないので直す所も無い）*/
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-left: calc(var(--spacer) / 2);
+  justify-content: center;
+}
+
+.datatoken {
+  white-space: pre;
+  margin-right: calc(var(--spacer) / 3);
+}
+
+.owner {
+  display: flex;
+}
+
+.addWrap {
+  padding-left: calc(var(--spacer) / 5);
+  border-left: 1px solid var(--border-color);
+  display: inline-block;
+}
+
+.add {
+  font-size: var(--font-size-mini);
+}
+
+.add svg path {
+  fill: var(--ocean-violet);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ここから下は本家に無い。本家が @shared/Publisher に任せている見た目を、
+   アドレスをそのまま出すぶんだけ写した。上の写しには手を入れていない。
+   ─────────────────────────────────────────────────────────────────────────── */
+.publisher {
+  color: var(--link-font-color);
+}
+
+/* 本家は ExplorerTokenLink が色を付ける。移植していないので、ここで与える */
+.datatoken {
+  color: var(--link-font-color);
+}

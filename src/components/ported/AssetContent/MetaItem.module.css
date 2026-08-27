@@ -1,0 +1,54 @@
+/* Ocean Market / Pontus-X Portal (Clio-X) より移植 (Apache-2.0)。
+   由来: cliox/src/components/Asset/AssetContent/MetaItem.module.css
+   見て書き直さず、そのまま写す（composes を持たないので直す所も無い）*/
+.metaItem {
+  font-size: var(--font-size-small);
+}
+
+.title {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-small);
+  margin-bottom: calc(var(--spacer) / 4);
+  color: var(--color-secondary);
+  text-transform: uppercase;
+}
+
+.content {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* ── 値の出どころの印（本家に無い追加） ──────────────────────────────
+   見出しの右に小さく置く。**色だけで区別しない**（色が見分けにくい人に届かない）。
+   語そのもの（DDO / チェーン / TEI）を出し、title 属性に説明を入れる。 */
+.source {
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-mini);
+  font-weight: var(--font-weight-base);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+  vertical-align: 0.05em;
+  cursor: help;
+}
+
+/* 公開者が申告した値。いちばん弱い */
+.ddo {
+  color: var(--color-secondary);
+}
+
+/* チェーンが持っている値。申告ではないので、強く出す */
+.chain {
+  color: var(--font-color-heading);
+  border-color: var(--font-color-heading);
+}
+
+/* 手元で数えた値。チェーンには無い */
+.tei {
+  color: var(--font-color-light);
+  border-style: dashed;
+}

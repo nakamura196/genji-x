@@ -1,0 +1,354 @@
+@import './_colors.css';
+@import '../../public/static/fonts/fonts.css';
+
+:root {
+  --color-primary: var(--brand-clay);
+  --color-secondary: var(--brand-clay-darker);
+  --color-highlight: var(--brand-clay-light);
+
+  /* Only use these vars for most color referencing for easy light/dark mode */
+  --font-color-text: var(--brand-grey);
+  --font-color-heading: var(--brand-black);
+  --font-color-light: var(--color-secondary);
+  --background-body: var(--brand-white);
+  --background-body-transparent: rgba(255, 255, 255, 0.8);
+  --background-content: var(--brand-white);
+  --background-highlight: var(--brand-grey-dimmed);
+  --border-color: var(--brand-grey-lighter);
+  --box-shadow-color: rgba(0, 0, 0, 0.05);
+  --checkbox-selected-background: var(--color-primary);
+  --bookmark-icon-fill-color: var(--brand-grey-lighter);
+  --bookmark-icon-selected-fill-color: var(--color-primary);
+  /* リンクの色。**本家は --color-highlight (= clay-light #d9955a) だが、
+     白地に対して 2.50:1 しかない**（実測）。本家では Tailwind の preflight が
+     `a { color: inherit }` を当てていて、この指定がそもそも効いていなかった。
+     こちらは preflight の二重適用を直した結果この指定が生き、リンクだけが
+     読めない状態になった。同じ調子で 1 段濃い --color-secondary
+     (clay-darker #8c6046, 白地に 5.42:1) に寄せる。
+     暗い表示では地が暗いので、下の .dark で clay-light (7.37:1) に戻す。 */
+  --link-font-color: var(--color-secondary);
+  --nft-refresh-icon-fill: var(--brand-white);
+  /* バッジの地。**本家は --color-primary (clay #c8794d)。白い文字を乗せると
+     3.33:1 しか出ない**（実測）。バッジの文字は --font-size-mini 以下なので、
+     WCAG AA の 4.5:1 が要る。1 段濃い clay-dark (#8a5949) にすると 5.82:1。
+     暗い表示でも地の色は変わらない（バッジは自分の地を持つ）ので、1 か所で足りる。 */
+  --badge-background-color: var(--brand-clay-dark);
+  --nft-placeholder-background: var(--brand-gradient);
+
+  /* Menubar */
+  --menu-logo-color: var(--color-primary);
+  --menu-logo-color-hover: var(--color-primary);
+  --menu-logo-size-width-sm: 3rem;
+  --menu-logo-size-height-sm: 3rem;
+  --menu-logo-size-width-xs: 2.3rem;
+  --menu-logo-size-height-xs: 2.3rem;
+  --menu-logo-size-width-lg: 3.5rem;
+  --menu-logo-size-height-lg: 3.5rem;
+  --menu-font-color: var(--brand-black);
+  /* メニューの現在地と hover。**本家は --color-primary (clay #c8794d) だが、
+     白地に対して 3.33:1 しか出ない**（実測）。15px の太字は WCAG の
+     「大きい文字」に当たらないので 4.5:1 が要る。リンクと同じ考え方で
+     1 段濃い --color-secondary (clay-darker, 白地に 5.42:1) に寄せる。
+     暗い表示では --color-secondary が clay-light になるので 7.37:1。 */
+  --menu-font-color-active: var(--color-secondary);
+  --menu-font-color-hover: var(--color-secondary);
+  --menu-active-indicator-color: var(--color-primary);
+  --menu-mobile-navigation-border-size: var(--border-size-sm);
+  --menu-mobile-navigation-border-color: var(--brand-grey-lighter);
+  --menu-border-color: var(--color-primary);
+  --menu-border-radius: var(--border-radius-sm);
+  --menu-border-size: var(--border-size);
+  --menu-icon-fill-color: var(--color-primary);
+  --menu-icon-fill-color-hover: var(--color-primary);
+  --menu-title-font-size: var(--font-size-h4);
+  --menu-link-font-size: var(--font-size-base);
+  --menu-link-font-weight: var(--font-weight-bold);
+  --menu-link-font-weight-active: var(--font-weight-bold);
+  --menu-caret-size: var(--font-size-small);
+  --menu-caret-fill-color: var(--color-primary);
+  --menu-caret-active-fill-color: var(--color-primary);
+  --menu-network-badge-font-color: var(--brand-white);
+
+  --menu-padding-vertical: 24px;
+  --menu-padding-horizontal: 64px;
+  --menu-background-color: #ffffff;
+  --menu-sticky-top: 0;
+  --menu-z-index: 1000;
+  --menu-link-padding: 8px 12px;
+  --menu-gap: 24px;
+  --menu-logo-height: 30px;
+  --menu-logo-max-height: 110px;
+  --menu-transition: all 0.3s ease;
+
+  /* Footer */
+  --footer-background-color: var(--brand-grey);
+  --footer-font-color: var(--brand-white);
+  --footer-font-color-highlight: var(--brand-cyan);
+  --footer-link-category-font-color: var(--brand-white);
+
+  /* Homepage */
+  --home-brand-logo-size-width: 22rem;
+  --home-brand-logo-size-height: 6rem;
+  --home-gaia-x-logo-size-width: 9rem;
+  --home-gaia-x-logo-size-height: 5rem;
+  --home-font-color-heading: var(--brand-black);
+
+  /* Input elements */
+  --input-font-color: var(--font-color-heading);
+  --input-placeholder-font-color: var(--brand-grey);
+  --input-disabled-font-color: var(--font-color-light);
+  --input-border-color: var(--brand-grey-lighter);
+  --input-checkbox-border-color: var(--brand-grey-light);
+  --input-border-size: var(--border-size-sm);
+  --input-border-radius: var(--border-radius);
+  --input-background: var(--brand-white);
+  --input-background-highlight: var(--background-highlight);
+  --input-selected-background: var(--checkbox-selected-background);
+  --input-selected-border-size: var(--border-size);
+  --input-selected-border-color: var(--brand-grey-lighter);
+
+  /* Buttons */
+  --button-border-radius: var(--border-radius);
+  /* **塗りのボタン。本家は clay (#c8794d) の地に白い文字で、3.33:1 しか
+     出ない**（実測）。文字は 15px の太字で、WCAG の「大きい文字」に当たらない
+     ので 4.5:1 が要る。地を 1 段濃い clay-dark (#8a5949) にすると 5.82:1。
+     hover は本家が clay-light (#d9955a) でさらに薄く（白い文字で 2.50:1）
+     なっていたので、逆に walnut (#3e2b23, 13.3:1) まで濃くする。
+     押したときに明るくなるか暗くなるかは好みの範囲で、読めることが先。 */
+  --button-font-color: var(--brand-white);
+  --button-background: var(--brand-clay-dark);
+  --button-hover-font-color: var(--brand-white);
+  --button-hover-background: var(--brand-walnut);
+  --button-active-font-color: var(--brand-white);
+  --button-active-background: var(--font-color-light);
+  --button-primary-font-color: var(--brand-white);
+  --button-primary-background: var(--brand-clay-dark);
+  --button-primary-border-color: var(--brand-clay-dark);
+  --button-primary-hover-background: var(--brand-walnut);
+  --button-primary-hover-border-color: var(--brand-walnut);
+  --button-secondary-font-color: var(--brand-black);
+  --button-secondary-background: var(--brand-clay-lightest);
+  --button-secondary-border-color: var(--brand-clay-lightest);
+  --button-secondary-hover-background: var(--brand-clay-lightest);
+  --button-secondary-hover-border-color: var(--brand-clay-lightest);
+  --button-outline-font-color: var(--brand-grey);
+  --button-outline-background: transparent;
+  --button-outline-border-color: var(--brand-grey);
+  /* 枠だけ / 地なしのボタン。文字が clay のままだと白地に 3.33:1 なので、
+     リンクと同じ --color-secondary に寄せる（白地 5.42:1 / 暗い地 7.37:1）。 */
+  --button-outline-hover-font-color: var(--color-secondary);
+  --button-outline-hover-border-color: var(--color-secondary);
+  --button-ghost-font-color: var(--color-secondary);
+  --button-ghost-background: var(--brand-white);
+  --button-ghost-hover-background: var(--brand-red-dark);
+  --button-text-font-color: var(--color-secondary);
+
+  /* Loading spinner */
+  --loader-border-color: var(--brand-clay);
+  --loader-top-border-color: transparent;
+  --loader-border-size: var(--border-size);
+  --loader-message-color: var(--color-secondary);
+
+  /* Box template */
+  --box-template-background: var(--background-content);
+  --box-template-border-radius: var(--border-radius);
+  --box-template-border-size: var(--border-size-sm);
+  --box-template-border-color: var(--border-color);
+  --box-template-box-shadow: 0 6px 17px 0 var(--box-shadow-color);
+  --box-template-hover-box-shadow: 0 10px 25px 0 var(--box-shadow-color);
+
+  /* Asset teaser */
+  --teaser-font-color: var(--brand-grey);
+  --teaser-title-font-color: var(--brand-black);
+  --teaser-background: var(--background-content);
+  --teaser-border-radius: var(--border-radius);
+  --teaser-border-size: var(--border-size-sm);
+  --teaser-border-color: var(--border-color);
+  --teaser-box-shadow: 0 6px 17px 0 var(--box-shadow-color);
+  --teaser-hover-box-shadow: 0 10px 25px 0 var(--box-shadow-color);
+
+  /* Pagination component */
+  --pagination-font-color: var(--color-secondary);
+  --pagination-selected-font-color: var(--font-color-heading);
+  --pagination-hover-font-color: var(--color-highlight);
+
+  /* Filter and sort */
+  --filter-title-color: var(--brand-black);
+  --filter-title-font-size: var(--font-size-title);
+  --filter-type-color: var(--font-color-text);
+  --filter-type-font-size: var(--font-size-large);
+  --filter-label-color: var(--font-color-text);
+  --filter-label-font-size: var(--font-size-base);
+  --filter-clear-color: var(--color-primary);
+  --filter-clear-hover-color: var(--color-highlight);
+
+  /* Search Results */
+  --search-results-font-color: var(--brand-black);
+
+  /* Confetti */
+  --confetti-color-one: var(--brand-blue-light);
+  --confetti-color-two: var(--brand-cyan);
+  --confetti-color-three: var(--brand-violet);
+  --confetti-color-four: var(--brand-grey-light);
+  --confetti-color-five: var(--brand-grey-lighter);
+
+  --box-template-font-color: var(--brand-black);
+
+  --metadata-history-color: var(--brand-black);
+  --file-icon-color: var(--color-primary);
+  --credential-button-background: var(--color-primary);
+  --credential-button-border: var(--color-primary);
+
+  /* ── 書体（この試作の追加）────────────────────────────────────────
+     本家の並びは 'IBM Plex Sans', -apple-system, BlinkMacSystemFont,
+     'Segoe UI', Helvetica, Arial, sans-serif。IBM Plex Sans に日本語の字が
+     入っていないので、そのままだと日本語が Helvetica → Arial と落ちて、
+     最後にブラウザ既定のゴシックで出る。どの字で出るかが端末任せになるため、
+     欧文のあとに日本語の並びを明示的に足した。順番は
+     **欧文 → 日本語**。逆にすると英数字まで日本語の書体で出る。 */
+  --font-family-body: 'Libre Baskerville', 'Hiragino Mincho ProN', 'Yu Mincho',
+    'YuMincho', 'Noto Serif JP', serif;
+  --font-family-base: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    'Noto Sans JP', 'Yu Gothic Medium', 'Yu Gothic', Meiryo, sans-serif;
+  --font-family-heading: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Helvetica, Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    'Noto Sans JP', 'Yu Gothic Medium', 'Yu Gothic', Meiryo, sans-serif;
+  --font-family-monospace: 'Fira Code', 'Fira Mono', Menlo, Monaco, Consolas,
+    'Courier New', monospace;
+
+  --font-size-root: 15px;
+  --font-size-base: 1rem;
+  --font-size-large: 1.2rem;
+  --font-size-small: 0.8125rem;
+  --font-size-mini: 0.65rem;
+  --font-size-text: 1rem;
+  --font-size-label: 1rem;
+  --font-size-title: 1.4rem;
+  --font-size-h1: 3rem;
+  --font-size-h2: 2.5rem;
+  --font-size-h3: 1.7rem;
+  --font-size-h4: 1.3rem;
+  --font-size-h5: 1.1rem;
+  --font-weight-base: 500;
+  --font-weight-bold: 600;
+  --line-height: 1.5;
+
+  --spacer: 2rem;
+  --border-radius-sm: 2px;
+  --border-radius: 0.2rem;
+  --border-size-sm: 1px;
+  --border-size: 2px;
+
+  --layout-max-width: 85rem;
+  --checkbox-size: 1.6em;
+
+  --break-point--small: 640px;
+  --break-point--medium: 860px;
+  --break-point--large: 1140px;
+  --break-point--huge: 1400px;
+}
+
+.dark {
+  /* 暗い地 (#141414) の上で 8.28:1。明るい表示用の #95612b は
+     暗い地では 2.9:1 しかないので、暗い表示だけ別の値にする */
+  --color-primary: #d9a463;
+  --color-secondary: #c99154;
+  --color-highlight: #e0b47a;
+  --font-color-text: #e2e2e2;
+  --font-color-heading: #f7f7f7;
+  --background-body: rgb(10, 10, 10);
+  --background-body-transparent: rgba(10, 10, 10, 0.9);
+  --background-content: #141414;
+  --background-highlight: #201f1f;
+  --border-color: #303030;
+  --box-shadow-color: rgba(0, 0, 0, 0.2);
+
+  /* ──────────────────────────────────────────────────────────────────
+     ここから下はこの試作の追加。本家 (Ocean Market / Pontus-X / Clio-X) の
+     `.dark` は上の 8 個しか塗り替えない。残りの変数は --brand-black や
+     #ffffff を直に指しているので、暗い表示でも黒のままになる。
+     本家は暗い表示を出す手段を持たない（切り替えの UI が無い）ので、
+     これで困らなかった。こちらは next-themes で端末の設定に従うため、
+     そのままだと #141414 の箱に黒い文字が乗って読めない。
+
+     値は 1 つずつブラウザで測って決めた。地は
+     --background-body #0a0a0a / --background-content #141414 / 
+     --background-highlight #201f1f の 3 種類しかないので、
+     文字はすべて --font-color-heading (#f7f7f7, 対比 17.3:1) か
+     --font-color-text (#e2e2e2, 14.2:1) に寄せてある。
+     ────────────────────────────────────────────────────────────────── */
+
+  /* **ここは削除した。上の .dark の #c99154 を効かせる。**
+
+     経緯: もともとここに `--color-secondary: var(--brand-clay-light)` と書いていた。
+     当時の --brand-clay-light は #d9955a という**本当に明るい**クレイで、
+     暗い地の上で 7.2:1 出ていた。
+
+     その後、axe の指摘（本家 Clio-X の色が明るい地で 3.33:1 しか出ない）を受けて
+     クレイの一式を入れ替えた。新しい --brand-clay-light は **#8a5626**、つまり
+     白地で 6.11:1 出すための**濃い**色である。名前は light のままだが中身が逆になった。
+
+     結果、この 1 行が暗い表示の --color-secondary を #8a5626 に戻してしまい、
+     地 (#0a0a0a) との比は **3.24:1**（AA 不適合）まで落ちていた。
+     しかも上の .dark が意図して置いた #c99154 を打ち消していたので、
+     line 256 の指定は丸ごと死んでいた。
+
+     この変数を見ているのは --font-color-light / --link-font-color /
+     --button-text-font-color / --loader-message-color / --pagination-font-color。
+     **暗い表示のリンクと補足文が全部これに巻き込まれていた。**
+
+     教訓: 色を一式入れ替えるときは、変数名ではなく**実際の明度**を見る。
+     light / dark という名前は、地が変われば意味が反転する。 */
+
+  /* 箱の中の文字。Box / AssetContent / AssetTeaser がここを見ている。
+     本家は --brand-black 固定 */
+  --box-template-font-color: var(--font-color-text);
+  --teaser-font-color: var(--font-color-text);
+  --teaser-title-font-color: var(--font-color-heading);
+  --metadata-history-color: var(--font-color-text);
+
+  /* トップの見出し（home.module.css が h2〜h6 に当てる） */
+  --home-font-color-heading: var(--font-color-heading);
+
+  /* メニュー */
+  --menu-font-color: var(--font-color-heading);
+  --menu-background-color: var(--background-content);
+  --menu-mobile-navigation-border-color: var(--border-color);
+
+  /* 入力欄。白地のままだと、暗い画面に白い箱だけが浮く */
+  --input-font-color: var(--font-color-heading);
+  --input-background: var(--background-content);
+  --input-background-highlight: var(--background-highlight);
+  --input-border-color: var(--border-color);
+  --input-checkbox-border-color: var(--border-color);
+  --input-selected-border-color: var(--border-color);
+  --input-placeholder-font-color: var(--font-color-light);
+
+  /* 絞り込みと検索結果の見出し */
+  --filter-title-color: var(--font-color-heading);
+  --filter-type-color: var(--font-color-text);
+  --filter-label-color: var(--font-color-text);
+  --search-results-font-color: var(--font-color-heading);
+
+  /* ボタン。
+     outline は brand-grey (#2b2e3b) の枠と文字で、#0a0a0a の上では
+     枠も字も 1.3:1 でほぼ見えない。
+     secondary は clay-lightest (#f2e5d5) の地に黒字なので、地のほうは
+     暗い画面でも読めるが眩しい。地を落として文字を明るくする。
+     text の色 (--button-text-font-color) は --color-secondary を見ているので、
+     上のクレイの入れ替えで自動的に直る */
+  --button-outline-font-color: var(--font-color-text);
+  --button-outline-border-color: var(--font-color-light);
+  --button-secondary-font-color: var(--font-color-heading);
+  --button-secondary-background: var(--background-highlight);
+  --button-secondary-border-color: var(--border-color);
+  --button-secondary-hover-background: var(--background-highlight);
+  --button-secondary-hover-border-color: var(--font-color-light);
+  --button-ghost-background: var(--background-content);
+
+  --pagination-selected-font-color: var(--font-color-heading);
+
+  /* NFT の差し替えアイコン。白のままだと明るい地の前提になる */
+  --nft-refresh-icon-fill: var(--font-color-heading);
+}

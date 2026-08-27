@@ -1,0 +1,42 @@
+/* Ocean Market / Pontus-X Portal (Clio-X) より移植 (Apache-2.0)。
+   由来: cliox/src/components/Asset/AssetContent/MetaFull.module.css
+   見て書き直さず、そのまま写す（composes を持たないので直す所も無い）*/
+.metaFull {
+  margin-top: var(--spacer);
+  display: grid;
+  gap: var(--spacer);
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+}
+
+.metaFull code {
+  /* magic number cause the code font has a bigger visual weight */
+  font-size: 0.8rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding: 0;
+}
+
+/* debug output */
+.metaFull + div {
+  margin-top: var(--spacer);
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ここから下は本家に無い。本家は @shared/ExplorerLink と Publisher が
+   持っている見た目を、この画面で必要な分だけ CSS で肩代わりしたもの。
+   上の写しには手を入れていない。
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* 本家 @shared/ExplorerLink 相当。code の字を継がせたいので色だけ与える */
+.explorerLink {
+  color: var(--link-font-color);
+}
+
+/* 「刻んだ人 n 人」の添え書き。root のアドレスの下にぶら下げる */
+.anchorCount {
+  display: block;
+  margin-top: calc(var(--spacer) / 8);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}

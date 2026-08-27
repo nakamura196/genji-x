@@ -1,0 +1,89 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/out
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env files (can opt-in for committing if needed)
+.env.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.env
+
+out.zip
+
+tmp
+
+# IDE
+.vscode/
+.idea/
+
+# OpenNext / wrangler の生成物
+.open-next/
+.wrangler/
+
+# ビルド時にチェーンから作り直せる写し
+# (registry.json は入口の一覧なのでコミットする)
+
+# 測定用の使い捨てスクリプトと、その出力（目視用の画面・失敗時のトレース）
+/.shots/
+/test-results/
+/playwright-report/
+/.axe.mjs
+/.h.mjs
+/.measure.mjs
+/.ph.mjs
+/.shot.mjs
+/.detail.mjs
+
+# ── 秘密が入りうるもの（漏れたら失効させるしかないので、広めに切る）───────
+# .env.production は公開 URL だけなのでコミットする（下で除外を解く）
+.env.*
+!.env.example
+!.env.production
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*.kdbx
+credentials.json
+service-account*.json
+gha-creds-*.json
+.npmrc
+
+# エディタの設定にトークンが入ることがある
+.vscode/settings.json

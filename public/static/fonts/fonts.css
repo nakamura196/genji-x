@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  src: url('./IBMPlexSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 600;
+  font-display: swap;
+  font-style: normal;
+  src: url('./IBMPlexSans-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+  src: url('./LibreBaskerville-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+  src: url('./LibreBaskerville-Bold.ttf') format('truetype');
+}

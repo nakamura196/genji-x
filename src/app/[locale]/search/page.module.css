@@ -1,0 +1,94 @@
+/*
+ * この画面だけの見た目。本家 (Ocean Market / Pontus-X Portal / Clio-X) に
+ * 対応するものが無い部分をここに集めた。以前は page.tsx に style={{}} で
+ * 直接書いていたが、94rem のような数字がじかに入っていて、本家の
+ * atoms/Container (1400px) とずれていた。幅は Container に任せる。
+ */
+
+.page {
+  padding-top: var(--spacer);
+  padding-bottom: calc(var(--spacer) * 3);
+}
+
+/*
+ * リード文。本家の PageHeader は description を --font-size-h3 (1.7rem) で出すが、
+ * それは 1 行の副題を想定した大きさで、ここの 200 字ほどの説明には大きすぎる。
+ * 見出しの下に本文として置く。
+ */
+.lead {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  /*
+   * **下に余白を持つ。** 以前は margin-bottom が 0 で、説明文のすぐ下から
+   * 「絞り込み」と件数が始まっていた（実測 7px）。
+   * 説明と、絞り込み・一覧という別の区画との間なので、1 spacer 空ける。
+   */
+  margin: calc(var(--spacer) / 4) 0 calc(var(--spacer) * 1.25);
+  max-width: 46rem;
+}
+
+/* 裏側（この画面がどこから来たか）への入口。表の画面を壊さないよう、
+   一覧の下に区切り線を引いて控えめに置く */
+.lineage {
+  margin-top: calc(var(--spacer) * 2);
+  padding-top: var(--spacer);
+  border-top: 1px solid var(--border-color);
+}
+
+.lineageTitle {
+  font-size: var(--font-size-h4);
+  margin: 0 0 calc(var(--spacer) / 3);
+}
+
+/* 系統図。等幅で桁を揃えたいので pre のまま。狭い画面では自分の中で横に流す
+   （本文ごと横スクロールさせない） */
+.lineageTree {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+  margin: 0 0 calc(var(--spacer) / 2);
+  color: var(--font-color-light);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.lineageNote {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.9;
+  margin: 0;
+  max-width: 52rem;
+}
+
+.readAt {
+  color: var(--font-color-light);
+  font-size: var(--font-size-mini);
+  margin: calc(var(--spacer) / 2) 0 0;
+}
+
+/* ------------------------------------------------------------------
+   全体版（54 帖まとめて 1 件）への入口。
+
+   以前はこの 1 件が帖のカードと同じ列に並んでいて、桐壺・帚木…と
+   続いた最後に 56 件目の顔で出ていた。粒度が違うので一覧からは外し、
+   一覧の直後に 1 枚だけ置いている。
+   ------------------------------------------------------------------ */
+.whole {
+  margin-top: calc(var(--spacer) * 1.5);
+  display: block;
+  color: inherit;
+}
+
+.wholeTitle {
+  font-size: var(--font-size-h5);
+  /* spacer/6 (5px) だと本文にくっつく。見出しと中身の間は spacer/4 (8px) を下限にする */
+  margin: 0 0 calc(var(--spacer) / 4);
+}
+
+.wholeBody {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.85;
+  margin: 0;
+  max-width: 46rem;
+}

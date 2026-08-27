@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "genji-x",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  /**
+   * 独自ドメイン。Cloudflare が DNS の記録と証明書を用意する。
+   * ldas.jp は既に同じアカウントにあり、ルートは tech-ldas-web が持っている。
+   * ここはサブドメイン 1 本だけを取るので、既存の配信には触らない。
+   */
+  "routes": [
+    { "pattern": "genji-x.ldas.jp", "custom_domain": true }
+  ],
+
+  "observability": { "enabled": true }
+  // バインディングは無し。鍵も保存領域も持たない。
+  // ページはビルド時に全部作ってあり、実行時にチェーンを読まない。
+}

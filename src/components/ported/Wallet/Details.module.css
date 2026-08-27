@@ -1,0 +1,131 @@
+/* Ocean Market / Pontus-X Portal より移植 (Apache-2.0)。
+ * 由来: cliox/src/components/Header/Wallet/Details.module.css
+ * composes の参照先だけ、こちらの配置に合わせて直してある。 */
+.details {
+  --sub-section-spacing: calc(var(--spacer) / 2);
+
+  padding: calc(var(--spacer) / 4);
+  padding-right: var(--sub-section-spacing);
+  min-width: 17rem;
+}
+
+@media (min-width: 40rem) {
+  .details {
+    padding: var(--sub-section-spacing);
+    min-width: 20rem;
+  }
+}
+
+.details > section[class*='feedback'] {
+  margin-top: var(--sub-section-spacing);
+}
+
+.profileLink,
+.bookmarksLink {
+  display: flex;
+  align-items: center;
+}
+
+.profileLink img,
+.bookmarksLink svg {
+  margin: 0;
+  margin-right: calc(var(--spacer) / 8);
+}
+
+.bookmarksLink svg {
+  width: var(--font-size-large);
+  height: var(--font-size-large);
+  fill: var(--bookmark-icon-selected-fill-color);
+}
+
+.profileButton,
+.bookmarksButton {
+  composes: link from '../Header/Menu.module.css';
+}
+
+.walletInfo {
+  margin-top: var(--sub-section-spacing);
+  margin-bottom: calc(var(--spacer) / 3);
+  padding-top: var(--sub-section-spacing);
+  border-top: var(--menu-mobile-navigation-border-size) solid
+    var(--menu-mobile-navigation-border-color);
+}
+
+.walletLogoWrap {
+  display: block;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 3);
+}
+
+/* ── この試作の追加 ──────────────────────────────────────────────
+   本家の Details は Popover の中で使われるが、こちらは Popover の部品を
+   移植していない。ボタンの直下に絶対配置で出す。
+   クラス名は本家に無いものだけ、ここで足す。 */
+.details {
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  z-index: 20;
+  background: var(--background-content);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 20px var(--box-shadow-color);
+  text-align: left;
+}
+
+/* 42 文字の住所。折り返して全部見せる（縮めた形はボタンに出ている） */
+.full {
+  margin: 0 0 calc(var(--spacer) / 3);
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
+.action {
+  display: block;
+  width: 100%;
+  padding: calc(var(--spacer) / 4) calc(var(--spacer) / 3);
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+  color: var(--font-color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.action:hover {
+  border-color: var(--color-secondary);
+  color: var(--color-secondary);
+}
+
+/* 取り消しにあたる操作。他と同じ見た目にすると、間違えて押される */
+.danger {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.action[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* 「押しても何が起きるか」を先に書く。EIP-1193 に切断の口が無い事情を 1 行で */
+.note {
+  margin: calc(var(--spacer) / 3) 0 0;
+  font-size: var(--font-size-mini);
+  line-height: 1.6;
+  color: var(--font-color-light);
+}
+
+/* ボタンの中の開閉の矢印。本家は SVG の .caret を使っている */
+.caret {
+  margin-left: 0.3rem;
+  font-size: 0.7em;
+}
