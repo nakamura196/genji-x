@@ -1,83 +1,91 @@
 #!/usr/bin/env zsh
 #
-# GitHub Actions が Cloudflare へ配るためのトークンを登録する。
+# Cloudflare の専用トークンを GitHub の Secret に入れる。
 #
-# ── 前提 ────────────────────────────────────────────────────────
-# Cloudflare の API トークンは **CLI からは作れない**（wrangler の OAuth は
-# 作成の権限を持たない）。先にダッシュボードで 1 本作っておく:
+# ── 先にやっていただくこと ──────────────────────────────────────
+# Cloudflare の API トークンは **CLI からは作れない**（wrangler の OAuth に
+# 作成の権限が無い）。ダッシュボードで 1 本作る:
 #
 #   https://dash.cloudflare.com/profile/api-tokens → Create Token → Custom token
 #
-#   Account | Workers Scripts        | Edit    Worker を配る
-#   Zone    | Workers Routes         | Edit    genji-x.ldas.jp の割り当て
-#   Zone    | Zone                   | Read    ゾーンの参照
-#   Zone Resources: Include | Specific zone | ldas.jp
+#     名前  genji-x deploy
+#     Account | Workers Scripts | Edit    Worker を配る
+#     Zone    | Workers Routes  | Edit    genji-x.ldas.jp の割り当てに要る
+#     Zone    | Zone            | Read    ゾーンの参照
+#     Zone Resources: Include | Specific zone | ldas.jp
 #
-#   ※ ldas.jp だけに絞る。他の案件と使い回さない
-#     （1 本漏れたときの被害範囲を広げないため）
+#   **ldas.jp だけに絞る。** アカウント全体に効くトークンを使い回すと、
+#   1 本漏れたときの被害が全リポジトリに広がる。
 #
-# ── 使い方 ──────────────────────────────────────────────────────
+# 作ったら 1Password に保存する。**タイトルにパレンを入れない**
+# （op:// の URI が解釈できなくなる）:
+#
+#   op item create --category="API Credential" --vault=Personal \
+#     --title="Cloudflare deploy genji-x" \
+#     "credential[concealed]=<トークン>" \
+#     "hostname=api.cloudflare.com"
+#
+# ── このスクリプトがすること ────────────────────────────────────
 #   zsh scripts/setup/cloudflare-secret.zsh
 #
-# トークンは画面に出ません。GitHub の Secret に入れたあと、変数を消します。
+# 1Password から取り、**権限が足りているか実際に確かめてから**、
+# GitHub の Secret に入れる。値は画面に出さず、標準入力で渡す
+# （引数にするとシェルの履歴と ps に残る）。
 set -euo pipefail
 
 REPO=nakamura196/genji-x
-ACCOUNT_ID=7efcf816ee8a11cebbfcc7115bbca3d5
+ACCOUNT=7efcf816ee8a11cebbfcc7115bbca3d5
+ITEM="${1:-Cloudflare deploy genji-x}"
+VAULT="${CF_VAULT:-Personal}"
 
-print "リポジトリ : $REPO"
-print "アカウント : $ACCOUNT_ID"
+print "1Password の項目 : $ITEM"
+print "リポジトリ       : $REPO"
 print ""
 
-# -s で入力を隠す。画面にもシェルの履歴にも残らない
-read -s 'TOKEN?Cloudflare API Token を貼り付けてください (表示されません): '
-print ""
-
-if [[ -z "$TOKEN" ]]; then
-  print "空でした。中止します。" >&2
+T=$(op item get "$ITEM" --vault "$VAULT" --fields credential --reveal 2>/dev/null || true)
+if [[ -z "$T" ]]; then
+  print "1Password から取れませんでした。" >&2
+  print "  項目名を確かめてください: op item list --vault $VAULT | grep -i cloudflare" >&2
   exit 1
 fi
-print "受け取った長さ: ${#TOKEN} 文字"
+print "取得しました（${#T} 文字。表示しません）"
 
-# 入れる前に、そのトークンで本当に配れるのかを確かめる
+code () { curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $T" "$1" }
+
 print ""
-print "権限を確かめています…"
-VERIFY=$(curl -s -H "Authorization: Bearer $TOKEN" \
-  https://api.cloudflare.com/client/v4/user/tokens/verify)
-if ! print "$VERIFY" | grep -q '"success":true'; then
-  # ユーザー所有でなければアカウント所有の窓口で試す
-  VERIFY=$(curl -s -H "Authorization: Bearer $TOKEN" \
-    "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/tokens/verify")
-fi
-if print "$VERIFY" | grep -q '"success":true'; then
-  print "  トークンは有効です"
+print "権限を確かめます（配ってから足りないと分かるのを避けるため）"
+ok=1
+c=$(code https://api.cloudflare.com/client/v4/user/tokens/verify)
+[[ "$c" == 200 ]] || c=$(code "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/tokens/verify")
+print "  トークンが有効                 $c"; [[ "$c" == 200 ]] || ok=0
+
+c=$(code "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/workers/scripts")
+print "  Workers Scripts               $c"; [[ "$c" == 200 ]] || ok=0
+
+ZID=$(curl -s -H "Authorization: Bearer $T" \
+  "https://api.cloudflare.com/client/v4/zones?name=ldas.jp" \
+  | python3 -c "import sys,json;d=json.load(sys.stdin);r=d.get('result') or [];print(r[0]['id'] if r else '')")
+if [[ -n "$ZID" ]]; then
+  c=$(code "https://api.cloudflare.com/client/v4/zones/$ZID/workers/routes")
+  print "  Workers Routes (ldas.jp)      $c"; [[ "$c" == 200 ]] || ok=0
 else
-  print "  検証に失敗しました。中止します。" >&2
-  print "$VERIFY" | head -c 300 >&2
-  unset TOKEN
+  print "  ldas.jp のゾーンが見えません（Zone | Zone | Read が要ります）"; ok=0
+fi
+
+if (( ! ok )); then
+  print ""
+  print "権限が足りません。ダッシュボードで作り直してください。" >&2
+  unset T
   exit 1
 fi
 
-# Workers の一覧が引けるか（Workers Scripts の権限があるか）
-LIST=$(curl -s -H "Authorization: Bearer $TOKEN" \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts")
-if print "$LIST" | grep -q '"success":true'; then
-  print "  Workers Scripts を読めます"
-else
-  print "  Workers Scripts を読めません。権限が足りない可能性があります" >&2
-fi
+print ""
+print "GitHub の Secret に入れます"
+print -n "$T" | gh secret set CLOUDFLARE_API_TOKEN --repo "$REPO"
+print -n "$ACCOUNT" | gh secret set CLOUDFLARE_ACCOUNT_ID --repo "$REPO"
+unset T ZID
 
 print ""
-print "GitHub の Secret に入れます…"
-# 値は標準入力で渡す。引数にするとシェルの履歴と ps に残る
-print -n "$TOKEN" | gh secret set CLOUDFLARE_API_TOKEN --repo "$REPO"
-print -n "$ACCOUNT_ID" | gh secret set CLOUDFLARE_ACCOUNT_ID --repo "$REPO"
-
-unset TOKEN VERIFY LIST
-
-print ""
-print "登録しました:"
 gh secret list --repo "$REPO"
 print ""
-print "次: git push で main に入れると Deploy が走ります。"
-print "    手で試すなら gh workflow run Deploy --repo $REPO"
+print "次: gh workflow run Deploy --repo $REPO"
