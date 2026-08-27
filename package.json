@@ -44,7 +44,8 @@
   },
   "overrides": {
     "js-yaml": ">=4.3.1",
-    "nanoid": ">=3.3.18"
+    "nanoid": ">=3.3.18",
+    "@swc/helpers": "0.5.23"
   },
   "description": "校異源氏物語の帖ごとの目録。索引サーバを使わず、チェーンと IPFS から直接組み立てる。Ocean Market / Pontus-X Portal / Clio-X と同じ画面の系統。"
 }
