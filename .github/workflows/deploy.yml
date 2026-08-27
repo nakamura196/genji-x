@@ -60,15 +60,22 @@ jobs:
 
       - run: npx tsc --noEmit
 
-      - name: ビルド
+      # **`next build` ではなく OpenNext の build を呼ぶ。**
+      # opennextjs-cloudflare deploy は「組み立て済みの設定」を要求する。
+      # `npm run build` (= next build) だけだとそれが作られず、
+      # 配る段で「Could not find compiled Open Next config」で落ちる。
+      #
+      # この 1 本で prebuild (チェーンと TEI の読み取り) → next build →
+      # Worker の梱包 まで走るので、二重に build しない。
+      - name: ビルドと梱包
         env:
           GENJI_TEI_DIR: ${{ github.workspace }}/kouigenji/xml/master
-        run: npm run build
+        run: npx opennextjs-cloudflare build
 
       # 出したものが意図どおりか、配る前に確かめる
       - name: 出来上がりの点検
         run: |
-          test -f .next/server/app/sitemap.xml.body || true
+          test -f .open-next/worker.js || { echo '::error::Worker が組み立てられていません'; exit 1; }
           node -e "
             const fs = require('fs');
             const f = require('./src/data/tei-facets.json');
