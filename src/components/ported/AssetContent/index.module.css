@@ -133,3 +133,46 @@
 .legendItem > span:first-child {
   margin-left: 0;
 }
+
+/* この帖に関わる取引。tx/[hash] の .actors と同じ組み方に揃える */
+.txSection {
+  /* 自分の上の余白は自分で持つ。直前が何であっても間が詰まらないように */
+  margin-top: var(--spacer);
+}
+
+.txNote {
+  color: var(--font-color-light);
+  font-size: var(--font-size-mini);
+  line-height: 1.8;
+  /* .sectionTitle は margin-bottom: 0 なので、題との間は**こちらが持つ**。
+     持たないと題と説明文がくっつく（実測 0px）。 */
+  margin: calc(var(--spacer) / 4) 0 calc(var(--spacer) / 2);
+}
+
+.txList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.txList li {
+  padding: calc(var(--spacer) / 5) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+  display: flex;
+  gap: calc(var(--spacer) / 3);
+  flex-wrap: wrap;
+  align-items: baseline;
+  font-size: var(--font-size-small);
+}
+
+.txKind,
+.txBlock {
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}
+
+.txBlock {
+  font-family: var(--font-family-monospace);
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}

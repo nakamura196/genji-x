@@ -5,9 +5,9 @@
  *
  * ── なぜ集めるのか ──────────────────────────────────────────────
  * Etherscan は汎用なので、名前と中身がずれたまま表示される。実際につまずいた:
- *   DispenserCreated  何も作られていない (共有窓口への登録)
+ *   DispenserCreated  何も作られていない (共有の Dispenser への登録)
  *   1 of ○○           個数ではなく背番号
- *   Holders が空       壊れていない。券が同じ取引で焼かれる設計だから
+ *   Holders が空       壊れていない。datatoken が同じ取引でバーンされる設計だから
  *
  * そこで、生の値へ直接飛ばす前に「これは何か」を説明するページを挟む。
  * そのページに出す事実をここで集める。
@@ -17,7 +17,7 @@
  *   委譲先           EIP-1167 の中に埋まっている 20 バイト
  *   name / symbol    コントラクト自身の申告 (チェーンが保証した事実ではない)
  *   ownerOf(1)       data NFT の「公開者の役」を誰が持っているか
- *   totalSupply/cap  datatoken の券の状況
+ *   totalSupply/cap  datatoken の発行の状況
  */
 import { createPublicClient, http } from 'viem';
 import { sepolia } from 'viem/chains';

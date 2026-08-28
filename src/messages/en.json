@@ -214,12 +214,27 @@
         "chain": "held by the chain",
         "ddo": "asserted by the publisher",
         "tei": "counted here (not on chain)"
+      },
+      "groups": {
+        "text": {
+          "title": "About the text",
+          "note": "Only this group can be checked from outside. Given the text, anyone can recompute these values and compare."
+        },
+        "catalogue": {
+          "title": "Catalogue record",
+          "note": "Written to fit the Ocean format. How the DID is derived and how the data NFT is shaped are both Ocean decisions."
+        },
+        "usage": {
+          "title": "Reference records",
+          "note": "Who consulted this, and when, accumulates on this datatoken. It is free, so anyone can add as many as they like. The count itself proves nothing."
+        }
       }
     },
     "caveat": "Only the publisher has anchored this. It becomes a record the publisher cannot erase only once independent third parties anchor the same root. Also, being on IPFS does not mean permanent: if nobody keeps it, it becomes unreachable.",
     "count": {
       "title": "Times referenced",
-      "loading": "Counting…"
+      "loading": "Counting…",
+      "caveat": "Anyone can add one for free. A high count is not evidence that the material is well used."
     },
     "behind": {
       "title": "View on chain"
@@ -230,6 +245,19 @@
       "ownedBy": "Owned by",
       "access": "Download",
       "accessedWith": "Accessed with {symbol}"
+    },
+    "txs": {
+      "title": "Transactions for this volume",
+      "note": "Only the ones this catalogue tracks. Each is annotated, showing which transaction put the values on chain.",
+      "kind": {
+        "order": "reference",
+        "anchor": "root",
+        "metadata": "metadata"
+      },
+      "change": {
+        "created": "metadata first written",
+        "updated": "metadata rewritten"
+      }
     }
   },
   "contract": {
@@ -304,6 +332,108 @@
       "paired": "Its counterpart",
       "pairedNoteNft": "The datatoken this entry issues.",
       "pairedNoteDt": "The catalogue entry that issues this token."
+    },
+    "txs": "Transactions involving this contract",
+    "txsNote": "Only the ones this catalogue tracks: transactions addressed to it, and transactions in which it emitted a record.",
+    "txKind": {
+      "order": "reference",
+      "anchor": "root",
+      "metadata": "metadata"
+    }
+  },
+  "tx": {
+    "backToList": "Catalogue",
+    "zeroAddress": "zero address",
+    "unknownEvent": "record without a note yet",
+    "kind": {
+      "order": {
+        "title": "Reference record",
+        "what": "This transaction left a record that someone consulted this volume. One datatoken was minted, handed to the caller, and burned within the same transaction. What remains is not the datatoken but the record of the reference.",
+        "gotcha": "A reference record says nothing about whether the text is intact. Anyone can trigger one for free, so a high count means nothing. Whether the text was altered is settled by the root instead."
+      },
+      "anchor": {
+        "title": "Root record",
+        "what": "This transaction recorded a root for the whole corpus. With that root, any one of the 25,065 lines can be shown to have been part of that version using 15 hashes. The 5.87 MB of text never has to change hands.",
+        "gotcha": "Roots are appended, never overwritten. Each time the source is corrected a new root is recorded, and the older ones stay. Which one is current is decided by whoever reads the records in order."
+      },
+      "metadata": {
+        "title": "Metadata record",
+        "what": "This transaction wrote the volume metadata (DDO) onto the chain. It is not encrypted, so reading it needs no server.",
+        "gotcha": "In August 2026 all 55 records were rewritten to take the publisher name out of the metadata. The earlier versions carrying the name remain on the chain. They cannot be removed."
+      }
+    },
+    "badge": {
+      "ok": "Success",
+      "failed": "Failed",
+      "block": "Block {n}",
+      "gas": "Gas {n}"
+    },
+    "logs": "What happened",
+    "logsNote": "The {n} records in the order the chain wrote them. The number on the left is the index within the block, the same number Etherscan shows.",
+    "move": {
+      "mint": "mint",
+      "move": "move",
+      "burn": "burn"
+    },
+    "tickets": "{n} datatoken",
+    "note": {
+      "transfer": {
+        "mint": "One datatoken was newly minted. A sender of the zero address is the marker for \"newly created\".",
+        "move": "That same one moved to its next holder.",
+        "burn": "The datatoken was burned. A recipient of the zero address is the marker for \"gone\". It was held only for a few log entries inside this same transaction."
+      },
+      "TokensDispensed": "The Dispenser recorded that it handed one out. The Dispenser is a shared Ocean contract, not something built for this material.",
+      "OrderStarted": "This is the line that matters. The record that this version was consulted is left in a form nobody can erase. The other entries are the procedure that leaves this one line.",
+      "ProviderFee": "Every provider fee field is zero. Ocean normally verifies a provider signature before an order goes through, but with the fee address set to zero, the address recovered from an empty signature is also zero, so the two match. That is why no Ocean node has to run at all.",
+      "CorpusAnchored": "One root was recorded. The contract is open to anyone on purpose. Only when someone else records the same root can it be said that the publisher did not reconstruct it afterwards.",
+      "unknown": "No note prepared for this record yet. See Etherscan for the raw values.",
+      "MetadataCreated": "The metadata for this volume was written to the chain for the first time.",
+      "MetadataUpdated": "The metadata was rewritten. The earlier version remains; nothing can be removed from the chain."
+    },
+    "anchored": "Root recorded",
+    "leaves": "{n}",
+    "facts": "Read from the chain",
+    "factsNote": "None of these are claims. They are values the chain itself holds.",
+    "actors": "Addresses involved",
+    "actorsNote": "Addresses this catalogue can explain link inward. The rest link out to Etherscan.",
+    "actorKnown": "explained here",
+    "actorUnknown": "Etherscan",
+    "raw": "The raw screen",
+    "rawNote": "The unannotated screen is here, to read alongside the notes above.",
+    "row": {
+      "root": "Root",
+      "treeSize": "Leaves",
+      "treeSizeNote": "Verification needs this number because it fixes the shape of the tree. 54 is the per-volume tree, 25,065 the per-line tree.",
+      "spec": "Method",
+      "specNote": "How leaves are formed and how the tree is built. A root whose method is unknown cannot be checked, so the two are recorded together.",
+      "sourceUri": "Source",
+      "sourceUriNote": "Which state of the text it was computed from. It points at a git commit.",
+      "from": "Sender",
+      "fromNote": "Who paid the gas. This can differ from the consumer named in the record — anyone can name someone else as the consumer.",
+      "to": "Called",
+      "toNote": "The contract this transaction spoke to.",
+      "selector": "Function called",
+      "selectorNote": "Derived from the first four bytes of the call data. Etherscan sometimes leaves it as hex.",
+      "time": "Time",
+      "value": "ETH sent",
+      "valueNote": "Zero. A datatoken has no price.",
+      "fee": "Fee",
+      "feeNote": "Goes to the validator that built the block. It is not payment for the datatoken.",
+      "gas": "Gas",
+      "gasValue": "{used} of {limit} limit, {price} Gwei",
+      "volume": "Volume",
+      "change": "Action",
+      "changeNote": "Rewriting does not remove the previous version. Nothing can be deleted from the chain.",
+      "ddoBytes": "Size",
+      "flags": "flags",
+      "flagsPlainNote": "0x00 marks it as not encrypted, which is why reading it needs no server.",
+      "flagsNote": "Anything other than 0x00 means encryption or compression, which needs separate machinery to read."
+    },
+    "wrote": "What was written",
+    "bytes": "{n} bytes",
+    "change": {
+      "created": "first written",
+      "updated": "rewritten"
     }
   },
   "site": {

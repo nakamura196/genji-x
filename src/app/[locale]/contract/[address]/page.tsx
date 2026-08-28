@@ -3,10 +3,10 @@
  *
  * Etherscan は汎用なので、この資料の文脈では意味の取れない表示になる。
  * 実際につまずいたもの:
- *   DispenserCreated   何も作られていない (共有窓口への登録)
+ *   DispenserCreated   何も作られていない (共有の Dispenser への登録)
  *   1 of ○○            個数ではなく背番号
  *   contract_deployed  null なのに 2 つ作られている
- *   Holders が空        壊れていない。券が同じ取引で焼かれる設計だから
+ *   Holders が空        壊れていない。datatoken が同じ取引でバーンされる設計だから
  *   コードが 45 バイト   最小プロキシで、本体は別の場所にある
  *
  * このページはそれらを説明してから、Etherscan へ送る。
@@ -27,6 +27,7 @@ import { Button } from '@/components/ported/atoms/Button';
 import { getContract, allContractAddresses } from '@/lib/contracts';
 import { EXPLORER } from '@/lib/chain';
 import { registry } from '@/lib/catalog';
+import { txOfContract, TX_KIND_ORDER } from '@/lib/transactions';
 import styles from './page.module.css';
 
 export const dynamicParams = false;
@@ -58,6 +59,8 @@ export default async function ContractPage({
 
   const base = `/${locale}`;
   const kindKey = c.kind === 'shared' ? `shared.${c.shared}` : c.kind;
+  /* このコントラクトが出てくる取引。宛先になっているものと、記録を出したもの */
+  const txs = txOfContract(c.address);
 
   return (
     /*
@@ -162,6 +165,27 @@ export default async function ContractPage({
           />
         )}
       </section>
+
+      {/* このコントラクトが出てくる取引 */}
+      {txs.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>{t('txs')}</h2>
+          <p className={styles.note}>{t('txsNote')}</p>
+          <ul className={styles.txList}>
+            {txs.map((tx) => (
+              <li key={tx.hash}>
+                <a href={`${base}/tx/${tx.hash}`}>
+                  <Mono>{tx.hash.slice(0, 10)}…{tx.hash.slice(-6)}</Mono>
+                </a>
+                <span className={styles.txKind}>
+                  {t(`txKind.${tx.kinds.includes(TX_KIND_ORDER) ? 'order' : tx.kinds[0]}`)}
+                </span>
+                <span className={styles.txBlock}>{tx.block.toLocaleString()}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* 生の値へ */}
       <section className={styles.section}>

@@ -40,3 +40,25 @@
   font-size: var(--font-size-mini);
   color: var(--font-color-light);
 }
+
+/*
+ * 3 つの束。**性質の違うものが 1 枚に並んでいたのを分けた。**
+ * 束の題は h3、その下に「何についての主張か」を 1 行。
+ */
+.group {
+  margin-bottom: calc(var(--spacer) * 1.25);
+}
+
+.groupTitle {
+  font-size: var(--font-size-base);
+  margin: 0 0 calc(var(--spacer) / 4);
+}
+
+.groupNote {
+  color: var(--font-color-light);
+  font-size: var(--font-size-mini);
+  line-height: 1.8;
+  /* 自分の下の余白は自分で持つ。次に来るのが .metaFull（余白なし）なので、
+     ここを空けないと題と値がくっつく */
+  margin: 0 0 calc(var(--spacer) / 2);
+}

@@ -81,3 +81,17 @@
 :global(.dark) .actions {
   color: var(--font-color-text);
 }
+
+/*
+ * 参照回数の断り書き。**数そのものは何も証明しない。**
+ * 無料なので誰でも何度でも残せるし、他人を参照者として記録することもできる。
+ * 数字と同じ箱に入れないと、数字だけ読んで帰る人に届かない。
+ */
+.countCaveat {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.75;
+  /* 自分の上下の余白は自分で持つ。上は数字、下はボタンで、
+     どちらも余白を持っていない */
+  margin: calc(var(--spacer) / 4) 0 calc(var(--spacer) / 2);
+}

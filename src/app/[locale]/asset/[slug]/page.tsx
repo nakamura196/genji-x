@@ -25,6 +25,7 @@ import { AssetContent } from '@/components/ported/AssetContent';
 import { getAsset, readAnchors, registry } from '@/lib/catalog';
 import { EXPLORER } from '@/lib/chain';
 import { gatewayUrl } from '@/lib/merkle-browser';
+import { txOfSlug, TX_KIND_ORDER } from '@/lib/transactions';
 import styles from './page.module.css';
 
 /**
@@ -83,6 +84,19 @@ export default async function AssetPage({
      ここで直に書くと、ボット判定で落ちる先を指したまま気づけない */
   const gateway = gatewayUrl(a.ipfsCid);
 
+  /* この帖に関わる取引。root の記録は全帖に共通なので、ここには出さない
+     （帖の画面に 54 帖ぶん共通の取引を並べても意味が取れない）*/
+  const txs = txOfSlug(slug).map((tx) => {
+    const kind = tx.kinds.includes(TX_KIND_ORDER) ? TX_KIND_ORDER : tx.kinds[0];
+    /* 説明書きは 1 帖に 3 件並ぶことがある。
+       「最初に載せた」か「書き直した」かまで出さないと見分けが付かない */
+    const change = kind === 'metadata'
+      ? (tx.details.find((d) => (d as { slug?: string }).slug === slug) as
+          { change?: string } | undefined)?.change ?? null
+      : null;
+    return { hash: tx.hash, kind, change, block: tx.block };
+  });
+
   return (
     /* **Page を使う。** ここも `<main>` を持っていなかった（検索画面と同じ問題）。
        余白を測るテストが対象を 1 つも見つけられず、空のまま通っていた */
@@ -97,6 +111,7 @@ export default async function AssetPage({
         gateway={gateway}
         anchors={{ records: anchors.records.length, observers: anchors.observers }}
         locale={locale}
+        txs={txs}
         labels={{
           meta: {
             ownedBy: t('meta.ownedBy'),
@@ -130,9 +145,17 @@ export default async function AssetPage({
             // 値の出どころの印。チェーンの記録・公開者の申告・手元の集計を分ける
             sources: t.raw('raw.sources') as Record<'ddo' | 'chain' | 'tei',
               { short: string; help: string }>,
+            // 3 つの束。値の出どころ (上の sources) とは別の軸で、
+            // 「その値が何についての主張か」を言う
+            groups: t.raw('raw.groups') as Record<'text' | 'catalogue' | 'usage',
+              { title: string; note: string }>,
           },
           rawTitle: t('raw.title'),
           rawLegend: t.raw('raw.legend') as { chain: string; ddo: string; tei: string },
+          txs: t.raw('txs') as {
+            title: string; note: string;
+            kind: Record<string, string>; change: Record<string, string>;
+          },
           caveat: t('caveat'),
         }}
         actions={{
@@ -150,6 +173,7 @@ export default async function AssetPage({
           labels: {
             count: t('count.title'),
             countLoading: t('count.loading'),
+            countCaveat: t('count.caveat'),
             get: {
               get: t('get.button'),
               connecting: t('get.connecting'),

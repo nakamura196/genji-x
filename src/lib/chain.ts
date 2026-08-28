@@ -78,7 +78,11 @@ export const ORDER_EVENT = {
   name: 'OrderStarted',
   inputs: [
     { name: 'consumer', type: 'address', indexed: true },
-    { name: 'payer', type: 'address', indexed: true },
+    /* payer に添字は付いていない。data 欄の 1 語目にある。
+       ここを indexed にしていたので、topics が 1 つ足りず、
+       args.payer は取れない状態だった (consumer は topics[1] なので影響なし)。
+       実物のログは topics が 3 つ (topic0 / consumer / publishMarketAddress)。 */
+    { name: 'payer', type: 'address' },
     { name: 'amount', type: 'uint256' },
     { name: 'serviceIndex', type: 'uint256' },
     { name: 'timestamp', type: 'uint256' },
@@ -87,7 +91,7 @@ export const ORDER_EVENT = {
   ],
 } as const;
 
-/** CorpusAnchor。root を刻むだけのコントラクト。状態変数を持たない */
+/** CorpusAnchor。root を記録するだけのコントラクト。状態変数を持たない */
 export const CORPUS_ANCHORED_EVENT = {
   type: 'event',
   name: 'CorpusAnchored',

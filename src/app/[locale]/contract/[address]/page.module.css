@@ -38,7 +38,7 @@
   margin-bottom: var(--spacer);
 }
 
-/* バッジが 1 つも出ない種類（工場・手数料の宛先）では空の箱が残るので、
+/* バッジが 1 つも出ない種類（ファクトリ・手数料の宛先）では空の箱が残るので、
    その場合だけ余白を消す */
 .badges:empty {
   margin-bottom: 0;
@@ -127,4 +127,33 @@
    * 操作の箱は、前に何があっても自分で間を取る。
    */
   margin-top: var(--spacer);
+}
+
+/* このコントラクトが出てくる取引の一覧。tx/[hash] の .actors と同じ組み方 */
+.txList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.txList li {
+  padding: calc(var(--spacer) / 5) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+  display: flex;
+  gap: calc(var(--spacer) / 3);
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.txKind {
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}
+
+.txBlock {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
 }

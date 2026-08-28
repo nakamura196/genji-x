@@ -13,6 +13,7 @@ import { routing } from '@/i18n/routing';
 import { SITE_URL } from '@/constants/metadata';
 import registry from '@/data/registry.json';
 import contracts from '@/data/contracts.json';
+import txData from '@/data/transactions.json';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
@@ -39,6 +40,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: now,
         changeFrequency: 'weekly',
         priority: a.slug === 'all' ? 0.9 : 0.8,
+      });
+    }
+
+    // 取引の説明。契約と同じく裏側の層
+    for (const t of txData.transactions) {
+      out.push({
+        url: `${base}/tx/${t.hash}`,
+        lastModified: now,
+        changeFrequency: 'yearly',   // 取引は後から変わらない
+        priority: 0.3,
       });
     }
 

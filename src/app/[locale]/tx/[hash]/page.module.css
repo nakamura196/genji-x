@@ -1,0 +1,223 @@
+/*
+ * 取引 1 件の画面。
+ *
+ * contract/[address] と同じ組み方に揃えてある（.breadcrumb / .row / .links など）。
+ * 2 枚を行き来する画面なので、片方だけ別の作りにすると読者が読み直すことになる。
+ * 値は本家（Ocean 系）の変数から取る。px を直に書くと暗い表示に追随しない。
+ */
+
+.breadcrumb {
+  font-size: var(--font-size-small);
+  margin-bottom: calc(var(--spacer) / 2);
+}
+
+.pageHeader {
+  margin-bottom: calc(var(--spacer) / 4);
+}
+
+.hash {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  color: var(--font-color-light);
+  /* 66 文字の 16 進が入る。狭い画面で横に飛び出さないように折る */
+  overflow-wrap: anywhere;
+  margin: 0 0 calc(var(--spacer) / 8);
+}
+
+.badges {
+  display: flex;
+  gap: calc(var(--spacer) / 4);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacer);
+}
+
+.section {
+  margin-bottom: calc(var(--spacer) * 1.5);
+}
+
+.sectionTitle {
+  font-size: var(--font-size-h4);
+  margin: 0 0 calc(var(--spacer) / 4);
+}
+
+.lead {
+  margin: 0;
+  line-height: 1.95;
+}
+
+.gotcha {
+  margin: var(--spacer) 0 0;
+  padding-left: calc(var(--spacer) / 2);
+  border-left: var(--border-size) solid var(--color-primary);
+  color: var(--font-color-light);
+  line-height: 1.9;
+}
+
+.note {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  line-height: 1.8;
+  margin: 0 0 calc(var(--spacer) / 2);
+}
+
+/* ── 記録の並び。この画面の主役 ── */
+
+.logs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.log {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: calc(var(--spacer) / 3);
+  padding: calc(var(--spacer) / 2) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+}
+
+.log:first-child {
+  border-top: var(--border-size-sm) solid var(--border-color);
+}
+
+/*
+ * **この 1 行が目的である、と見た目で言う。**
+ * 6 件が同じ重みで並ぶのが Etherscan の問題そのものなので、
+ * ここで平らに並べ直したら作った意味がない。
+ */
+.point {
+  border-left: var(--border-size) solid var(--color-primary);
+  padding-left: calc(var(--spacer) / 2);
+}
+
+.logIdx {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
+}
+
+.logBody {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacer) / 8);
+}
+
+.logName {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--spacer) / 4);
+  flex-wrap: wrap;
+}
+
+/* 発行・移動・バーンの別。Transfer は 3 回出てくるが意味が違う */
+.move {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  font-weight: var(--font-weight-base);
+  border: var(--border-size-sm) solid currentColor;
+  border-radius: var(--border-radius);
+  padding: 0 0.4em;
+  color: var(--font-color-light);
+}
+
+.mint { color: var(--brand-clay, var(--color-secondary)); }
+.burn { color: var(--color-primary); }
+
+.flow {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--spacer) / 6);
+  flex-wrap: wrap;
+}
+
+.arrow { opacity: 0.6; }
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  color: var(--font-color-text);
+}
+
+.logNote {
+  font-size: var(--font-size-small);
+  line-height: 1.85;
+  margin: calc(var(--spacer) / 8) 0 0;
+}
+
+/* ── 事実の一覧。contract/[address] と同じ ── */
+
+.row {
+  padding: calc(var(--spacer) / 4) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+}
+
+.rowInner {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  flex-wrap: wrap;
+}
+
+.rowKey {
+  color: var(--font-color-light);
+  font-size: var(--font-size-small);
+  min-width: 11rem;
+}
+
+.rowValue {
+  flex: 1;
+  min-width: 14rem;
+  font-size: var(--font-size-small);
+  overflow-wrap: anywhere;
+}
+
+.rowNote {
+  color: var(--font-color-light);
+  font-size: var(--font-size-mini);
+  line-height: 1.8;
+  margin: calc(var(--spacer) / 8) 0 0;
+}
+
+.mono {
+  font-family: var(--font-family-monospace);
+  font-size: var(--font-size-small);
+}
+
+/* ── 出てきたアドレス ── */
+
+.actors {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.actors li {
+  padding: calc(var(--spacer) / 5) 0;
+  border-bottom: var(--border-size-sm) solid var(--border-color);
+  display: flex;
+  gap: calc(var(--spacer) / 3);
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.actorRole {
+  font-size: var(--font-size-mini);
+  color: var(--font-color-light);
+}
+
+/* 自分の上の余白は自分で持つ。直前に何が来ても間が詰まらないように
+   （契約の画面で 0px になった前例がある） */
+.links {
+  display: flex;
+  gap: calc(var(--spacer) / 2);
+  flex-wrap: wrap;
+  margin-top: var(--spacer);
+}

@@ -41,7 +41,7 @@ export function AssetActions({
   } | null;
   links: { nft: string; datatoken: string; anchor: string | null };
   labels: {
-    count: string; countLoading: string;
+    count: string; countLoading: string; countCaveat: string;
     get: React.ComponentProps<typeof GetButton>['labels'];
     verify: React.ComponentProps<typeof VerifyPanel>['labels'];
     verifyTitle: string; verifyLead: string;
@@ -65,6 +65,10 @@ export function AssetActions({
             <span className={styles.countLoading}>{labels.countLoading}</span>
           )}
         </p>
+
+        {/* 数字のすぐ下に断りを置く。束の説明文にも書いてあるが、
+            数字を先に見る人はそこまで読まない */}
+        <p className={styles.countCaveat}>{labels.countCaveat}</p>
 
         <GetButton
           datatoken={datatoken}

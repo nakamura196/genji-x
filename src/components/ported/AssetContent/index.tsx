@@ -35,6 +35,7 @@ export function AssetContent({
   gateway,
   anchors,
   locale,
+  txs,
   actions,
   labels,
 }: {
@@ -72,6 +73,8 @@ export function AssetContent({
   gateway: string;
   anchors: { records: number; observers: number };
   locale: string;
+  /** この帖に関わる取引。目録が把握しているものだけ */
+  txs: { hash: string; kind: string; change: string | null; block: number }[];
   actions: React.ComponentProps<typeof AssetActions>;
   labels: {
     meta: React.ComponentProps<typeof MetaMain>['labels'];
@@ -80,6 +83,7 @@ export function AssetContent({
     rawTitle: string;
     /** 印の読み方。1 行の凡例として出す */
     rawLegend: { chain: string; ddo: string; tei: string };
+    txs: { title: string; note: string; kind: Record<string, string>; change: Record<string, string> };
     caveat: string;
   };
 }) {
@@ -142,6 +146,32 @@ export function AssetContent({
               anchors={anchors}
               labels={labels.raw}
             />
+
+            {/*
+              **この帖に関わる取引。**
+              「生の値」で葉ハッシュや root を見せた直後に、
+              その値が実際にチェーンへ入った取引へ行けるようにする。
+              Etherscan へ直に飛ばすと文脈が切れるので、まず目録の中の説明に送る。
+            */}
+            {txs.length > 0 && (
+              <section className={styles.txSection}>
+                <h2 className={styles.sectionTitle}>{labels.txs.title}</h2>
+                <p className={styles.txNote}>{labels.txs.note}</p>
+                <ul className={styles.txList}>
+                  {txs.map((tx) => (
+                    <li key={tx.hash}>
+                      <a href={`/${locale}/tx/${tx.hash}`}>
+                        <code>{tx.hash.slice(0, 10)}…{tx.hash.slice(-6)}</code>
+                      </a>
+                      <span className={styles.txKind}>
+                        {tx.change ? labels.txs.change[tx.change] : labels.txs.kind[tx.kind]}
+                      </span>
+                      <span className={styles.txBlock}>{tx.block.toLocaleString()}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <p className={styles.caveat}>{labels.caveat}</p>
           </div>
