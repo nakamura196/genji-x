@@ -98,7 +98,12 @@ jobs:
 
       - name: 配ったものが応答するか
         run: |
-          for p in /ja /en /ja/search /ja/publisher /ja/how-to /ja/asset/01 /.well-known/genji-witness.json; do
+          # 動的な区間 (contract / tx) も必ず見る。ここを見ていなかったので、
+          # 契約の画面が 404 のまま配られていた
+          for p in /ja /en /ja/search /ja/publisher /ja/how-to /ja/asset/01 \
+                   /ja/contract/0x8197bd3d263b9dcf68df1e2629459f01e0cfcab9 \
+                   /ja/tx/0xea95b38eebe2f5752474e3d003b205da4d51f0edda79e748446a82fc758964c1 \
+                   /.well-known/genji-witness.json; do
             code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 --retry 3 --retry-delay 5 "https://genji-x.ldas.jp$p")
             printf '  %-38s %s\n' "$p" "$code"
             [ "$code" = "200" ] || exit 1

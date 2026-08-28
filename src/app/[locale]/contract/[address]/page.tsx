@@ -30,7 +30,38 @@ import { registry } from '@/lib/catalog';
 import { txOfContract, TX_KIND_ORDER } from '@/lib/transactions';
 import styles from './page.module.css';
 
-export const dynamicParams = false;
+/**
+ * **静的に書き出す。これが無いと本番で 404 になる。**
+ *
+ * `dynamicParams = false` だけでは足りない。Cloudflare Workers / OpenNext では、
+ * 明示しないと「必要になったら作る」扱いになり、保存領域 (R2 や KV) を要求する。
+ * この Worker はバインディングを 1 つも持っていないので、そこで落ちる。
+ *
+ * 帖の画面 (asset/[slug]) には以前これを付けたが、こちらには付けていなかった。
+ * **配布後の確認が /ja と /ja/asset/01 しか見ていなかったので、
+ * 気づかないまま 404 を配っていた。** 確認する URL も増やした。
+ */
+export const dynamic = 'force-static';
+
+/**
+ * **`dynamicParams = false` を付けない。付けると本番で 404 になる。**
+ *
+ * この Worker は保存領域 (R2 や KV) を 1 つも持たない。OpenNext の
+ * 増分キャッシュが空なので、**どの要求も必ずキャッシュ外れになる**。
+ * そこで `dynamicParams = false` があると、Next は「一覧に無い道は作らない」と
+ * 決めて `NoFallbackError` を投げ、404 が返る。
+ * 一覧に**載っている**道でも同じで、キャッシュから読めない時点で同じ扱いになる。
+ *
+ * 付けなければ、その場で描いて返す。手元のデータだけで描けるので
+ * (実行時にチェーンを読まない)、費用は変わらない。
+ * 知らないアドレスは `getContract` が null を返し、`notFound()` で 404 になる。
+ * つまり**振る舞いは同じで、こちらは本番で動く**。
+ *
+ * 帖の画面 (asset/[slug]) が動いていたのは、そこに
+ * この指定が無かったからだった。契約の画面は 404 のまま配られていて、
+ * **配布後の確認が /ja と /ja/asset/01 しか見ていなかったので気づかなかった。**
+ */
+// (ここに dynamicParams = false は置かない)
 
 const Row = ({ k, v, note }: { k: string; v: React.ReactNode; note?: string }) => (
   <div className={styles.row}>
