@@ -20,7 +20,7 @@ export const SITE_CONFIG = {
   description: {
     ja: '校異源氏物語（池田亀鑑『校異源氏物語』中央公論社 を底本とする TEI/XML、54 帖・25,065 行）を'
       + 'チェーンと IPFS に載せた版。本文は CC0 で、読むのに手続きは要りません。'
-      + '各帖には「刻まれた全体の一部である」ことを、他の帖を見ずに確かめる証明が付いています。',
+      + '各帖には「記録された全体の一部である」ことを、他の帖を見ずに確かめる証明が付いています。',
     en: 'A chain-and-IPFS edition of the Kouigenji Monogatari text database '
       + '(TEI/XML from Ikeda Kikan, Chuokoron-sha; 54 volumes, 25,065 lines). The text is CC0 and needs '
       + 'no permission to read. Each volume carries a proof that it belongs to the anchored '

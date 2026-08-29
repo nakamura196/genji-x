@@ -200,13 +200,31 @@ for (const [i, a] of registry.assets.entries()) {
 console.log('');
 
 /**
- * **CorpusAnchor に刻まれた root を読む。**
+ * **CorpusAnchor に記録された root を読む。**
  *
  * 以前は帖ごとの DDO が chapterRoot を持っていたが、それは
  * **チェーンの別の場所にある値の写し**だった。DDO から外したので
  * （scripts/19-reattribute.mjs）、ここで出どころから直接読む。
  * 写しが 2 つあると、片方だけ古くなっても気づけない。
  */
+/**
+ * **前回の写しを土台にする。**
+ *
+ * 公開 RPC は締め出すとき、エラーではなく**空を返す**。実際に、
+ * root が 3 件から 2 件に減った写しを書いてしまったことがある。
+ * チェーンの履歴は増えるだけなので、**前にあった root が今回見つからないのは
+ * 「消えた」ではなく「読めなかった」**。前回の分と足し合わせ、減っていたら声を上げる。
+ *
+ * なお root が 3 件なのは正しい。記録は 6 回あるが、
+ * **同じ root を 3 回記録している**ので、値としては
+ * 帖の木 2 種類 + 行の木 1 種類 = 3 種類になる。
+ */
+const OUT_PATH = path.join(ROOT, 'src/data/snapshot.json');
+const prev = fs.existsSync(OUT_PATH)
+  ? JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'))
+  : { anchoredRoots: [], assets: [] };
+const prevAssets = new Map((prev.assets ?? []).map((a) => [a.slug, a]));
+
 const anchored = [];
 try {
   const logs = await client.request({
@@ -232,12 +250,69 @@ try {
       block: Number(l.blockNumber),
     });
   }
-  console.log(`  刻まれた root ${anchored.length} 件 (CorpusAnchor から直接)`);
+  /* 読めなかった分を足し戻す。値そのものは変わらないので、古くならない */
+  let restored = 0;
+  for (const old of prev.anchoredRoots ?? []) {
+    if (!anchored.some((a) => a.root === old.root)) { anchored.push(old); restored++; }
+  }
+  anchored.sort((a, b) => a.block - b.block);
+  if (restored) {
+    console.warn(`  ！ 前回あった root ${restored} 件が今回は読めませんでした。足し戻しています`);
+    console.warn('    公開 RPC の締め出しが疑われます。時間をおくか、NEXT_PUBLIC_SEPOLIA_RPC_URL を指してください');
+  }
+  console.log(`  記録された root ${anchored.length} 種類 (CorpusAnchor から直接)`);
   for (const a of anchored) {
     console.log(`    ${a.root.slice(0, 18)}…  ${String(a.treeSize).padStart(6)} 葉  ${a.spec}`);
   }
 } catch (e) {
-  console.warn(`  ${'刻まれた値の読み取りに失敗: ' + e.message}`);
+  console.warn(`  ${'root の読み取りに失敗: ' + e.message}`);
+}
+
+/*
+ * DDO も同じ。読めなかった帖は前回の写しを使う。
+ * 空のまま書き出すと、画面から説明も葉ハッシュも消える。
+ */
+let keptAssets = 0;
+let keptNewer = 0;
+for (let i = 0; i < out.length; i++) {
+  const o = out[i];
+  const old = prevAssets.get(o.slug);
+
+  // 読めなかった帖は前回の写しをそのまま使う
+  if (!o.ddo && !o.encrypted) {
+    if (old?.ddo) { out[i] = { ...old, usage: o.usage ?? old.usage }; keptAssets++; }
+    continue;
+  }
+
+  /*
+   * **古い版に化けていないか見る。**
+   * ログが一部しか返らないと、書き直しを見落として作成時の DDO を採ってしまう。
+   * 作成時の DDO には氏名が入っているので、これは黙って起きると
+   * 「消したはずの氏名が写しに戻る」ことになる (実際に 18 帖で起きた)。
+   * 前回より古いものを読んだときは、前回のほうを採る。
+   */
+  if (old?.ddoFrom && o.ddoFrom && old.ddoFrom.block > o.ddoFrom.block) {
+    out[i] = { ...old, usage: o.usage ?? old.usage };
+    keptNewer++;
+  }
+}
+if (keptAssets) console.warn(`  ！ ${keptAssets} 帖は今回読めませんでした。前回の写しを使っています`);
+if (keptNewer) {
+  console.warn(`  ！ ${keptNewer} 帖で、前回より古い記録しか読めませんでした。前回のほうを使っています`);
+  console.warn('    ログの取りこぼしです。放っておくと、書き直す前の DDO に戻ります');
+}
+
+/*
+ * **最後の関所。氏名が入っていたら書き出さない。**
+ * DDO からは 55 件すべて外してある (scripts/19-reattribute.mjs)。
+ * 写しに氏名が現れたら、それは古い記録を読んだということなので、
+ * ここで止める。配布の workflow にも同じ点検があるが、手元でも止める。
+ */
+const named = out.filter((o) => /中村|Nakamura/.test(JSON.stringify(o.ddo ?? {})));
+if (named.length) {
+  console.error(`  ！ ${named.length} 帖の DDO に氏名が入っています: ${named.map((o) => o.slug).join(', ')}`);
+  console.error('    書き直す前の記録を読んでいます。時間をおいて実行し直してください');
+  process.exit(1);
 }
 
 const encrypted = out.filter((o) => o.encrypted).length;
@@ -256,7 +331,7 @@ fs.writeFileSync(
     generatedAt: new Date().toISOString(),
     atBlock: Number(latest),
     rpc: RPC,
-    /** CorpusAnchor に刻まれた値。DDO の写しではなく、出どころから読んだもの */
+    /** CorpusAnchor に記録された値。DDO の写しではなく、出どころから読んだもの */
     anchoredRoots: anchored,
     assets: out,
   }, null, 2) + '\n'
