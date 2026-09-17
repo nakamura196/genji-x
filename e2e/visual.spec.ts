@@ -194,13 +194,29 @@ test.describe('見えているか（存在ではなく）', () => {
   });
 });
 
+/**
+ * 目視用に 1 枚撮る。
+ *
+ * **画像の大きさは CSS の px ではなく端末の px で決まる。**
+ * iPhone 14 は 1 CSS px = 3 端末 px なので、目録 (縦 13,000px 強) を
+ * そのまま撮ると 39,000px を超える。WebKit は 1 辺 32,767px までしか撮れず、
+ * Linux の CI はここで必ず落ちていた。
+ * **macOS の WebKit は 39,000px でも撮れてしまうので、手元では再現しない。**
+ *
+ * `scale: 'css'` で CSS の px と 1:1 にする。倍率ぶんの細かさは落ちるが、
+ * 見て確かめる用途には足りる（添付も 1/9 の大きさで済む）。
+ */
+function shot(page: Page) {
+  return page.screenshot({ fullPage: true, scale: 'css' });
+}
+
 test('目視用の画面を残す', async ({ page }, testInfo) => {
   for (const [path, name] of [['/ja', 'home'], ['/ja/search', 'search'],
     ['/ja/asset/01', 'asset'], ['/ja/about', 'about']]) {
     await page.goto(path);
     await page.waitForTimeout(600);
     await testInfo.attach(`${name}-light`, {
-      body: await page.screenshot({ fullPage: true }), contentType: 'image/png',
+      body: await shot(page), contentType: 'image/png',
     });
   }
   await page.evaluate(() => {
@@ -210,6 +226,6 @@ test('目視用の画面を残す', async ({ page }, testInfo) => {
   await page.goto('/ja');
   await page.waitForTimeout(600);
   await testInfo.attach('home-dark', {
-    body: await page.screenshot({ fullPage: true }), contentType: 'image/png',
+    body: await shot(page), contentType: 'image/png',
   });
 });
