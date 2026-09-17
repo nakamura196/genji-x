@@ -8,7 +8,8 @@ import next from 'eslint-config-next';
  */
 const eslintConfig = [
   // .open-next は OpenNext が生成する Worker の束ね。他人のコードなので見ない
-  { ignores: ['.next/**', 'out/**', 'build/**', '.open-next/**', '.wrangler/**'] },
+  // kouigenji は CI が素材の TEI を取るために checkout する別リポジトリ。これも見ない
+  { ignores: ['.next/**', 'out/**', 'build/**', '.open-next/**', '.wrangler/**', 'kouigenji/**'] },
   ...next,
   {
     rules: {
