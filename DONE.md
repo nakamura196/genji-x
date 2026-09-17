@@ -247,3 +247,16 @@ kouigenjimonogatari PR #8 / #9 がマージされたので、新しい版を記�
 - [x] **検索結果に出る説明文の造語を直した。** src/constants/metadata.ts の
       「刻まれた全体の一部である」→「記録された」。用語表の点検が
       src/messages しか見ていなかったので残っていた
+- [x] [CI で検出] **スマホ幅 (390px) でヘッダが 3px あふれ、目録の画像が撮れなかった** → 直した
+      手元 (macOS) では 4 件とも通り、Linux の CI でだけ落ちる。原因は 2 つ。
+      (1) **`transform: scale()` は描くときの大きさしか変えない。** 本家は狭い画面で
+      `.actions button { transform: scale(0.85) }` と書いて右側の操作を縮めていたが、
+      場所取りは等倍のまま。iPhone 14 の 390px では右側の 5 つで **375px をちょうど
+      使い切っていた（余り 0px）**。文字の幅は OS のフォントで 1% 変わるので、
+      Linux では 3px あふれ、歯車の吹き出しも画面の外 (393px) に出ていた。
+      箱の左右の余白を実際に詰めた（縦の余白と文字の大きさは触っていない）。
+      (2) **fullPage の画像の大きさは端末の px で決まる。** iPhone 14 は 3 倍なので
+      目録 (縦 13,000px 強) は 39,000px になり、WebKit の上限 32,767px を超える。
+      **macOS の WebKit は撮れてしまうので手元では再現しない。** `scale: 'css'` にした。
+      手元で通って CI で落ちるときは、CI と同じ Linux で走らせると再現する:
+      `docker run --rm -v "$PWD":/w -w /w --ipc=host mcr.microsoft.com/playwright:v1.62.1-noble bash -c 'npm ci && npx playwright test'`

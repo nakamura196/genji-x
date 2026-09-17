@@ -78,3 +78,16 @@
     fill: var(--menu-icon-fill-color);
   }
 }
+
+/* ここから下は本家に無い追加分。**狭い画面で左右の余白だけ詰める。**
+ *
+ * 390px の画面では、右側の操作 5 つで横幅を使い切っていた（余り 0px）。
+ * 文字の幅は OS のフォントで変わるので、Linux の CI では 3px あふれていた。
+ * 縦の余白と文字の大きさは変えない（隣の箱と高さを揃えてあるため）。
+ * 事情は Menu.module.css の末尾に書いた。 */
+@media screen and (max-width: 26rem) {
+  .network {
+    padding-left: calc(var(--spacer) / 6);
+    padding-right: calc(var(--spacer) / 6);
+  }
+}
