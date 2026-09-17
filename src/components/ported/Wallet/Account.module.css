@@ -138,3 +138,16 @@ svg.caret {
 .button .address {
   display: inline-block;
 }
+
+/* **狭い画面で左右の余白だけ詰める。**（本家に無い追加分）
+ *
+ * 本家は 25rem 未満でボタンの中の <span> を隠して幅を稼いでいるが、
+ * その指定はこの移植では効かない。本家の中身は <span> に包まれた住所で、
+ * こちらは「ウォレットを接続」などの文字を直に置いているため。
+ * 文言は隠さず、余白のほうを詰める。事情は Menu.module.css の末尾に書いた。 */
+@media screen and (max-width: 26rem) {
+  .button {
+    padding-left: calc(var(--spacer) / 6);
+    padding-right: calc(var(--spacer) / 6);
+  }
+}

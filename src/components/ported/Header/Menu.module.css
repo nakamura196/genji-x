@@ -32,10 +32,6 @@
     width: var(--menu-logo-size-width-sm);
     height: var(--menu-logo-size-height-sm);
   }
-
-  .actions button {
-    transform: scale(0.9);
-  }
 }
 
 @media screen and (max-width: 420px) {
@@ -45,10 +41,6 @@
 
   .actions {
     gap: calc(var(--spacer) / 8);
-  }
-
-  .actions button {
-    transform: scale(0.85);
   }
 
   .logo svg {
@@ -294,3 +286,20 @@ svg.caret {
     gap: calc(var(--spacer) / 8);
   }
 }
+
+/* **`transform: scale()` をやめた。**
+ *
+ * 本家は狭い画面で `.actions button { transform: scale(0.9 / 0.85) }` と書いて
+ * 右側の操作を縮めていた。**これは描くときの大きさしか変えない。**
+ * 場所取り（レイアウト上の幅）は等倍のままなので、いくら縮めても
+ * 1 行に入る量は増えない。
+ *
+ * iPhone 14 の幅 (390px) では、右側の 5 つ（言語・検索・ネットワーク・
+ * ウォレット・設定）でちょうど 375px を使い切っていた。**余りが 0 だった。**
+ * 文字の幅は OS のフォントで 1% ほど変わるので、Linux の CI では 3px あふれ、
+ * 「横スクロールが出ない」「ドロップダウンが画面の外に出ない」が落ちていた。
+ * 手元の macOS では 1px も余らないまま、たまたま収まっていた。
+ *
+ * 代わりに、**箱の左右の余白を実際に詰める**（Network / Wallet / 設定の
+ * それぞれの CSS に書いた）。縦の余白と文字の大きさは触っていない。
+ * 高さを揃えてある並びを崩さず、読みにくくもしないため。 */
