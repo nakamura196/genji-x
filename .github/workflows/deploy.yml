@@ -56,7 +56,11 @@ jobs:
       - run: npm ci
 
       # 既知の脆弱性がある依存のまま配らない
-      - run: npm audit --audit-level=high
+      - name: Audit
+        run: npm audit --audit-level=high
+        # 手動起動 (dependabot-security-merge.yml からの起動を含む) では止めない。
+        # 脆弱性が残っていると、それを減らす修正まで配れなくなるため。
+        continue-on-error: ${{ github.event_name == 'workflow_dispatch' }}
 
       - run: npx tsc --noEmit
 

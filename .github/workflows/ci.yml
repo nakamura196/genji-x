@@ -31,7 +31,12 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm audit --audit-level=high
+      - name: Audit
+        run: npm audit --audit-level=high
+        # Dependabot の PR では失敗させない。一部の脆弱性だけを直す更新でも、
+        # 残りの脆弱性で落ちて取り込めなくなるため。取り込むかどうかは
+        # dependabot-security-merge.yml が更新前後の件数で判定する。
+        continue-on-error: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
       - run: npx tsc --noEmit
       - run: npx eslint
 
