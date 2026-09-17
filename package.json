@@ -41,7 +41,7 @@
     "postcss": "^8.5.20",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "wrangler": "^4.126.0"
+    "wrangler": "^4.133.0"
   },
   "overrides": {
     "js-yaml": ">=4.3.1",
