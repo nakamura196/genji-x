@@ -40,8 +40,11 @@ jobs:
       - run: npx tsc --noEmit
       - run: npx eslint
 
+      # ブラウザ名をここに書かない。playwright.config.ts の projects と二重になり、
+      # こちらが古くなる（mobile = iPhone 14 は WebKit なのに chromium だけ入れていて、
+      # mobile のテストが全部起動前に落ちていた）。どれが要るかは config が決める
       - name: ブラウザを取る
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps
 
       - name: 画面のテスト
         env:
