@@ -25,9 +25,15 @@ export const EXPLORER = 'https://sepolia.etherscan.io';
  *   1 回 50,000 ブロックまで / アドレス指定が必須 / 続けて叩くと締め出される
  * さらに厄介なことに、**混んでいるとエラーではなく空の結果を返す**。
  * だからこの画面は「全体を舐める」ことをせず、**アドレスが分かっているものだけ**を引く。
+ *
+ * **既定は Tenderly の公開 RPC。** 2026-10-01 に実測したところ、publicnode は
+ * 参照回数の問い合わせ (8 件のアドレス × 6 窓) にエラーを返さず 0 件を返し、
+ * Tenderly は同じ問い合わせで 50 件を返した。CI の画面テストでは一覧の
+ * 参照回数が「数えています…」のまま入らなくなっていた (9-29 から)。
+ * ビルド前の写し (scripts/build-snapshot.mjs) も #13 で Tenderly に替えている。
  */
 export const RPC_URL =
-  process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || 'https://ethereum-sepolia-rpc.publicnode.com';
+  process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL || 'https://sepolia.gateway.tenderly.co';
 
 export const publicClient = createPublicClient({
   chain: CHAIN,
