@@ -31,8 +31,15 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const registry = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/registry.json'), 'utf8'));
 
+/**
+ * **既定は Tenderly の公開 RPC。** publicnode は同じ問い合わせにも
+ * 0 件・4 件・7 件と気まぐれに返し (2026-10-01 実測、4 回中 2 回が 0 件)、
+ * 配布が 1 か月止まった。Tenderly は同じ問い合わせで 4 回とも 7 件を返した。
+ * drpc は無料だと 10,000 ブロックまで、thirdweb はログの量の上限で落ちる。
+ * ブラウザ側 (src/lib/chain.ts) は変えていない。
+ */
 const RPC = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL
-  || 'https://ethereum-sepolia-rpc.publicnode.com';
+  || 'https://sepolia.gateway.tenderly.co';
 const client = createPublicClient({ chain: sepolia, transport: http(RPC, { retryCount: 3 }) });
 
 /**
@@ -94,29 +101,61 @@ const METADATA_EVENT = {
   ],
 };
 
+/**
+ * 前回の写し（リポジトリに入っている）。読めなかった分の補いと、
+ * 「どこまで新しい記録があるはずか」の目安に使う。
+ */
+const OUT_PATH = path.join(ROOT, 'src/data/snapshot.json');
+const prev = fs.existsSync(OUT_PATH)
+  ? JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'))
+  : { anchoredRoots: [], assets: [] };
+const prevAssets = new Map((prev.assets ?? []).map((a) => [a.slug, a]));
+
 const MAX_RANGE = 49_000n;
+const READ_ATTEMPTS = 6;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-/** 締め出しを避けるため、少しずつ順番に読む */
+/**
+ * 締め出しを避けるため、少しずつ順番に読む。
+ *
+ * **読めなくても投げない。** 公開 RPC (publicnode) は同じ問い合わせにも
+ * 4 件・0 件・7 件と気まぐれに空を返す。以前はここで投げていたため、
+ * 55 件のうち 1 件でも空が続くとビルドごと止まり、**2026-08-29 から
+ * 1 か月以上配布が 1 度も通らなかった**。
+ *
+ * 帖のログは消えないので、空は「無い」ではなく「読めなかった」。
+ * 読めなかった帖は readFailed を付けて返し、後段で前回の写しを使う
+ * （写しはリポジトリに入っている）。前回の写しも無いときだけ止める。
+ */
 async function readOne(a, latest) {
   const from = BigInt(a.fromBlock);
   const to = from + MAX_RANGE > latest ? latest : from + MAX_RANGE;
-  for (let attempt = 0; attempt < 4; attempt++) {
+  let lastError = null;
+  for (let attempt = 0; attempt < READ_ATTEMPTS; attempt++) {
     try {
       /**
        * 作成と更新の両方を読み、**いちばん新しいものを採る**。
        * viem の getLogs はイベントごとにしか引けないので 2 回引いて並べ直す。
+       * 同時に 2 本投げると締め出されやすいので、順に引く。
        */
-      const [created, updated] = await Promise.all([
-        client.getLogs({ address: a.nft, event: METADATA_EVENT, fromBlock: from, toBlock: to }),
-        client.getLogs({ address: a.nft, event: METADATA_UPDATED_EVENT, fromBlock: from, toBlock: to }),
-      ]);
+      const created = await client.getLogs({ address: a.nft, event: METADATA_EVENT, fromBlock: from, toBlock: to });
+      const updated = await client.getLogs({ address: a.nft, event: METADATA_UPDATED_EVENT, fromBlock: from, toBlock: to });
+      /*
+       * 作成のログは必ず 1 件ある。それが無ければ、更新が返っていても
+       * 取りこぼしの最中とみなして読み直す（片方だけ空のこともある）。
+       */
+      if (!created.length) throw new Error('メタデータのログが 0 件');
       const logs = [...created, ...updated].sort((x, y) =>
         x.blockNumber === y.blockNumber
           ? Number(x.logIndex) - Number(y.logIndex)
           : Number(x.blockNumber - y.blockNumber));
-      if (!logs.length) throw new Error('メタデータのログが 0 件');
       const last = logs[logs.length - 1];
+      /*
+       * 書き直しのログだけ空で返ることもある (2026-10-01 の手元実行で 55 件中 28 件)。
+       * 前回の写しより古い記録しか無ければ、取りこぼしとみなして読み直す。
+       */
+      const known = prevAssets.get(a.slug)?.ddoFrom?.block ?? 0;
+      if (Number(last.blockNumber) < known) throw new Error('前回より古い記録しか返らない');
       const flags = last.args.flags;
       const encrypted = flags.length >= 4 && (parseInt(flags.slice(2, 4), 16) & 2) !== 0;
       const bytes = (last.args.data.length - 2) / 2;
@@ -127,10 +166,12 @@ async function readOne(a, latest) {
         ddoFrom: { event: last.eventName, block: Number(last.blockNumber),
           revisions: logs.length, tx: last.transactionHash } };
     } catch (e) {
-      if (attempt === 3) throw e;
-      await sleep(1500 * (attempt + 1));   // 締め出されたら間を空けて再試行
+      lastError = e;
+      // 締め出されたら間を空けて再試行。空は数秒で戻ることが多いので、だんだん長く待つ
+      if (attempt < READ_ATTEMPTS - 1) await sleep(2000 * (attempt + 1));
     }
   }
+  return { ...a, encrypted: false, ddo: null, readFailed: lastError?.message ?? '不明' };
 }
 
 /**
@@ -180,24 +221,59 @@ async function countOrders(datatoken, fromBlock, latest) {
   return { orders, consumers: consumers.size };
 }
 
+const t0 = Date.now();
 const latest = await client.getBlockNumber();
 console.log(`チェーンから ${registry.assets.length} 件のメタデータを読みます (block ${latest})`);
+
+/*
+ * **メタデータを先に全部読み、参照回数はそのあとで数える。**
+ * 参照回数は 1 件につき数十回 RPC を叩く。以前は 1 件ごとに交互にしていたため、
+ * 数えているうちに締め出され、後ろの帖のメタデータが読めなくなっていた
+ * (実際に 40/55 で止まった)。写しの中身として大事なのはメタデータのほう。
+ */
 const out = [];
 for (const [i, a] of registry.assets.entries()) {
-  const got = await readOne(a, latest);
-  // 参照回数も同じ流れで数える（1 アドレスずつ）
-  try {
-    got.usage = await countOrders(a.datatoken, registry.corpusAnchorFromBlock, latest);
-  } catch {
-    got.usage = null;   // 数えられなくても写し自体は作る
-  }
-  out.push(got);
+  out.push(await readOne(a, latest));
   if ((i + 1) % 10 === 0 || i === registry.assets.length - 1) {
     process.stdout.write(`\r  ${i + 1}/${registry.assets.length}`);
   }
   await sleep(150);
 }
 console.log('');
+console.log(`  メタデータ ${Math.round((Date.now() - t0) / 1000)} 秒`);
+const failedReads = out.filter((o) => o.readFailed);
+if (failedReads.length) {
+  console.warn(`  ！ ${failedReads.length} 帖のメタデータが読めませんでした: ${failedReads.map((o) => o.slug).join(', ')}`);
+}
+
+/*
+ * 参照回数は数えられたぶんだけ使う。
+ *
+ * ここの値は**予備**で、詳細ページはブラウザがその 1 件を数え直す。
+ * いっぽう集計は 1 件につき数区間ぶん RPC を叩き、55 件で 300 回を超える。
+ * 締め出されると 1 回ごとに再試行を待つので、配布の制限時間 (20 分) を食いつぶす。
+ * そこで、続けて失敗したとき・持ち時間を使い切ったときは打ち切り、
+ * 残りは前回の写しの値を使う。
+ */
+const COUNT_BUDGET_MS = Number(process.env.SNAPSHOT_COUNT_BUDGET_MS ?? 180_000);
+const countStart = Date.now();
+let countFailStreak = 0;
+let countStopped = null;
+for (const got of out) {
+  if (!countStopped && countFailStreak >= 3) countStopped = '続けて失敗 (締め出し)';
+  if (!countStopped && Date.now() - countStart > COUNT_BUDGET_MS) countStopped = `持ち時間 ${COUNT_BUDGET_MS / 1000} 秒を超過`;
+  if (countStopped) { got.usage = null; continue; }
+  try {
+    got.usage = await countOrders(got.datatoken, registry.corpusAnchorFromBlock, latest);
+    countFailStreak = 0;
+  } catch {
+    got.usage = null;   // 数えられなくても写し自体は作る
+    countFailStreak++;
+  }
+  await sleep(150);
+}
+console.log(`  参照回数の集計 ${Math.round((Date.now() - countStart) / 1000)} 秒`);
+if (countStopped) console.warn(`  ！ 参照回数の集計を途中でやめました (${countStopped})。残りは前回の値を使います`);
 
 /**
  * **CorpusAnchor に記録された root を読む。**
@@ -219,22 +295,27 @@ console.log('');
  * **同じ root を 3 回記録している**ので、値としては
  * 帖の木 2 種類 + 行の木 1 種類 = 3 種類になる。
  */
-const OUT_PATH = path.join(ROOT, 'src/data/snapshot.json');
-const prev = fs.existsSync(OUT_PATH)
-  ? JSON.parse(fs.readFileSync(OUT_PATH, 'utf8'))
-  : { anchoredRoots: [], assets: [] };
-const prevAssets = new Map((prev.assets ?? []).map((a) => [a.slug, a]));
 
 const anchored = [];
 try {
-  const logs = await client.request({
-    method: 'eth_getLogs',
-    params: [{
-      address: registry.corpusAnchor,
-      fromBlock: '0x' + BigInt(registry.corpusAnchorFromBlock).toString(16),
-      toBlock: '0x' + latest.toString(16),
-    }],
-  });
+  /*
+   * **区間に分けて読む。** 公開 RPC は 1 回 50,000 ブロックまで。
+   * 以前は 1 回で読んでいたため、記録から 50,000 ブロック (約 1 週間) を過ぎた
+   * 2026-09 には毎回「exceed maximum block range」で失敗し、前回の値で補われていた。
+   */
+  const logs = [];
+  for (let b = BigInt(registry.corpusAnchorFromBlock); b <= latest; b += MAX_RANGE) {
+    const to = b + MAX_RANGE > latest ? latest : b + MAX_RANGE;
+    logs.push(...await client.request({
+      method: 'eth_getLogs',
+      params: [{
+        address: registry.corpusAnchor,
+        fromBlock: '0x' + b.toString(16),
+        toBlock: '0x' + to.toString(16),
+      }],
+    }));
+    await sleep(150);
+  }
   for (const l of logs) {
     let d;
     try { d = decodeEventLog({ abi: [CORPUS_ANCHORED_EVENT], data: l.data, topics: l.topics }); }
@@ -280,9 +361,10 @@ for (let i = 0; i < out.length; i++) {
 
   // 読めなかった帖は前回の写しをそのまま使う
   if (!o.ddo && !o.encrypted) {
-    if (old?.ddo) { out[i] = { ...old, usage: o.usage ?? old.usage }; keptAssets++; }
+    if (old?.ddo || old?.encrypted) { out[i] = { ...old, usage: o.usage ?? old.usage }; keptAssets++; }
     continue;
   }
+  if (!o.usage && old?.usage) o.usage = old.usage;
 
   /*
    * **古い版に化けていないか見る。**
@@ -300,6 +382,17 @@ if (keptAssets) console.warn(`  ！ ${keptAssets} 帖は今回読めませんで
 if (keptNewer) {
   console.warn(`  ！ ${keptNewer} 帖で、前回より古い記録しか読めませんでした。前回のほうを使っています`);
   console.warn('    ログの取りこぼしです。放っておくと、書き直す前の DDO に戻ります');
+}
+
+/*
+ * **前回の写しも無い帖が読めなかったときだけ止める。**
+ * そのまま書き出すと、その帖の説明と葉ハッシュが画面から消える。
+ */
+const missing = out.filter((o) => o.readFailed);
+if (missing.length) {
+  console.error(`  ！ ${missing.length} 帖は読めず、前回の写しもありません: ${missing.map((o) => o.slug).join(', ')}`);
+  console.error('    時間をおくか、NEXT_PUBLIC_SEPOLIA_RPC_URL を別の RPC に向けて実行し直してください');
+  process.exit(1);
 }
 
 /*
