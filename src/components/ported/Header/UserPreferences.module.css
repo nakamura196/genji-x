@@ -117,3 +117,12 @@
 .anchor {
   flex-shrink: 0;
 }
+
+/* **狭い画面で左右の余白だけ詰める。**（本家に無い追加分）
+ * 高さ (39px) は隣の箱と揃えたままにする。事情は Menu.module.css の末尾に書いた。 */
+@media screen and (max-width: 26rem) {
+  .preferences {
+    padding-left: calc(var(--spacer) / 6);
+    padding-right: calc(var(--spacer) / 6);
+  }
+}
