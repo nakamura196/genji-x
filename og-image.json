@@ -1,0 +1,9 @@
+{
+  "accent": "#95612b",
+  "pages": [
+    {"url": "https://genji-x.ldas.jp/ja", "out": "public/ogp-ja.jpg",
+     "description": "校異源氏物語の本文（TEI/XML、54 帖・25,065 行）をチェーンと IPFS に載せた版。本文は CC0 で、読むのに手続きは要りません。"},
+    {"url": "https://genji-x.ldas.jp/en", "out": "public/ogp-en.jpg",
+     "description": "The Kouigenji Monogatari text (TEI/XML, 54 volumes, 25,065 lines) on chain and IPFS. The text is CC0 and free to read."}
+  ]
+}

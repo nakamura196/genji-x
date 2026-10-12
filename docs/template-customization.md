@@ -35,8 +35,8 @@ export const SITE_CONFIG = {
   },
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://your-domain.com',
   ogImage: {
-    ja: '/ogp-ja.svg',           // ← 必要に応じて変更
-    en: '/ogp-en.svg',           // ← 必要に応じて変更
+    ja: '/ogp-ja.jpg',           // ← 必要に応じて変更
+    en: '/ogp-en.jpg',           // ← 必要に応じて変更
   },
   twitter: {
     card: 'summary_large_image',
@@ -162,8 +162,10 @@ backgroundImage: 'url(https://your-image-url.com/image.jpg)',
 
 `public/` ディレクトリにOGP画像を配置します。
 
-- `public/ogp-ja.svg` または `public/ogp-ja.png`
-- `public/ogp-en.svg` または `public/ogp-en.png`
+- `public/ogp-ja.jpg`
+- `public/ogp-en.jpg`
+
+SVG は X や Facebook で表示されないので使わない。画像は `og-image.json` を設定にして、共通の道具 [og-image](https://github.com/nakamura196/og-image) で作る（`python3 og_image.py og-image.json`）。
 
 ---
 
@@ -210,7 +212,7 @@ docs/blog/nextjs-sitemap-with-static-export.md
 | `CONTRIBUTING.md` | プロジェクト名 | - |
 | `src/components/layout/Footer.tsx` | 外部リンク | - |
 | `src/components/page/home/Hero.tsx` | 背景画像 | - |
-| `public/ogp-*.svg` | OGP画像 | - |
+| `public/ogp-*.jpg`, `og-image.json` | OGP画像 | - |
 | `public/favicon.ico` | ファビコン | - |
 
 ---
