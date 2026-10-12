@@ -57,7 +57,10 @@ jobs:
 
       # 既知の脆弱性がある依存のまま配らない
       - name: Audit
-        run: npm audit --audit-level=high
+        # 配る部品だけを調べる。開発用の道具（ESLint・Tailwind）の脆弱性は
+        # 公開サイトに入らないので、audit.yml と Dependabot で追う。
+        # 2026-10: braces (GHSA-vfj7-8cjw-p6xm) が修正版なしで全 PR を止めたため。
+        run: npm audit --omit=dev --audit-level=high
         # 手動起動 (dependabot-security-merge.yml からの起動を含む) では止めない。
         # 脆弱性が残っていると、それを減らす修正まで配れなくなるため。
         continue-on-error: ${{ github.event_name == 'workflow_dispatch' }}
