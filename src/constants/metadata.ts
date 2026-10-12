@@ -44,7 +44,7 @@ export const SITE_CONFIG = {
       'Ocean Protocol', 'Merkle tree'],
   },
   url: SITE_URL,
-  ogImage: { ja: '/ogp-ja.svg', en: '/ogp-en.svg' },
+  ogImage: { ja: '/ogp-ja.jpg', en: '/ogp-en.jpg' },
   twitter: { card: 'summary_large_image' as const },
 } as const;
 
