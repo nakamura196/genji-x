@@ -17,6 +17,15 @@ const nextConfig: NextConfig = {
    * Playwright が 127.0.0.1 を使うため、両方を許可する。
    */
   allowedDevOrigins: ['127.0.0.1', 'localhost'],
+  /**
+   * `/` に来た人を既定の言語へ送る。
+   * 以前は src/app/page.tsx の redirect() で行っていたが、Next 16.4 は
+   * ルートの page.tsx にルートレイアウトを要求するようになった。
+   * レイアウトは [locale] の下にあるので、設定側の redirects に移した。
+   */
+  async redirects() {
+    return [{ source: '/', destination: '/ja' /* routing.defaultLocale と同じ */, permanent: false }];
+  },
 };
 
 export default withNextIntl(nextConfig);
